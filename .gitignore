@@ -1,0 +1,236 @@
+# =============================================================================
+# mctev-lib — .gitignore
+# =============================================================================
+# Organized by category. When in doubt, prefer ignoring too much over
+# accidentally committing large binary artifacts, environment files, or
+# machine-specific configuration.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Virtual environments
+# -----------------------------------------------------------------------------
+# Primary environment used for this project.
+.mctev-venv/
+
+# Common alternatives (so the repo is clean on any contributor's machine).
+.venv/
+venv/
+env/
+ENV/
+.env.d/
+.python-version
+.python-version.d/
+
+# Virtualenv tool metadata (Pipenv, Poetry, Hatch, PDM, uv).
+.venv-*/
+venv-*/
+*-venv/
+*-env/
+.pipenv/
+poetry.lock.bak
+.pdm-python
+.uv/
+uv.lock
+
+# Conda environments
+conda-meta/
+.condarc
+
+# -----------------------------------------------------------------------------
+# Python interpreter and bytecode
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+
+# Distribution / packaging
+build/
+dist/
+wheels/
+sdist/
+develop-eggs/
+downloads/
+parts/
+var/
+*.whl
+MANIFEST
+.installed.cfg
+lib64/
+pip-wheel-metadata/
+
+# -----------------------------------------------------------------------------
+# Testing and coverage
+# -----------------------------------------------------------------------------
+.pytest_cache/
+.pytest/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.cover
+*.py,cover
+.hypothesis/
+hypothesis-examples/
+
+# -----------------------------------------------------------------------------
+# Type checking and linting caches
+# -----------------------------------------------------------------------------
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pyright/
+.bandit_cache/
+
+# -----------------------------------------------------------------------------
+# Jupyter
+# -----------------------------------------------------------------------------
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+.jupyter/
+.jupyterlab/
+nbsphinx_code_cells/
+*.nbconvert.ipynb
+
+# -----------------------------------------------------------------------------
+# Documentation builds
+# -----------------------------------------------------------------------------
+docs/_build/
+docs/_source/
+_build/
+site/
+site-packages/
+public/
+
+# -----------------------------------------------------------------------------
+# mctev-lib specific: tutorial and example outputs
+# -----------------------------------------------------------------------------
+# All example scripts write PNGs, CSVs, and JSON reports into outputs/.
+# These are regenerable from code and should not be committed.
+outputs/
+experiments/outputs/
+tutorial_outputs/
+*.png
+*.pdf
+*.svg
+*.jpg
+*.jpeg
+
+# Exception: documentation figures that are intentionally committed.
+!docs/**/*.png
+!docs/**/*.svg
+!docs/**/*.pdf
+!README*.png
+!docs/images/**
+
+# -----------------------------------------------------------------------------
+# Simulation and analysis artifacts
+# -----------------------------------------------------------------------------
+# Large kernels, survival traces, agent logs.
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.parquet
+*.feather
+*.joblib
+
+# Intermediate or cached results written by tutorial scripts.
+cache/
+.cache/
+tmp/
+temp/
+*.tmp
+*.log
+
+# -----------------------------------------------------------------------------
+# OS-specific
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+Icon?
+*.lnk
+
+# -----------------------------------------------------------------------------
+# Editor and IDE
+# -----------------------------------------------------------------------------
+# VS Code
+.vscode/
+!.vscode/settings.json.example
+!.vscode/launch.json.example
+!.vscode/extensions.json.example
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Vim / Neovim
+*.swp
+*.swo
+*.swn
+.*.sw?
+.vim/
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+.emacs.desktop
+.emacs.d/
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Atom
+.atom/
+
+# -----------------------------------------------------------------------------
+# Secrets and local configuration
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.secret
+*.key
+secrets/
+credentials.json
+config.local.*
+*.local.toml
+*.local.yaml
+*.local.yml
+
+# -----------------------------------------------------------------------------
+# Continuous integration and deployment (local overrides)
+# -----------------------------------------------------------------------------
+.ci/
+*.local.ci.yml
+
+# -----------------------------------------------------------------------------
+# Miscellaneous
+# -----------------------------------------------------------------------------
+# Lock files from other tools (keep our pip-compiled ones).
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Cargo.lock

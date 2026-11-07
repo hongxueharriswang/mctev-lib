@@ -1,0 +1,32 @@
+# =============================================================================
+# mctev-lib runtime dependencies
+# =============================================================================
+# These are the packages required to import and use mctev-lib in a Python
+# program. They are pinned to minimum-compatible versions matching
+# pyproject.toml. For exact reproducibility, use the --freeze workflow
+# documented in requirements-dev.txt.
+#
+# Install:
+#   pip install -r requirements.txt
+# =============================================================================
+
+# --- Core numerical stack ---------------------------------------------------
+numpy>=1.24,<3.0
+scipy>=1.10,<2.0
+
+# --- Data handling ----------------------------------------------------------
+pandas>=2.0,<3.0
+
+# --- Visualization ----------------------------------------------------------
+# matplotlib is imported by mctev.analysis.visualization and by all
+# example scripts. It is imported lazily where possible, but is listed
+# as a required dependency because the examples depend on it and because
+# the analysis module's public API returns matplotlib Axes objects.
+matplotlib>=3.7,<4.0
+
+# --- Optional acceleration (not required) -----------------------------------
+# Uncomment if you want faster numerical kernels on your platform.
+# These are pure accelerators; the library works without them.
+#
+# numba>=0.58,<1.0
+# joblib>=1.3,<2.0

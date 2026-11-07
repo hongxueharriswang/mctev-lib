@@ -1,0 +1,22 @@
+# =============================================================================
+# mctev-lib documentation dependencies
+# =============================================================================
+# Only what is needed to build the docs, plus runtime (so autodoc can
+# import the library).
+#
+# Install:
+#   pip install -r requirements-docs.txt
+#
+# Build:
+#   cd docs && make html
+# =============================================================================
+
+# --- Runtime (needed for autodoc to import the package) --------------------
+-r requirements.txt
+
+# --- Documentation ----------------------------------------------------------
+sphinx>=7.0,<9.0
+sphinx-rtd-theme>=1.3,<3.0
+myst-parser>=2.0,<5.0
+sphinx-autodoc-typehints>=1.24,<3.0
+sphinx-copybutton>=0.5,<1.0

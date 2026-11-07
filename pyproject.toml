@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mctev-lib"
+version = "0.1.0"
+description = "Multi-Level Computational Theory of Ethics: reference implementation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "MCTEV Research Program" }]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "black>=23.0", "ruff>=0.1"]
+
+[tool.setuptools.packages.find]
+include = ["mctev*"]

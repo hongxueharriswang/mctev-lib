@@ -1,0 +1,19 @@
+# =============================================================================
+# mctev-lib: complete dependency environment
+# =============================================================================
+# Installs runtime + dev + docs in a single pass. Use this when you want
+# a full workstation that can run every tutorial, every test, and build
+# the docs.
+#
+# Install:
+#   pip install -r requirements-all.txt
+# =============================================================================
+
+# --- Runtime ----------------------------------------------------------------
+-r requirements.txt
+
+# --- Development ------------------------------------------------------------
+-r requirements-dev.txt
+
+# --- Documentation ----------------------------------------------------------
+-r requirements-docs.txt
