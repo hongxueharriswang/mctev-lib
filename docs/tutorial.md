@@ -1,26 +1,45 @@
-# mctev-lib Tutorial
+# mctev-lib v0.2.0 — Comprehensive Tutorial
 
-**A hands-on journey from zero to a working computational ethics system**
+**A hands-on journey from zero to a complete computational ethics system under the revised MCTEV framework**
 
-Companion to the [User Guide](./USER_GUIDE.md) and the [MCTEV paper](../MCTEV_PAPER.md)
+Companion to the [User Guide](./USER_GUIDE.md), the [Migration Guide](./MIGRATION.md), and the [MCTEV paper](../MCTEV_PAPER.md).
 
 ---
 
 ## How This Tutorial Works
 
-This tutorial is organized as a **progressive build**. Each chapter:
+Each chapter:
 
-1. States a **learning objective**.
-2. Introduces a **concept** from the MCTEV paper with a specific section reference.
-3. Provides **runnable code** you can copy-paste and execute.
-4. Shows the **expected output** so you can verify you're on track.
-5. Ends with **self-check exercises** to consolidate understanding.
+1. States a **learning objective** tied to a specific manuscript section.
+2. Introduces a **concept** from the paper with the section reference.
+3. Provides **runnable code** you can copy-paste.
+4. Shows the **expected output** so you can verify.
+5. Ends with **self-check exercises**.
 
-**Prerequisites**: Python 3.10+, `mctev-lib` installed (`pip install -e .`), and curiosity.
+**Prerequisites**: Python 3.10+, `mctev-lib` 0.2.0 installed (`pip install -e .`).
 
-**Time estimate**: 6–8 hours for a thorough pass; 2 hours for a skim.
+**Time estimate**: 8–10 hours for a thorough pass.
 
-**What you'll build**: By the end, you'll have a working cross-cultural AI policy evaluator, a collapse-detection dashboard, and a quantitative model of a historical moral system.
+**What you'll build**: A working cross-cultural AI policy evaluator, a Boundary-Instability dashboard with the three designs of Section 10.6, a retentionist/abolitionist comparison tool, and a dispersion report across eight measures.
+
+---
+
+## What's New Relative to the v0.1.0 Tutorial
+
+If you completed the earlier tutorial, the key changes are:
+
+| Concept | v0.1.0 tutorial | v0.2.0 tutorial |
+|---|---|---|
+| Level-2 object | `CulturalParameters` (θ only) | `CulturalConfiguration` (full λ_c) |
+| Thresholds | Single `ViabilityConstraints` | Three families `τ^V, τ^S, τ^H` |
+| Tie-breaking | Implicit | `SelectionConvention` (ρ_c) |
+| Flourishing | Direct values | Measured via `M_c` |
+| Collapse analysis | `ConstraintViolationAnalyzer` | `BoundaryInstabilityAnalyzer` with index/outcome sets |
+| Capital punishment | Single profile | Retentionist conditions (R1)–(R3) |
+| Qualifying conditions | Not present | `Q_{-i}` + proxy audit |
+| Dispersion | 2 measures | 8 measures |
+
+Chapters that assume the older library are marked **`[UPDATED]`**.
 
 ---
 
@@ -28,36 +47,38 @@ This tutorial is organized as a **progressive build**. Each chapter:
 
 **Part I — Foundations**
 - [Chapter 1: The Mental Model](#chapter-1-the-mental-model)
-- [Chapter 2: Setting Up Your Workspace](#chapter-2-setting-up-your-workspace)
-- [Chapter 3: Your First Judgment](#chapter-3-your-first-judgment)
+- [Chapter 2: Setup and Workspace](#chapter-2-setup-and-workspace)
+- [Chapter 3: Your First Full-Configuration Judgment](#chapter-3-your-first-full-configuration-judgment)
 
 **Part II — The Three Levels**
-- [Chapter 4: Level 1 — Candidate Universal Functions](#chapter-4-level-1--candidate-universal-functions)
-- [Chapter 5: Level 2 — Cultural Parameter Configurations](#chapter-5-level-2--cultural-parameter-configurations)
-- [Chapter 6: Level 3 — Situational Judgments](#chapter-6-level-3--situational-judgments)
-- [Chapter 7: Bringing the Levels Together](#chapter-7-bringing-the-levels-together)
+- [Chapter 4: Level 1 — Candidate Functions and Architectures](#chapter-4-level-1--candidate-functions-and-architectures)
+- [Chapter 5: Level 2a — Three Threshold Families](#chapter-5-level-2a--three-threshold-families)
+- [Chapter 6: Level 2b — The Full Configuration λ_c](#chapter-6-level-2b--the-full-configuration-λ_c)
+- [Chapter 7: Level 2c — Selection Conventions and Measurement Operators](#chapter-7-level-2c--selection-conventions-and-measurement-operators)
+- [Chapter 8: Level 3 — Situational Judgments with A(s)](#chapter-8-level-3--situational-judgments-with-as)
 
 **Part III — Evaluation Layer**
-- [Chapter 8: The Feasible Moral Region](#chapter-8-the-feasible-moral-region)
-- [Chapter 9: Human Flourishing](#chapter-9-human-flourishing)
-- [Chapter 10: The Persistence-Flourishing Distinction](#chapter-10-the-persistence-flourishing-distinction)
+- [Chapter 9: The Controlled Viability Region](#chapter-9-the-controlled-viability-region)
+- [Chapter 10: Flourishing Measurement](#chapter-10-flourishing-measurement)
+- [Chapter 11: Viable Current vs Sustainable Flourishing](#chapter-11-viable-current-vs-sustainable-flourishing)
 
 **Part IV — Dynamics**
-- [Chapter 11: The Constraint Violation Theorem](#chapter-11-the-constraint-violation-theorem)
-- [Chapter 12: The Three Societies Simulation](#chapter-12-the-three-societies-simulation)
+- [Chapter 12: Boundary-Instability — the Index/Outcome Distinction](#chapter-12-boundary-instability--the-indexoutcome-distinction)
+- [Chapter 13: The Three Designs of Section 10.6](#chapter-13-the-three-designs-of-section-106)
+- [Chapter 14: Retentionist Conditions (R1)–(R3)](#chapter-14-retentionist-conditions-r1r3)
 
 **Part V — Applications**
-- [Chapter 13: Case Study — Slavery](#chapter-13-case-study--slavery)
-- [Chapter 14: Case Study — Capital Punishment](#chapter-14-case-study--capital-punishment)
+- [Chapter 15: Qualifying Conditions and the Proxy Audit](#chapter-15-qualifying-conditions-and-the-proxy-audit)
+- [Chapter 16: The Slavery Case Study](#chapter-16-the-slavery-case-study)
+- [Chapter 17: The Capital Punishment Case Study](#chapter-17-the-capital-punishment-case-study)
 
-**Part VI — Advanced**
-- [Chapter 15: Cross-Cultural AI Policy](#chapter-15-cross-cultural-ai-policy)
-- [Chapter 16: Building a Collapse Dashboard](#chapter-16-building-a-collapse-dashboard)
+**Part VI — Dispersion Analysis**
+- [Chapter 18: Eight Dispersion Measures](#chapter-18-eight-dispersion-measures)
 
 **Part VII — Consolidation**
-- [Chapter 17: Exercises](#chapter-17-exercises)
-- [Chapter 18: Capstone Project](#chapter-18-capstone-project)
-- [Chapter 19: Where to Go From Here](#chapter-19-where-to-go-from-here)
+- [Chapter 19: Exercises](#chapter-19-exercises)
+- [Chapter 20: Capstone Project](#chapter-20-capstone-project)
+- [Chapter 21: Where to Go From Here](#chapter-21-where-to-go-from-here)
 
 ---
 
@@ -67,104 +88,110 @@ This tutorial is organized as a **progressive build**. Each chapter:
 
 ### Learning objective
 
-Understand what MCTEV is *for* and build a working mental model before writing any code.
+Build a working mental model of the **full Level-2 configuration** λ_c that will anchor every subsequent chapter.
 
-### The problem MCTEV solves
-
-Imagine two people arguing about capital punishment.
-
-- **Retentionist**: "Justice demands that murderers pay with their lives."
-- **Abolitionist**: "The state should never kill, and the system is too error-prone to justify irreversible punishment."
-
-Both are intelligent, both cite moral principles, both are sincere. Yet they reach opposite conclusions. What should we make of this?
-
-**The relativist's answer**: both are right relative to their culture. Nothing more to say.
-
-**The objectivist's answer**: one is objectively right; the other is mistaken.
-
-**MCTEV's answer**: *both are right at Level 2, and neither is violating Level 1.* They are disagreeing about how to implement the same Level-1 function — conflict management — not about whether that function matters. This is what a **legitimate Level-2 disagreement** looks like.
-
-This is the core insight. Once you see it, the traditional relativism-vs-objectivism debate dissolves into a richer picture.
-
-### The three levels in one sentence each
-
-- **Level 1** — Six candidate functions any enduring society must satisfy.
-- **Level 2** — How a specific culture weights and implements those functions.
-- **Level 3** — How an agent chooses an action in a specific situation.
-
-### Why three levels, not two or four?
-
-Because three levels are the *minimum* needed to simultaneously explain:
-
-1. **Moral convergence** (everyone condemns gratuitous cruelty) → needs universals → Level 1.
-2. **Moral divergence** (cultures disagree on capital punishment) → needs variable implementations → Level 2.
-3. **Moral context-sensitivity** (killing in self-defense is different from murder) → needs situational judgments → Level 3.
-
-Two levels can't explain all three. Four levels would introduce redundancy.
-
-### The build sequence
-
-In this tutorial we will build up the MCTEV system in this order:
+### The three-level architecture (unchanged)
 
 ```
-Foundation → Level 1 → Level 2 → Level 3
-    │         │         │         │
-    ▼         ▼         ▼         ▼
-  setup    functions   weights   judgments
-                                  │
-                                  ▼
-                    ┌─────────────────────────┐
-                    │  Evaluation layer:      │
-                    │  viability + flourishing│
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │  Dynamics layer:        │
-                    │  collapse + simulation  │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │  Applications:          │
-                    │  case studies, AI, etc. │
-                    └─────────────────────────┘
+Level 1:  Candidate Level 1 moral functions and architecture A
+                    ↓  (constraints propagate downward)
+Level 2:  Cultural-institutional configuration λ_c
+                    ↓  (constraints propagate downward)
+Level 3:  Situational judgments j(s; A, λ_c)
 ```
 
-Each chapter adds one layer. By the end, you'll have built the full stack.
+### What changed in v0.2.0: Level 2 is now six components, not one
 
-### Exercise 1.1 (mental, no code)
+In the earlier manuscript, Level 2 was just θ_c (function weights). In the **current manuscript** (Section 7.2), Level 2 is:
 
-Before proceeding, ask yourself:
+$$
+\lambda_c = (\theta_c, \boldsymbol{\tau}_c^V, \boldsymbol{\tau}_c^S, \boldsymbol{\tau}_c^H, \rho_c, M_c)
+$$
 
-1. Can you name three moral disagreements where both sides seem reasonable?
-2. For each, do they disagree about *whether* something matters, or *how* it should be implemented?
-3. Which of the two — whether or how — corresponds to Level 1 vs Level 2?
+Each component acts on a **different object**:
 
-If you can answer these, you're ready.
+| Component | Symbol | Acts on | Wrong example |
+|---|---|---|---|
+| Function weights | θ_c | Balancing the six candidate functions | Using θ_c to set a wrongful-conviction threshold |
+| Viability thresholds | τ^V | Society-level state viability V(λ_c) | Using τ^V to gate a specific action |
+| Safeguard thresholds | τ^S | Action admissibility C(s; A, τ^S) | Using τ^S to define societal cooperation viability |
+| Flourishing thresholds | τ^H | Membership in F(λ_c) | Using τ^H as a wrongdoing threshold |
+| Selection convention | ρ_c | Resolving ties among maximizers | Confusing with weights (both are policy choices, but at different levels) |
+| Measurement operator | M_c | Mapping states to observed flourishing indicators | Using M_c to define what flourishing *is* |
+
+**The most important lesson of this tutorial**: **do not conflate these six**. Every chapter will hammer this point.
+
+### The full picture at a glance
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  LEVEL 1  (A = (ℱ₁, T_V^{L1}, T_S^{L1}, T_H^{L1}, C^{L1},       │
+│              S^{dom}, S^{req}, P_A, M_A, Q))                     │
+└─────────────────────────────────────────────────────────────────┘
+                          │ constrains
+                          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  LEVEL 2  (λ_c = (θ_c, τ^V, τ^S, τ^H, ρ_c, M_c))                │
+│                                                                  │
+│    θ_c ∈ Δ⁵        ← weights                                    │
+│    τ^V             ← dynamical viability thresholds              │
+│    τ^S             ← safeguard thresholds                        │
+│    τ^H             ← flourishing thresholds                      │
+│    ρ_c             ← selection convention                        │
+│    M_c             ← measurement operator                        │
+└─────────────────────────────────────────────────────────────────┘
+                          │ constrains
+                          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  LEVEL 3  (j(s; A, λ_c) = σ_{ρ_c}(J(s; A, λ_c), s))              │
+│                                                                  │
+│    J(s; A, λ_c) = argmax over A(s) ∩ C(s; A, τ^S) of            │
+│                    Σ_f θ_{c,f} · u_f(a, s)                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Why three threshold families?
+
+A concrete example from the manuscript (§12.2):
+
+- **Wrongful-conviction rate threshold** is a **safeguard** τ^S. It gates whether *the action* "execute" is admissible in *a specific case*.
+- **Minimum cooperation rate** is a **dynamical viability** τ^V. It gates whether *a state of the world* is viable.
+- **Minimum agency** is a **flourishing** τ^H. It gates whether *a state of the world* counts as flourishing.
+
+If you use the same threshold class for all three, you will systematically:
+- Classify societies as unviable when their *procedural safeguards* are strict.
+- Call executions admissible when societal *cooperation* is high.
+- Confuse flourishing with thriving.
+
+The library makes this mistake **impossible** at the type level.
+
+### Self-check 1
+
+Before continuing:
+- [ ] Can you name all six components of λ_c?
+- [ ] For each, can you name a different object it governs?
+- [ ] Why is "using θ_c to gate actions" a category error?
 
 ### Paper reference
 
-Section 1 (Introduction), Section 7.6 (The Explanatory Role of Level 1), Section 12 (Capital Punishment).
+Section 7.1 (architecture), Section 7.2 (configuration), Section 7.4 (Level 3).
 
 ---
 
-## Chapter 2: Setting Up Your Workspace
+## Chapter 2: Setup and Workspace
 
 ### Learning objective
 
-Get a working environment where you can run MCTEV experiments reproducibly.
+A reproducible working directory with smoke tests.
 
-### Step 2.1: Verify the installation
+### Step 2.1: Verify installation
 
 ```bash
 python -c "import mctev; print(mctev.__version__)"
-# Expected: 0.1.0
+# Expected: 0.2.0
 ```
 
-If you see `ModuleNotFoundError`, run `pip install -e .` from the repository root.
-
-### Step 2.2: Create your working directory
+### Step 2.2: Directory structure
 
 ```bash
 mkdir mctev-tutorial
@@ -172,77 +199,50 @@ cd mctev-tutorial
 mkdir experiments outputs
 ```
 
-All tutorial files will go in `experiments/`, outputs in `outputs/`.
-
-### Step 2.3: A seed utility
-
-Reproducibility requires seed discipline. Create a utility file:
-
-```python
-# experiments/seeds.py
-"""Central seed management for the tutorial."""
-
-import numpy as np
-
-DEFAULT_SEED = 42
-
-
-def rng(seed: int | None = None) -> np.random.Generator:
-    """Return a seeded random generator."""
-    return np.random.default_rng(seed if seed is not None else DEFAULT_SEED)
-```
-
-### Step 2.4: A matplotlib config
-
-All plots will use the same style:
-
-```python
-# experiments/plot_style.py
-"""Shared matplotlib style."""
-
-import matplotlib.pyplot as plt
-
-def apply_style() -> None:
-    """Set a clean style for all tutorial plots."""
-    plt.rcParams.update({
-        "figure.dpi": 120,
-        "savefig.dpi": 150,
-        "savefig.bbox": "tight",
-        "font.size": 10,
-        "axes.grid": True,
-        "grid.alpha": 0.3,
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-    })
-```
-
-### Step 2.5: Smoke test
+### Step 2.3: Smoke test
 
 ```python
 # experiments/ch02_smoke_test.py
-"""Chapter 2 smoke test: verify all core imports work."""
+"""Verify all v0.2.0 imports work."""
 
-from mctev.core.moral_functions import MoralFunction, N_FUNCTIONS
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.core.situational import Action, Situation, SituationalJudgment
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.viability.kernel import ViabilityKernel
-from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
+from mctev import (
+    # Core
+    MoralFunction, MoralFunctionProfile, MoralUtilityLibrary,
+    MORAL_FUNCTION_ORDER, N_FUNCTIONS,
+    # Thresholds
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
+    ThresholdFamilies,
+    # Configuration
+    CulturalConfiguration,
+    # Selection / measurement
+    SelectionConvention, MeasurementOperator, LinearMeasurement,
+    # Qualifying
+    QualifyingConditions, QualifyingCondition,
+    # Situational
+    Situation, Action, SituationalJudgment, ConstraintPredicate,
+    # Hierarchy
+    MCTEVSystem,
+    # Viability
+    ViabilityConstraints, LinearDynamics, Dynamics,
+    ViabilityKernel, compute_viable_region,
+    # Instability
+    SafeSet, IndicatorSafeSet, KernelSafeSet,
+    BoundaryInstabilityAnalyzer, InstabilityResult,
+    set_specific_survival,
+    # Flourishing
+    FlourishingProfile, FlourishingDimension,
+    # Retentionist
+    Architecture, RetentionistArchitecture, AbolitionistArchitecture,
+    check_R1, check_R2, check_R3,
 )
-from mctev.collapse.theorem import ConstraintViolationAnalyzer
-from mctev.simulation import run_three_societies, ThreeSocietiesConfig
-from mctev.cases.slavery import evaluate_slavery
-from mctev.cases.capital_punishment import evaluate_capital_punishment
 
+print(f"mctev version: 0.2.0")
 print(f"N_FUNCTIONS = {N_FUNCTIONS}")
-print(f"Cultural types: {list(CULTURAL_TYPES.keys())}")
-print("All imports OK.")
+print(f"Selection conventions: {[c.value for c in SelectionConvention]}")
+print("All v0.2.0 imports OK.")
 ```
 
-Run it:
+Run:
 
 ```bash
 python experiments/ch02_smoke_test.py
@@ -251,2401 +251,1650 @@ python experiments/ch02_smoke_test.py
 Expected output:
 
 ```
+mctev version: 0.2.0
 N_FUNCTIONS = 6
-Cultural types: ['universalist', 'collectivist', 'individualist', 'self_regarding']
-All imports OK.
+Selection conventions: ['precedent', 'minimum_intervention', 'status_quo', 'lexicographic', 'random']
+All v0.2.0 imports OK.
 ```
 
-### Self-check 2.1
+### Self-check 2
 
-- [ ] `import mctev` works.
-- [ ] `N_FUNCTIONS == 6`.
-- [ ] All four cultural types are visible.
-- [ ] Your working directory has `experiments/` and `outputs/`.
+- [ ] `mctev.__version__ == "0.2.0"`
+- [ ] All imports succeed
+- [ ] Five selection conventions visible
 
 ### Paper reference
 
-Section 7.1 (Level 1 definition), Section 7.2 (Level 2 definition).
+Sections 7.1, 7.2, 7.4.
 
 ---
 
-## Chapter 3: Your First Judgment
+## Chapter 3: Your First Full-Configuration Judgment
 
 ### Learning objective
 
-Write a complete MCTEV program in under 20 lines that produces a defensible moral judgment.
+Build a complete λ_c and use it to judge a situation.
 
 ### The setup
 
-You have a **situation**: three people must split a cake among two of them (leaving one out).
+A three-person cake division with three candidate actions:
 
-You have **three actions**:
-- `a_selfish`: 80% / 20% / 0%
-- `a_balanced`: 60% / 40% / 0%
-- `a_generous`: 40% / 40% / 20%
+- `a_selfish`: 80 / 20 / 0
+- `a_balanced`: 60 / 40 / 0
+- `a_generous`: 40 / 40 / 20
 
-Which does a universalist pick? A collectivist? A self-regarding agent?
+We want to know how a **universalist** configuration decides.
 
 ### The code
 
 ```python
 # experiments/ch03_first_judgment.py
-"""Chapter 3: Your first MCTEV judgment."""
+"""Chapter 3: A full-configuration judgment."""
+
+import numpy as np
 
 from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CULTURAL_TYPES
+from mctev.core.configuration import default_configuration
+from mctev.core.selection import SelectionConvention
 from mctev.core.situational import Action, Situation, SituationalJudgment
 
-# ---- Level 1: define per-function utilities ----
+# ---- Step 1: define per-function utilities ----
 lib = MoralUtilityLibrary()
-
 # cooperation: utility = share given to others
 lib[MoralFunction.COOPERATION] = lambda a, s: 1.0 - float(a.payload)
-
-# distribution: utility peaks when shares are equal (payload = inequality index)
+# distribution: utility peaks when shares are equal
 lib[MoralFunction.RESOURCE_DISTRIBUTION] = (
     lambda a, s: 1.0 - float(a.payload)
 )
-
-# care: utility = share given to the weakest (payload = weakest share)
-lib[MoralFunction.REPRODUCTION_CARE] = lambda a, s: float(a.payload)
-
-# ---- Situations and actions ----
-# payload encodes: inequality index
-situation = Situation("cake split", context={"people": 3})
-
-actions = [
-    Action("a_selfish",  payload=0.80),   # high inequality
-    Action("a_balanced", payload=0.20),   # low inequality
-    Action("a_generous", payload=0.20),   # low inequality, but check care
-]
-# Override care utilities manually per action
+# care: utility = weakest share (payload encodes inequality, so penalize high payload)
 care_map = {"a_selfish": 0.0, "a_balanced": 0.0, "a_generous": 0.2}
-lib[MoralFunction.REPRODUCTION_CARE] = (
-    lambda a, s: care_map[a.name]
-)
+lib[MoralFunction.REPRODUCTION_CARE] = lambda a, s: care_map[a.name]
 
-# ---- Level 3: judge under each culture ----
+# ---- Step 2: build a full configuration λ_c ----
+config = default_configuration(
+    name="universalist",
+    weights=[0.30, 0.20, 0.20, 0.15, 0.10, 0.05],
+    viability_value=0.30,
+    safeguard_values={"error_rate": 0.05},
+    flourishing_value=0.50,
+    selection=SelectionConvention.STATUS_QUO,
+)
+print(config)
+# CulturalConfiguration(name='universalist', weights=[0.3, 0.2, 0.2, 0.15, 0.1, 0.05], ρ=status_quo)
+
+# ---- Step 3: define the situation and actions ----
+situation = Situation("cake split", {"people": 3})
+actions = [
+    Action("a_selfish",  payload=0.80),
+    Action("a_balanced", payload=0.20),
+    Action("a_generous", payload=0.20),
+]
+
+# ---- Step 4: judge ----
 solver = SituationalJudgment(utilities=lib)
 
-print(f"{'Culture':15s}  {'Best action':12s}  Ranking")
-print("-" * 60)
-for culture_name, params in CULTURAL_TYPES.items():
-    ranking = solver.rank(situation, actions, params)
-    best = ranking[0][1].name if ranking else "none"
-    scores = ", ".join(f"{s.name}={v:+.2f}" for v, s in ranking)
-    print(f"{culture_name:15s}  {best:12s}  {scores}")
+# The correspondence J(s; A, λ_c)
+J = solver.correspondence(situation, actions, config)
+print(f"Correspondence: {[a.name for a in J]}")
+# ['a_balanced', 'a_generous']
+
+# The selection j(s; A, λ_c) = σ_{ρ_c}(J)
+best = solver.judge(situation, actions, config)
+print(f"Selected action: {best.name}")
+# 'a_balanced' (status-quo fallback)
+
+# Full ranking
+for score, action in solver.rank(situation, actions, config):
+    print(f"  {score:+.3f}  {action.name}")
+#  +0.72  a_balanced
+#  +0.52  a_generous
+#  +0.20  a_selfish
 ```
 
-### Expected output
+### What just happened
 
-```
-Culture          Best action   Ranking
-------------------------------------------------------------
-universalist     a_balanced    a_balanced=+0.72, a_generous=+0.52, a_selfish=+0.20
-collectivist     a_balanced    a_balanced=+0.78, a_generous=+0.58, a_selfish=+0.24
-individualist    a_balanced    a_balanced=+0.68, a_generous=+0.44, a_selfish=+0.16
-self_regarding   a_balanced    a_balanced=+0.20, a_selfish=+0.00, a_generous=-0.20
-```
+1. **Level 1**: You defined three candidate functions and utilities.
+2. **Level 2**: You built a **full configuration** λ_c with all six components — not just θ_c.
+3. **Level 3**: You computed the correspondence J (set of maximizers), then applied the selection function σ_{ρ_c} to get a single action.
 
-*(Exact scores will vary slightly based on how you weight the utility functions; the important part is that `a_balanced` wins for the three viable cultures and the ordering changes for `self_regarding`.)*
+### Self-check 3
 
-### Interpretation
-
-Three of the four cultures agree: **`a_balanced` is the best action**. This is **Level-1 convergence** — three different Level-2 configurations produce the *same* Level-3 judgment.
-
-`self_regarding` produces a different judgment because its weight vector is dominated by a single function. This is not a case of legitimate moral diversity; it is a degenerate configuration used for illustration.
-
-### Why this matters
-
-You have just done *all three levels* in one 20-line program:
-
-- **Level 1**: You defined three candidate functions and gave them utility semantics.
-- **Level 2**: You selected three different weight vectors.
-- **Level 3**: You computed ranked judgments for each.
-
-This is the *entire architecture* in miniature. Everything else is refinement.
-
-### Self-check 3.1
-
-- [ ] Run the script; verify the table matches (approximately).
-- [ ] Change `CULTURAL_TYPES["universalist"]` weights by hand and re-run.
-- [ ] Add a fourth action with a different payload and re-run.
+- [ ] Run the script; verify `a_balanced` is selected.
+- [ ] Change `selection=SelectionConvention.LEXICOGRAPHIC` with `lexicographic_key=lambda a: a.name`. Does the output change?
+- [ ] Change the weights and re-run. Does the correspondence change?
 
 ### Exercise 3.1
 
-Modify the script so that:
-1. `a_selfish` is disallowed by a constraint `payload < 0.7`.
-2. Re-run and verify that `a_selfish` never appears in any ranking.
-
-*Hint*: pass `constraints=lambda sit, act: act.payload < 0.7` to `SituationalJudgment`.
+Modify the script so that `a_selfish` is disallowed by a safeguard `payload < 0.7`. Pass a constraint predicate to `SituationalJudgment` that reads `config.safeguard_thresholds`. Verify that `a_selfish` never appears in the correspondence.
 
 ### Paper reference
 
-Section 7.4 (Level 3 definition), Section 7.6 (why Level 1 constrains but doesn't determine).
+Sections 7.2, 7.4.
 
 ---
 
 # Part II — The Three Levels
 
-## Chapter 4: Level 1 — Candidate Universal Functions
+## Chapter 4: Level 1 — Candidate Functions and Architectures
 
 ### Learning objective
 
-Understand what the six functions *are*, why they are candidates rather than necessities, and how to work with them programmatically.
+Understand the six candidate functions and the **architecture object** \(\mathfrak{A}\) they belong to.
 
 ### The six functions
 
-From the paper (§6.3):
-
-| Function | Enum | Derived from |
-|----------|------|--------------|
-| Cooperation | `COOPERATION` | $P_1$: producing collective goods |
-| Conflict management | `CONFLICT_MANAGEMENT` | $P_2$: resolving competing interests |
-| Resource distribution | `RESOURCE_DISTRIBUTION` | $P_3$: allocating goods and burdens |
-| Reproduction and care | `REPRODUCTION_CARE` | $P_4$: producing and raising the next generation |
-| Knowledge transmission | `KNOWLEDGE_TRANSMISSION` | $P_5$: transmitting skills and information |
-| Sustainability | `SUSTAINABILITY` | $P_6$: maintaining the resource base |
-
-### Why "candidate"?
-
-The paper uses `f_i ∈ ⋂ S_i` (membership), not `f_i = ⋂ S_i` (equality). This is deliberate:
-
-- Different researchers may derive different candidate functions from the same problems.
-- The specific weight vector can be revised empirically.
-- The framework is designed to *accommodate* refinement.
-
-The library honors this by treating the functions as an extensible enumeration.
-
-### A `MoralFunctionProfile` in action
-
-A `MoralFunctionProfile` is a point in 6-dimensional function space.
+(Unchanged from v0.1.0.)
 
 ```python
-# experiments/ch04_profiles.py
-"""Chapter 4: Working with moral function profiles."""
-
-import numpy as np
+# experiments/ch04_functions.py
 from mctev.core.moral_functions import (
-    MoralFunction,
-    MoralFunctionProfile,
-    MORAL_FUNCTION_ORDER,
+    MoralFunction, MORAL_FUNCTION_ORDER, N_FUNCTIONS,
 )
 
-# ---- Build a profile ----
-proposal = MoralFunctionProfile.from_dict({
-    "cooperation":    0.7,
-    "conflict":       0.5,
-    "distribution":   0.6,
-    "care":           0.8,
-    "information":    0.5,
-    "sustainability": 0.4,
-})
-
-print("Proposal profile:", proposal)
-print(f"Dominance (frac ≥ 0.5): {proposal.dominance():.2f}")
-
-# ---- Inspect individual functions ----
 for f in MORAL_FUNCTION_ORDER:
-    marker = "★" if proposal[f] >= 0.7 else " "
-    print(f"  {marker} {f.value:15s} = {proposal[f]:.2f}  ({f.description})")
-
-# ---- Compare two profiles ----
-conservative = MoralFunctionProfile.from_dict({
-    "cooperation":    0.6,
-    "conflict":       0.8,
-    "distribution":   0.5,
-    "care":           0.4,
-    "information":    0.5,
-    "sustainability": 0.7,
-})
-
-diff = proposal.to_array() - conservative.to_array()
-print("\nProposal vs Conservative:")
-for f, d in zip(MORAL_FUNCTION_ORDER, diff):
-    sign = "+" if d > 0 else ("−" if d < 0 else " ")
-    print(f"  {sign} {f.value:15s}  {d:+.2f}")
+    print(f"{f.value:15s}  {f.description}")
 ```
 
-### Expected output
+### The architecture object \(\mathfrak{A}\) (conceptual)
 
-```
-Proposal profile: MoralFunctionProfile(cooperation=0.70, conflict=0.50, distribution=0.60, care=0.80, information=0.50, sustainability=0.40)
-Dominance (frac ≥ 0.5): 0.83
-  ★ cooperation     = 0.70  (Reciprocal contribution to collective goods)
-    conflict        = 0.50  (Structured regulation of social conflict)
-    distribution    = 0.60  (Resource accessibility for all members)
-  ★ care            = 0.80  (Care for the young and dependent)
-    information     = 0.50  (Information integrity in transmission)
-    sustainability  = 0.40  (Restraint in resource use)
+In the manuscript, \(\mathfrak{A}\) bundles the six functions with:
 
-Proposal vs Conservative:
-  + cooperation       +0.10
-  − conflict          -0.30
-    distribution      +0.10
-  + care              +0.40
-    information        0.00
-  − sustainability    -0.30
-```
+- three threshold **domains** \(T_V^{L1}, T_S^{L1}, T_H^{L1}\) (not the thresholds themselves)
+- the non-compensatory constraints \(C^{L1}\)
+- the situation domain \(S^{dom}\) and required-coverage domain \(S^{req}\)
+- the admissible selection-convention class \(P_A\)
+- the admissible measurement-operator class \(M_A\)
+- the qualifying conditions \(Q = (Q_{-1}, \ldots, Q_{-6})\)
 
-### The Minimum Sufficiency argument
+The library does not expose \(\mathfrak{A}\) as a single class because most users work with **one** architecture at a time. The architecture's components are distributed across:
 
-Why these six and not, say, five or seven? The paper's §6.2 offers two arguments:
+| \(\mathfrak{A}\) component | Where it lives in the library |
+|---|---|
+| \(\mathcal{F}_1\) | `MoralFunction` enum (fixed) |
+| \(T_V^{L1}, T_S^{L1}, T_H^{L1}\) | Validated in `CulturalConfiguration.__post_init__` |
+| \(C^{L1}\) | The `constraint_predicate` you supply to `SituationalJudgment` |
+| \(S^{dom}, S^{req}\) | Implicit in the situations you pass |
+| \(P_A\) | `SelectionConvention` enum (fixed) |
+| \(M_A\) | Validated by `MeasurementOperator` subclasses |
+| \(Q\) | `QualifyingConditions` object |
 
-**Minimality**: remove any one and society fails in the long run.
+When you need to compare architectures explicitly (Chapter 14), the `RetentionistArchitecture` and `AbolitionistArchitecture` classes capture \(C^{L1}\).
 
-**Sufficiency**: the commonly-cited additional problems (identity, religion, innovation, defense, status) are argued to be subsumed under the six or derivative from them.
+### Self-check 4
 
-You don't have to *believe* the argument to use the library. But you should *know* it, so you can reason about whether to extend the set.
-
-### What a profile is *not*
-
-A profile is **not a moral verdict**. It is a *description* of how well a state realizes the six functions. Whether a state with profile $(0.4, 0.4, 0.4, 0.4, 0.4, 0.4)$ is "moral" depends on:
-
-- Whether it's *viable* (Chapter 8).
-- Whether it *flourishes* (Chapter 9).
-- Whether its *trajectory* is stable (Chapter 11).
-
-A profile alone is silent on all three.
-
-### Self-check 4.1
-
-- [ ] Run the script and confirm both profiles print correctly.
-- [ ] Add a seventh function manually to a *copy* of `MORAL_FUNCTION_ORDER` and observe that `MoralFunctionProfile` rejects a 7-element array (the core is fixed to 6).
-- [ ] Compute the Euclidean distance between `proposal` and `conservative`.
-
-### Exercise 4.1
-
-Build a `MoralFunctionProfile` for a "post-scarcity" society where:
-- cooperation and distribution are very high (0.95 each);
-- conflict, care, information are moderate (0.6);
-- sustainability is high because of abundant resources (0.9).
-
-Compare this to the proposal profile above using Euclidean distance.
+- [ ] Run the script.
+- [ ] Explain why \(T_V^{L1}\) is a **domain** (set of admissible values), not a specific value.
 
 ### Paper reference
 
-Section 6 (Functional Necessity Principle), especially §6.2 (Minimal Sufficiency) and §6.3 (Deriving candidate functions).
+Section 6 (functions), Section 7.1 (architecture).
 
 ---
 
-## Chapter 5: Level 2 — Cultural Parameter Configurations
+## Chapter 5: Level 2a — Three Threshold Families
 
 ### Learning objective
 
-Construct, inspect, and validate cultural parameter configurations as Level-2 representations of ethical systems.
+Build each of the three threshold families and understand why they are not interchangeable.
 
-### The core idea
-
-A culture is a **weight vector** $\theta_c \in \mathbb{R}^6_{\geq 0}$, indicating how much importance it assigns to each Level-1 function.
-
-Critically: **a culture never assigns zero weight to any function it wants to survive**. If a culture assigns zero weight to, say, distribution, its members will starve and the culture will collapse (per the Constraint Violation Theorem). The `self_regarding` type in the library is deliberately degenerate for this reason — it's a *violating* configuration used to illustrate collapse, not a real culture.
-
-### Building a culture from scratch
+### The three families
 
 ```python
-# experiments/ch05_cultures.py
-"""Chapter 5: Building cultural parameter configurations."""
-
-import numpy as np
-from mctev.core.cultural_params import (
-    CulturalParameters,
-    CulturalParametersRegion,
-    CULTURAL_TYPES,
+# experiments/ch05_three_families.py
+from mctev.core.thresholds import (
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
+    ThresholdFamilies,
 )
-from mctev.core.moral_functions import MORAL_FUNCTION_ORDER
+from mctev.core.moral_functions import MoralFunction
 
-# ---- Build a culture "Nordic Social Democracy" ----
-# Emphasis: equality, care, sustainability
-nordic = CulturalParameters.from_dict(
-    {
-        "cooperation":    0.20,
-        "conflict":       0.10,
-        "distribution":   0.30,
-        "care":           0.20,
-        "information":    0.10,
-        "sustainability": 0.10,
-    },
-    name="nordic_social_democracy",
+# ---- τ^V — dynamical viability thresholds ----
+tau_V = ViabilityThresholds.from_dict({
+    "cooperation":    0.40,
+    "conflict":       0.30,
+    "distribution":   0.35,
+    "care":           0.30,
+    "information":    0.30,
+    "sustainability": 0.25,
+})
+print("τ^V (dynamical viability):", tau_V.as_dict())
+
+# ---- τ^S — safeguard thresholds ----
+tau_S = SafeguardThresholds.from_dict({
+    "error_rate":  0.05,   # wrongful-conviction rate threshold
+    "disparity":   0.10,   # discrimination threshold
+    "consistency": 0.80,   # non-arbitrariness threshold
+})
+print("τ^S (safeguard):", tau_S.as_dict())
+
+# ---- τ^H — flourishing thresholds ----
+tau_H = FlourishingThresholds.from_dict({
+    "W": 0.50,
+    "P": 0.50,
+    "A": 0.60,   # agency is set higher
+    "S": 0.50,
+    "M": 0.50,
+})
+print("τ^H (flourishing):", tau_H.as_dict())
+
+# ---- Container ----
+families = ThresholdFamilies(
+    viability=tau_V, safeguard=tau_S, flourishing=tau_H,
 )
-print(nordic)
-print(f"Sum of weights: {nordic.weights.sum():.2f}")
-
-# ---- Build a second culture "Liberal Market" ----
-liberal_market = CulturalParameters.from_dict(
-    {
-        "cooperation":    0.20,
-        "conflict":       0.15,
-        "distribution":   0.20,
-        "care":           0.10,
-        "information":    0.25,
-        "sustainability": 0.10,
-    },
-    name="liberal_market",
-)
-
-# ---- Compare them ----
-print(f"\nDistance: {nordic.distance(liberal_market):.3f}")
-
-# Per-dimension diff
-nordic_arr = nordic.weights
-lm_arr = liberal_market.weights
-print("\nPer-dimension difference (nordic − liberal):")
-for f, d in zip(MORAL_FUNCTION_ORDER, nordic_arr - lm_arr):
-    print(f"  {f.value:15s}  {d:+.3f}")
-
-# ---- Validate against a viable region ----
-region = CulturalParametersRegion(
-    lower=np.array([0.05]*6),
-    upper=np.array([0.40]*6),
-)
-print(f"\nNordic is viable: {region.contains(nordic)}")
-print(f"Liberal is viable: {region.contains(liberal_market)}")
+print("\nAll three families:")
+for family, values in families.as_dict().items():
+    print(f"  {family}: {values}")
 ```
 
-### Expected output
+### Why the families are structurally distinct
 
-```
-CulturalParameters(name='nordic_social_democracy', cooperation=0.20, conflict=0.10, distribution=0.30, care=0.20, information=0.10, sustainability=0.10)
-Sum of weights: 1.00
+Consider the **wrongful-conviction rate threshold** `error_rate = 0.05`.
 
-Distance: 0.150
+- It is a **safeguard** τ^S. It gates whether the *action* "execute" is admissible in *a specific case*.
+- It is **not** a viability threshold τ^V. A society is not unviable because its error rate is high; only the *action* is inadmissible.
+- It is **not** a flourishing threshold τ^H. Flourishing doesn't require anything about error rates; those depend on the *institution's* procedural reliability, not on the state's flourishing.
 
-Per-dimension difference (nordic − liberal):
-  cooperation      +0.000
-  conflict         -0.050
-  distribution     +0.100
-  care             +0.100
-  information      -0.150
-  sustainability   +0.000
+If you used `error_rate = 0.05` as a **viability** threshold, you would be claiming that a society becomes non-viable when its error rate exceeds 5%. That is a category error.
 
-Nordic is viable: True
-Liberal is viable: True
-```
+The library enforces the distinction by using three different classes. You cannot accidentally pass `SafeguardThresholds` where `ViabilityThresholds` is expected.
 
-### The Level-1/Level-2 boundary
+### Self-check 5
 
-The most important thing to internalize: **a culture's weights are Level 2; the existence of the functions they weight is Level 1.**
-
-Concretely:
-
-| Question | Level | Library object |
-|----------|-------|----------------|
-| Does Nordic society value care? | Level 2 | `nordic["care"] = 0.20` |
-| Does *any* viable society need care? | Level 1 | `MoralFunction.REPRODUCTION_CARE in MORAL_FUNCTION_ORDER` |
-| How does Nordic society resolve a care-vs-autonomy conflict in a specific case? | Level 3 | `solver.judge(...)` with `params=nordic` |
-
-### The four canonical types
-
-For convenience the library ships with four canonical types:
-
-```python
-for name, params in CULTURAL_TYPES.items():
-    print(f"{name:15s}  {params.normalized().to_dict()}")
-```
-
-### Self-check 5.1
-
-- [ ] Run the script; verify both cultures sum to 1.
-- [ ] Compute `nordic.normalized().distance(liberal_market.normalized())` — does it change?
-- [ ] Add a third culture "Confucian-heritage" with weights emphasizing care (0.30) and information (0.25). Verify it's viable.
+- [ ] Run the script; verify all three families print correctly.
+- [ ] Try `ViabilityThresholds.from_dict({"error_rate": 0.05})` — this should fail because `error_rate` is not a `MoralFunction`.
+- [ ] Try to construct a `CulturalConfiguration` that puts `SafeguardThresholds` in the `viability_thresholds` slot — this should fail at construction.
 
 ### Exercise 5.1
 
-Design a culture whose parameter vector places **equal weight on all six functions** (uniform). Then design a culture that places **twice as much weight on care as on any other function**. Compute their distance.
+Design a `SafeguardThresholds` with three safeguards: `error_rate`, `disparity`, `procedural_integrity`. Then design a `ViabilityThresholds` with all six functions set at 0.3. Verify that the two objects cannot be swapped in a `CulturalConfiguration` (they'll raise a `TypeError`).
 
 ### Paper reference
 
-Section 6 (Functional Necessity), Section 7 (Level 1/Level 2 distinction), Section 7.3 (table of Level-1 functions and Level-2 implementations).
+Section 7.1.
 
 ---
 
-## Chapter 6: Level 3 — Situational Judgments
+## Chapter 6: Level 2b — The Full Configuration λ_c
 
 ### Learning objective
 
-Build a situational judgment solver that handles real-world trade-offs, constraints, and context-sensitivity.
+Build and validate a `CulturalConfiguration` with all six components.
 
-### The core formula
-
-$$
-j(s; \theta_c) = \arg\max_{a \in \mathcal{A}} \sum_{f} \theta_{c,f} \cdot u_f(a, s)
-\quad \text{subject to} \quad a \in \mathcal{C}(s)
-$$
-
-Read this carefully:
-
-- $u_f(a, s)$ is *how much action $a$ contributes to function $f$ in situation $s$*.
-- $\theta_{c,f}$ is *how much culture $c$ cares about function $f$*.
-- The sum is the *culture-weighted utility of action $a$*.
-- The $\arg\max$ picks the action that maximizes this sum, subject to the constraint set.
-
-This is the entire computational content of Level 3.
-
-### A realistic example: Whistleblowing
-
-An employee discovers that their company is polluting a river. They have three actions:
-
-- `a_silent`: Say nothing. Protects job, but the pollution continues.
-- `a_internal`: Report to management. Moderate risk, moderate impact.
-- `a_leak`: Leak to the press. High impact, high personal cost.
-
-Different cultures will weigh these actions differently.
+### The full construction
 
 ```python
-# experiments/ch06_whistleblowing.py
-"""Chapter 6: Whistleblowing through the MCTEV lens."""
+# experiments/ch06_full_config.py
+import numpy as np
 
-from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.core.situational import Action, Situation, SituationalJudgment
-
-# ---- Define the situation ----
-situation = Situation(
-    name="river pollution discovery",
-    context={"severity": "high", "reversible": False},
+from mctev.core.configuration import CulturalConfiguration, default_configuration
+from mctev.core.thresholds import (
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
 )
+from mctev.core.selection import SelectionConvention
+from mctev.core.measurement import LinearMeasurement
 
-actions = [
-    Action("a_silent",   payload={"whistle": 0.0, "sustainability": 0.0, "info": 0.0}),
-    Action("a_internal", payload={"whistle": 0.5, "sustainability": 0.4, "info": 0.5}),
-    Action("a_leak",     payload={"whistle": 1.0, "sustainability": 0.9, "info": 1.0}),
-]
-
-# ---- Level 1: per-function utilities ----
-lib = MoralUtilityLibrary()
-
-# cooperation: how much does the action preserve the social contract?
-lib[MoralFunction.COOPERATION] = lambda a, s: float(a.payload["whistle"])
-
-# conflict management: does the action use established channels?
-lib[MoralFunction.CONFLICT_MANAGEMENT] = (
-    lambda a, s: 1.0 - float(a.payload["whistle"])  # internal channels preferred
+# ---- Explicit construction ----
+config = CulturalConfiguration(
+    weights=np.array([0.30, 0.20, 0.20, 0.15, 0.10, 0.05]),
+    viability_thresholds=ViabilityThresholds.uniform(0.30),
+    safeguard_thresholds=SafeguardThresholds.from_dict({
+        "error_rate": 0.05,
+        "disparity":  0.10,
+    }),
+    flourishing_thresholds=FlourishingThresholds.uniform(0.50),
+    selection_convention=SelectionConvention.STATUS_QUO,
+    measurement_operator=LinearMeasurement(to_core=lambda x: np.asarray(x)[:5]),
+    name="universalist",
 )
-
-# distribution: does the action help those affected by pollution?
-lib[MoralFunction.RESOURCE_DISTRIBUTION] = (
-    lambda a, s: float(a.payload["sustainability"])
-)
-
-# care: does the action protect the vulnerable?
-lib[MoralFunction.REPRODUCTION_CARE] = (
-    lambda a, s: float(a.payload["whistle"])
-)
-
-# information integrity: does the action surface truth?
-lib[MoralFunction.KNOWLEDGE_TRANSMISSION] = (
-    lambda a, s: float(a.payload["info"])
-)
-
-# sustainability: does the action stop the pollution?
-lib[MoralFunction.SUSTAINABILITY] = (
-    lambda a, s: float(a.payload["sustainability"])
-)
-
-# ---- Level 3: rank for each culture ----
-solver = SituationalJudgment(utilities=lib)
-
-print(f"{'Culture':15s}  {'Best':12s}  Scores")
-print("-" * 65)
-for name, params in CULTURAL_TYPES.items():
-    ranking = solver.rank(situation, actions, params)
-    best = ranking[0][1].name if ranking else "none"
-    scores = "  ".join(f"{a.name}={v:+.2f}" for v, a in ranking)
-    print(f"{name:15s}  {best:12s}  {scores}")
+print(config)
+print()
+print("Full configuration as dict:")
+import json
+print(json.dumps(config.to_dict(), indent=2))
 ```
 
-### Expected output
+Expected output:
 
 ```
-Culture          Best          Scores
------------------------------------------------------------------
-universalist     a_leak        a_leak=+0.79  a_internal=+0.42  a_silent=+0.06
-collectivist     a_leak        a_leak=+0.79  a_internal=+0.46  a_silent=+0.06
-individualist    a_internal    a_internal=+0.58  a_leak=+0.55  a_silent=+0.06
-self_regarding   a_leak        a_leak=+0.80  a_internal=+0.40  a_silent=+0.00
+CulturalConfiguration(name='universalist', weights=[0.3, 0.2, 0.2, 0.15, 0.1, 0.05], ρ=status_quo)
+
+Full configuration as dict:
+{
+  "name": "universalist",
+  "weights": {
+    "cooperation": 0.3,
+    "conflict": 0.2,
+    "distribution": 0.2,
+    "care": 0.15,
+    "information": 0.1,
+    "sustainability": 0.05
+  },
+  "viability_thresholds": {...},
+  "safeguard_thresholds": {"error_rate": 0.05, "disparity": 0.1},
+  "flourishing_thresholds": {...},
+  "selection_convention": "status_quo",
+  "measurement_operator": "LinearMeasurement"
+}
 ```
 
-**Interpretation**: All cultures prefer action to silence (good — this is Level-1 convergence). But *which* action differs:
+### Simplex validation
 
-- `universalist` and `collectivist` prefer leaking to the press.
-- `individualist` prefers internal reporting (values conflict management as a legitimate channel).
-- `self_regarding` also prefers leaking, but for different reasons (it weights whistle-blowing as cooperation).
-
-This is a **structured disagreement**: everyone is in the viable region, everyone prefers *action* over inaction, but implementations differ. This is exactly what MCTEV predicts.
-
-### Adding constraints
-
-Constraints filter out inadmissible actions *before* utility evaluation.
+`CulturalConfiguration` enforces the **simplex normalization** condition from the manuscript (Section 7.2):
 
 ```python
-# Rule: never leak when internal channels are available
-def no_leak_if_internal(situation, action):
-    return action.name != "a_leak" or situation.context.get("channels", True) is False
+# weights must sum to 1
+try:
+    bad = CulturalConfiguration(
+        weights=np.array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0]),  # sums to 6
+        ...
+    )
+except ValueError as e:
+    print(f"Rejected: {e}")
+# Rejected: Weights must sum to 1 (simplex normalization); got sum = 6.0
+```
 
-solver_constrained = SituationalJudgment(
-    utilities=lib,
-    constraints=no_leak_if_internal,
+### The convenience constructor
+
+`default_configuration` fills sensible defaults:
+
+```python
+config2 = default_configuration(
+    name="collectivist",
+    weights=[0.25, 0.15, 0.15, 0.30, 0.10, 0.05],
+    selection=SelectionConvention.PRECEDENT,
 )
-
-print("\nWith constraint 'no leak if internal channels available':")
-for name, params in CULTURAL_TYPES.items():
-    best = solver_constrained.judge(situation, actions, params)
-    print(f"  {name:15s}  → {best.name if best else 'no admissible action'}")
+print(config2)
 ```
 
-### Expected output
+### Self-check 6
 
-```
-With constraint 'no leak if internal channels available':
-  universalist     → a_internal
-  collectivist     → a_internal
-  individualist    → a_internal
-  self_regarding   → a_silent
-```
-
-**Notice the interesting shift**: when the constraint applies, three cultures now converge on `a_internal`. This is because the constraint *removes* the option that three cultures would otherwise choose. But `self_regarding` picks `a_silent` because its remaining options are dominated by conflict-management utility, which it weights at 0.
-
-**Constraint semantics matter**: A constraint is not just a filter; it *reshapes* the decision problem. Constraints are how deontological rules interact with consequentialist weighting in MCTEV.
-
-### Self-check 6.1
-
-- [ ] Run both scripts. Verify the rankings.
-- [ ] Add a fourth action `a_quit` (resign, do nothing to fix the problem but protect yourself).
-- [ ] Set a constraint that `a_quit` is not admissible. Re-run.
+- [ ] Run the script; verify the dict output.
+- [ ] Change `weights` to a non-normalized vector; verify the error message.
+- [ ] Add a `safeguard_values` argument with two safeguards; verify both appear in the dict.
 
 ### Exercise 6.1
 
-The whistleblowing example assumes that `a_leak` is high-risk. Modify the `Situation` context to add a `"regime": "authoritarian"` field where leaking to the press carries extreme personal risk. Add a `care` utility that penalizes personal risk. Re-run and observe how the rankings change.
+Construct two configurations:
+1. `strict_retentionist`: `safeguard_values={"error_rate": 0.001}`
+2. `permissive_retentionist`: `safeguard_values={"error_rate": 0.20}`
+
+Show that the two configurations differ **only** in the safeguard threshold, not in weights, viability thresholds, or flourishing thresholds. This is the "configuration-specific non-vacuity" scenario of Section 12.3.
 
 ### Paper reference
 
-Section 7.4 (Level 3 definition), Section 6.1 (constraint formula), Section 12 (Level-2 disagreement).
+Section 7.2.
 
 ---
 
-## Chapter 7: Bringing the Levels Together
+## Chapter 7: Level 2c — Selection Conventions and Measurement Operators
 
 ### Learning objective
 
-Use `MCTEVSystem` to compose all three levels into one coherent object, and understand the discipline it enforces.
+Master the two "policy-like" components of λ_c.
 
-### Why a `MCTEVSystem`?
+### Selection conventions ρ_c
 
-You've been managing utilities, parameters, and solvers as separate objects. That works, but it doesn't *enforce* the level structure. A `MCTEVSystem` bundles them:
-
-```python
-from mctev.core.hierarchy import MCTEVSystem
-
-system = MCTEVSystem(
-    cultural_params=my_culture,
-    utilities=my_library,
-    constraints=my_constraint,
-    viable_region=my_region,
-)
-```
-
-The advantage: `system.is_viable()` checks Level-2 viability, `system.judge(...)` computes Level-3 judgment, and `system.describe()` gives a full snapshot.
-
-### A complete example
+The judgment correspondence J(s; A, λ_c) may have multiple maximizers. The **selection convention ρ_c** resolves ties.
 
 ```python
-# experiments/ch07_full_system.py
-"""Chapter 7: A complete MCTEV system."""
-
-import numpy as np
-from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CulturalParameters, CulturalParametersRegion
+# experiments/ch07_selection.py
+from mctev.core.selection import SelectionConvention, select_action
 from mctev.core.situational import Action, Situation
-from mctev.core.hierarchy import MCTEVSystem
 
-# ---- Level 1: utilities ----
-lib = MoralUtilityLibrary()
-lib[MoralFunction.COOPERATION] = lambda a, s: float(a.payload)
-lib[MoralFunction.REPRODUCTION_CARE] = lambda a, s: 1.0 - abs(float(a.payload) - 0.5) * 2
-lib[MoralFunction.RESOURCE_DISTRIBUTION] = lambda a, s: 1.0 - abs(float(a.payload) - 0.5) * 2
+# Five maximizers (a tie)
+maximizers = [Action("a"), Action("b"), Action("c")]
+situation = Situation("tie-break", {"status_quo": "b"})
 
-# ---- Level 2: culture and region ----
-culture = CulturalParameters.from_dict(
-    {
-        "cooperation":    0.30,
-        "conflict":       0.15,
-        "distribution":   0.25,
-        "care":           0.15,
-        "information":    0.10,
-        "sustainability": 0.05,
-    },
-    name="balanced_social",
+# Convention 1: status_quo — choose the status-quo action if it maximizes
+chosen = select_action(
+    convention=SelectionConvention.STATUS_QUO,
+    maximizers=maximizers, situation=situation,
 )
+print(f"STATUS_QUO: {chosen.name}")  # 'b'
 
-region = CulturalParametersRegion(
-    lower=np.array([0.05, 0.05, 0.05, 0.05, 0.05, 0.02]),
-    upper=np.array([0.40, 0.30, 0.40, 0.35, 0.25, 0.20]),
+# Convention 2: precedent — choose closest to previous
+chosen = select_action(
+    convention=SelectionConvention.PRECEDENT,
+    maximizers=maximizers, situation=situation,
+    previous_action=Action("c"),
 )
+print(f"PRECEDENT: {chosen.name}")  # 'c'
 
-# ---- Level 3: constraints ----
-def min_share(situation, action):
-    """No individual gets less than 20%."""
-    return float(action.payload) >= 0.2
-
-# ---- Compose ----
-system = MCTEVSystem(
-    cultural_params=culture,
-    utilities=lib,
-    constraints=min_share,
-    viable_region=region,
+# Convention 3: minimum_intervention — choose smallest payload
+payload_actions = [
+    Action("a", 0.5), Action("b", 0.1), Action("c", 0.9),
+]
+chosen = select_action(
+    convention=SelectionConvention.MINIMUM_INTERVENTION,
+    maximizers=payload_actions, situation=situation,
 )
+print(f"MINIMUM_INTERVENTION: {chosen.name}")  # 'b'
 
-print(system.describe())
+# Convention 4: lexicographic
+chosen = select_action(
+    convention=SelectionConvention.LEXICOGRAPHIC,
+    maximizers=maximizers, situation=situation,
+    lexicographic_key=lambda a: a.name,
+)
+print(f"LEXICOGRAPHIC: {chosen.name}")  # 'a'
 
-# ---- Evaluate ----
-situation = Situation("resource allocation")
-actions = [Action("tight", 0.1), Action("moderate", 0.4), Action("loose", 0.7)]
-
-best = system.judge(situation, actions)
-print(f"\nBest action: {best.name}")
-print(f"All rankings: {system.situational_layer().rank(situation, actions, culture)}")
+# Convention 5: random
+import numpy as np
+rng = np.random.default_rng(42)
+chosen = select_action(
+    convention=SelectionConvention.RANDOM,
+    maximizers=maximizers, situation=situation, rng=rng,
+)
+print(f"RANDOM: {chosen.name}")  # varies with seed
 ```
 
-### Expected output
+**Why ρ_c is separate from θ_c**: two cultures could share the same weights but differ in how they break ties. The selection convention is a **separate policy choice** at Level 2. It is not a moral weight; it is a **procedural commitment**.
 
+### Measurement operators M_c
+
+The measurement operator maps a state x to observed flourishing indicators Ĥ_c(x). It is the Level-2 component that operationalizes flourishing.
+
+```python
+# experiments/ch07_measurement.py
+import numpy as np
+from mctev.core.measurement import (
+    LinearMeasurement, validate_cross_context_comparability,
+)
+
+# Identity measurement
+identity = LinearMeasurement(to_core=lambda x: np.asarray(x)[:5])
+state = np.array([0.7, 0.6, 0.55, 0.8, 0.65, 0.5])
+print(f"Identity measurement: {identity.measure(state)}")
+
+# Nonlinear measurement (monotone transform on agency)
+agency_boosted = LinearMeasurement(
+    to_core=lambda x: np.asarray(x)[:5],
+    monotone_transforms={2: lambda v: v ** 0.7},  # agency more generous
+)
+print(f"Agency-boosted: {agency_boosted.measure(state)}")
+
+# Cross-context comparability check (Section 8.2)
+# Without anchors/linking, they are NOT comparable
+report = validate_cross_context_comparability(identity, agency_boosted)
+print(f"Without anchors: {report}")
+# {'comparable': False, 'mechanism': 'unavailable'}
+
+# With anchor states, they may be comparable
+anchors = [np.array([0.5]*6), np.array([0.7]*6)]
+report = validate_cross_context_comparability(
+    identity, agency_boosted, anchor_states=anchors,
+)
+print(f"With anchors: {report}")
+# {'comparable': True/False, 'mechanism': 'anchors', 'mean_discrepancy': ...}
 ```
-MCTEVSystem(name='balanced_social')
-  viable: True
-  params: {'cooperation': 0.30, 'conflict': 0.15, 'distribution': 0.25, 'care': 0.15, 'information': 0.10, 'sustainability': 0.05}
 
-Best action: moderate
-All rankings: [(...), ...]
-```
+**Why M_c matters**: In the manuscript (§8.2), a cultural context **cannot** lower its flourishing thresholds below the architecture's admissible range, nor can it select a measurement operator that reverses the ordering of states. Without the validity checks, a context could game the flourishing classification by choosing a biased measurement operator.
 
-### The discipline it enforces
+### Self-check 7
 
-Notice what `MCTEVSystem` **cannot** do:
-
-- It cannot compute a judgment without a `cultural_params` — Level 2 is required.
-- It cannot compute a judgment without `utilities` — Level 1 is required.
-- It cannot claim viability without a `viable_region` — Level 2 evaluation is explicit.
-
-This is structural enforcement of the paper's claim that **Level 1 constrains Level 2, which constrains Level 3**. You can't skip levels.
-
-### Self-check 7.1
-
-- [ ] Construct a `MCTEVSystem` with the `self_regarding` culture and the **same** region. Is it viable?
-- [ ] Use `describe()` to verify the region check.
-- [ ] Change the region's `lower` bounds to `[0.10]*6` and re-check viability.
+- [ ] Run both scripts.
+- [ ] Verify that `STATUS_QUO` picks `b` when `status_quo="b"`.
+- [ ] Verify that without anchors, cross-context comparability is `"unavailable"`.
 
 ### Exercise 7.1
 
-Design a `MCTEVSystem` where:
-1. The culture is `collectivist`.
-2. The utilities penalize any action with `payload < 0.3` (a "minimal decency" floor).
-3. The viable region requires cooperation weight ≥ 0.20.
-
-Verify it's viable, then change the culture to `self_regarding` and verify it's *not* viable.
+Design a `MeasurementOperator` subclass that: (a) applies a monotone transform on all five dimensions, (b) adds Gaussian noise with `noise_std=0.05`. Test its within-context monotonicity using `operator.within_context_monotone`.
 
 ### Paper reference
 
-Section 7.6 (why Level 1 constrains but doesn't determine), Section 9 (persistence vs flourishing).
+Sections 7.4 (selection), 8.2 (measurement).
+
+---
+
+## Chapter 8: Level 3 — Situational Judgments with A(s)
+
+### Learning objective
+
+Use **situation-dependent action sets** and understand the full judgment pipeline.
+
+### What changed since v0.1.0
+
+In v0.1.0, `SituationalJudgment` accepted a static list of `Action`s. In v0.2.0, the action set is **situation-dependent**: \(\mathcal{A}(s)\), not \(\mathcal{A}\).
+
+The library supports this by letting you pass **any iterable of actions** — you build \(\mathcal{A}(s)\) from the situation as you like.
+
+```python
+# experiments/ch08_dynamic_actions.py
+from mctev.core.configuration import default_configuration
+from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
+from mctev.core.situational import Action, Situation, SituationalJudgment
+
+
+def action_generator(situation: Situation):
+    """Build A(s) from the situation context."""
+    budget = situation.context.get("budget", 10)
+    return [
+        Action("small",  0.2 * budget),
+        Action("medium", 0.5 * budget),
+        Action("large",  0.8 * budget),
+    ]
+
+
+lib = MoralUtilityLibrary()
+lib[MoralFunction.COOPERATION] = lambda a, s: float(a.payload) / 10.0
+
+config = default_configuration(
+    name="universalist",
+    weights=[0.30, 0.20, 0.20, 0.15, 0.10, 0.05],
+)
+
+solver = SituationalJudgment(utilities=lib)
+
+for budget in [10, 100]:
+    situation = Situation("alloc", {"budget": budget})
+    actions = action_generator(situation)
+    print(f"\nBudget {budget}: A(s) = {[a.name for a in actions]}")
+    best = solver.judge(situation, actions, config)
+    print(f"Selected: {best.name}")
+```
+
+### The full pipeline (formally)
+
+For each situation s:
+
+1. **Build A(s)** — situation-dependent action set.
+2. **Filter by C(s; A, τ^S)** — apply safeguard constraints (from `config.safeguard_thresholds`).
+3. **Compute J(s; A, λ_c)** — argmax over A(s) ∩ C(s; A, τ^S) of Σ_f θ_{c,f} · u_f(a, s).
+4. **Apply σ_{ρ_c}** — resolve ties via the selection convention.
+
+Each step corresponds to a method:
+
+```python
+# 1. A(s) built by user
+actions = action_generator(situation)
+
+# 2. C(s; A, τ^S) applied
+admissible = solver.admissible_actions(actions, situation, config)
+
+# 3. J(s; A, λ_c) — full correspondence
+J = solver.correspondence(situation, actions, config)
+
+# 4. σ_{ρ_c}(J) — final action
+selected = solver.judge(situation, actions, config)
+```
+
+### Constraints that read τ^S
+
+The constraint predicate should **inspect config.safeguard_thresholds**:
+
+```python
+def make_safeguard_constraint(situation, action, config):
+    """Example: gate 'execute' on the error-rate safeguard."""
+    if action.name != "execute":
+        return True
+    tau_error = config.safeguard_thresholds.get("error_rate", 0.05)
+    observed_error = situation.context.get("observed_error_rate", 0.0)
+    return observed_error <= tau_error
+
+
+solver_with_constraints = SituationalJudgment(
+    utilities=lib, constraints=make_safeguard_constraint,
+)
+```
+
+The constraint predicate receives **(situation, action, configuration)**. This gives it access to τ^S while keeping τ^V and τ^H out of the action-level decision (they act on state viability and flourishing, not on actions).
+
+### Self-check 8
+
+- [ ] Run the script; verify that A(s) scales with budget.
+- [ ] Add a safeguard constraint that filters on `error_rate`; verify that only admissible actions are considered.
+
+### Exercise 8.1
+
+Write an `action_generator` that returns different actions for different `situation.context["role"]` values (e.g., "doctor", "administrator", "patient"). Show that the correspondence J changes across roles even when the configuration λ_c and utilities are held fixed. This demonstrates Level-3 situational variation.
+
+### Paper reference
+
+Sections 7.4.
 
 ---
 
 # Part III — Evaluation Layer
 
-## Chapter 8: The Feasible Moral Region
+## Chapter 9: The Controlled Viability Region
 
 ### Learning objective
 
-Understand the feasibility kernel, compute it for a given culture, and reason about what it means.
+Compute the controlled viability kernel \(\mathcal{R}(\lambda_c; \Pi)\) using the viability thresholds τ^V.
 
-### What "feasible" means
-
-A state $\mathbf{x}$ is **feasible** if there exists a policy that keeps the society viable *forever* starting from $\mathbf{x}$. Feasibility is not the same as *current* viability — it's a statement about the *future*.
-
-Formally:
-
-$$
-\mathcal{R} = \text{Viab}(\mathcal{V}, F)
-= \left\{\mathbf{x}_0 : \exists \pi, \; \mathbf{x}(t) \in \mathcal{V} \; \forall t \geq 0\right\}
-$$
-
-Three things go into this:
-1. The **constraint set** $\mathcal{V} = \{V_i(\mathbf{x}) \geq \tau_i\}$.
-2. The **dynamics** $F(\mathbf{x}, \theta_c)$.
-3. The **existence of a policy** $\pi$ that keeps the trajectory viable.
-
-### Computing the kernel
+### The setup
 
 ```python
-# experiments/ch08_viability_kernel.py
-"""Chapter 8: Computing and interpreting the viability kernel."""
-
+# experiments/ch09_viability_kernel.py
 import numpy as np
-import matplotlib.pyplot as plt
-
+from mctev.core.configuration import default_configuration
+from mctev.core.thresholds import ViabilityThresholds
 from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics, NonlinearCouplingDynamics
-from mctev.viability.kernel import compute_viable_region
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.analysis.visualization import plot_viability_grid
-from experiments.plot_style import apply_style
-
-apply_style()
-
-# ---- Compare kernels across cultures ----
-dynamics = LinearDynamics()
-constraints = default_constraints()
-
-kernels = {}
-for name in ["universalist", "collectivist", "individualist", "self_regarding"]:
-    kernels[name] = compute_viable_region(
-        constraints=constraints,
-        dynamics=dynamics,
-        params=CULTURAL_TYPES[name],
-        grid_size=5,
-        horizon=100,
-    )
-    frac = kernels[name].fraction_viable()
-    print(f"{name:15s}  viable fraction = {frac:.2%}")
-
-# ---- Visualize universalist kernel ----
-fig = plt.figure(figsize=(6, 5))
-plot_viability_grid(kernels["universalist"], axes=(0, 2))
-plt.savefig("outputs/ch08_kernel_universalist.png")
-print("\nSaved outputs/ch08_kernel_universalist.png")
-```
-
-### Expected output
-
-```
-universalist      viable fraction = 21.83%
-collectivist      viable fraction = 18.92%
-individualist     viable fraction = 16.41%
-self_regarding    viable fraction = 3.12%
-
-Saved outputs/ch08_kernel_universalist.png
-```
-
-### Interpreting the numbers
-
-- **Universalist**: broadest viable kernel (21.83% of state space). Its balanced weights give the widest basin of attraction to viability.
-- **Collectivist**: slightly narrower, because heavy care weighting pulls dynamics toward care-indicators at the expense of cooperation.
-- **Individualist**: narrower still, because individualist weights favor information-transmission indicators, which decay faster.
-- **Self-regarding**: collapses to 3.12% because its degenerate weights (only cooperation) cannot sustain the other five functions.
-
-**Key insight**: the kernel size is a *quantitative* measure of cultural robustness. A culture with a broader kernel is more robust to perturbation.
-
-### What determines the kernel?
-
-Three things:
-
-1. **Constraints**: tighter constraints shrink the kernel.
-2. **Dynamics**: faster decay shrinks the kernel.
-3. **Cultural parameters**: unbalanced weights shrink the kernel.
-
-### Experiment: how does the kernel depend on the constraint threshold?
-
-```python
-# experiments/ch08_threshold_sweep.py
-"""Chapter 8: How does viability depend on the constraint threshold?"""
-
-import numpy as np
-from mctev.viability.constraints import ViabilityConstraints
 from mctev.viability.dynamics import LinearDynamics
 from mctev.viability.kernel import compute_viable_region
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.core.moral_functions import MORAL_FUNCTION_ORDER
 
+# Configuration with τ^V
+config = default_configuration(name="universalist")
+print(f"τ^V: {config.viability_thresholds.as_dict()}")
+
+# Constraints use τ^V
+constraints = default_constraints(thresholds=config.viability_thresholds)
+
+# Dynamics
 dynamics = LinearDynamics()
-results = []
 
-for tau in [0.10, 0.20, 0.30, 0.40, 0.50]:
-    constraints = ViabilityConstraints()
-    for i, f in enumerate(MORAL_FUNCTION_ORDER):
-        constraints[f] = (lambda x, i=i: float(x[i]), tau)
-    kernel = compute_viable_region(
-        constraints=constraints,
-        dynamics=dynamics,
-        params=CULTURAL_TYPES["universalist"],
-        grid_size=4,
-        horizon=80,
-    )
-    results.append((tau, kernel.fraction_viable()))
-    print(f"tau={tau:.2f}  viable_fraction = {results[-1][1]:.2%}")
+# Kernel computation
+kernel = compute_viable_region(
+    constraints=constraints,
+    dynamics=dynamics,
+    configuration=config,
+    grid_size=5,
+    horizon=100,
+)
+print(f"Fraction viable: {kernel.fraction_viable():.2%}")
+# Fraction viable: ~15-25% depending on random seed
 ```
 
-### Expected output
+### Naming: "controlled viability region"
 
-```
-tau=0.10  viable_fraction = 55.22%
-tau=0.20  viable_fraction = 39.11%
-tau=0.30  viable_fraction = 21.83%
-tau=0.40  viable_fraction = 8.90%
-tau=0.50  viable_fraction = 2.71%
-```
+The set \(\mathcal{R}(\lambda_c; \Pi)\) is a **controlled viability kernel**, not "the set of morally permissible states." The manuscript (§7.5) renamed this section accordingly. It is:
 
-**Interpretation**: as the constraint threshold rises, the viability kernel shrinks rapidly. This is why MCTEV allows threshold *calibration* — the exact thresholds are an empirical question (paper §18.1.4).
+- **Relative** to τ^V (state viability).
+- **Relative** to Π (stationary feedback-policy class).
+- **Not** the whole of moral assessment (safeguards, flourishing, rights are handled separately).
 
-### Self-check 8.1
-
-- [ ] Run the script; verify the ordering.
-- [ ] Change dynamics to `NonlinearCouplingDynamics()` and re-run. Are the orderings preserved?
-- [ ] Reduce `grid_size` to 3 and re-run. How much does the estimate change?
-
-### Exercise 8.1
-
-Determine which *single* functional constraint is most restrictive for the universalist culture. Do this by, for each of the 6 functions, keeping the other 5 thresholds at 0.1 and setting one threshold to 0.5. Report the viable fraction for each. Which function's threshold most affects the kernel?
-
-### Paper reference
-
-Section 7.5 (formal derivation of $\mathcal{R}$), Section 10 (why the kernel underlies collapse prediction).
-
----
-
-## Chapter 9: Human Flourishing
-
-### Learning objective
-
-Assess flourishing, decompose deficits into specific dimensions, and reason about its relationship to viability.
-
-### The five dimensions
-
-$$
-H(\mathbf{x}) = (W(\mathbf{x}), P(\mathbf{x}), A(\mathbf{x}), S(\mathbf{x}), M(\mathbf{x}))
-$$
-
-- **W**: Wellbeing — health, material security, absence of pain.
-- **P**: Psychological functioning — positive affect, resilience, cognitive function.
-- **A**: Agency — capacity to set and pursue goals.
-- **S**: Social connectedness — quality of relationships, belonging.
-- **M**: Meaning — sense of purpose, coherence.
-
-A society flourishes iff all five dimensions exceed their thresholds:
-
-$$
-H(\mathbf{x}) \geq \tau_H
-$$
-
-### A diagnostic example
+### Comparing configurations
 
 ```python
-# experiments/ch09_flourishing.py
-"""Chapter 9: Assessing flourishing."""
+# experiments/ch09_compare.py
+from mctev.core.configuration import default_configuration
+from mctev.viability.constraints import default_constraints
+from mctev.viability.dynamics import LinearDynamics
+from mctev.viability.kernel import compute_viable_region
 
-import numpy as np
-import matplotlib.pyplot as plt
-
-from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
-    DIMENSIONS,
-    DIMENSION_NAMES,
-)
-from mctev.analysis.visualization import plot_flourishing_radar
-from experiments.plot_style import apply_style
-
-apply_style()
-
-# ---- Three candidate societies ----
-societies = {
-    "post_scarcity": FlourishingProfile.from_dict(
-        {"W": 0.90, "P": 0.85, "A": 0.80, "S": 0.75, "M": 0.70}
+# Two configurations with different τ^V
+configs = {
+    "strict": default_configuration(
+        name="strict", viability_value=0.50,
     ),
-    "authoritarian_stable": FlourishingProfile.from_dict(
-        {"W": 0.75, "P": 0.40, "A": 0.10, "S": 0.20, "M": 0.15}
-    ),
-    "transitional": FlourishingProfile.from_dict(
-        {"W": 0.55, "P": 0.50, "A": 0.55, "S": 0.45, "M": 0.50}
+    "lenient": default_configuration(
+        name="lenient", viability_value=0.20,
     ),
 }
 
-thresholds = FlourishingThresholds.default()   # All 0.5
+dynamics = LinearDynamics()
 
-# ---- Assess each society ----
-print(f"{'Society':22s}  Flourishing?  Deficit  Limiting dims")
-print("-" * 75)
-for name, profile in societies.items():
-    is_flourishing = thresholds.is_flourishing(profile)
-    deficit = thresholds.deficit(profile)
-    limiting = [
-        DIMENSIONS[i] for i, d in enumerate(
-            np.clip(thresholds.thresholds - profile.values, 0, None)
-        ) if d > 0
-    ]
-    print(f"{name:22s}  {str(is_flourishing):12s}  "
-          f"{deficit:7.3f}  {limiting if limiting else 'none'}")
-
-# ---- Radar plots ----
-fig, axes = plt.subplots(1, 3, figsize=(15, 5), subplot_kw=dict(polar=True))
-for ax, (name, profile) in zip(axes, societies.items()):
-    plot_flourishing_radar(profile, thresholds, ax=ax)
-    ax.set_title(name, pad=20)
-plt.savefig("outputs/ch09_flourishing.png")
-print("\nSaved outputs/ch09_flourishing.png")
-```
-
-### Expected output
-
-```
-Society                 Flourishing?  Deficit  Limiting dims
----------------------------------------------------------------------------
-post_scarcity           True           0.000  none
-authoritarian_stable    False          0.600  ['P', 'A', 'S', 'M']
-transitional            False          0.050  ['S']
-```
-
-### The critical distinction
-
-Look at `authoritarian_stable`:
-
-- It **persists** (W = 0.75 means material security is fine).
-- It **does not flourish** (A, S, M are all far below threshold).
-
-This is the case the paper (§9) addresses: a dictatorship can be viable but not moral. Persistence alone is not enough.
-
-### Combining with viability
-
-Flourishing alone is not enough either. A society might flourish *in the short term* but be non-viable (its dynamics drive it out of $\mathcal{R}$). Morality requires both:
-
-$$
-\text{Morality} = \text{Persistence} \wedge \text{Flourishing}
-$$
-
-```python
-# experiments/ch09_combining.py
-"""Chapter 9: Combining persistence and flourishing."""
-
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.viability.kernel import compute_viable_region
-from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
-)
-import numpy as np
-
-# For each culture: compute viability fraction
-print(f"{'Culture':15s}  {'Persistence':12s}  {'Flourishing':12s}  {'Morality':10s}")
-print("-" * 60)
-
-sample_flourishing = FlourishingProfile.from_dict(
-    {"W": 0.7, "P": 0.7, "A": 0.7, "S": 0.7, "M": 0.7}
-)
-thresholds = FlourishingThresholds.default()
-
-for name, params in CULTURAL_TYPES.items():
+print(f"{'Config':10s}  {'τ^V (uniform)':15s}  {'Viable fraction':15s}")
+print("-" * 45)
+for name, config in configs.items():
+    constraints = default_constraints(thresholds=config.viability_thresholds)
     kernel = compute_viable_region(
-        constraints=default_constraints(),
-        dynamics=LinearDynamics(),
-        params=params,
-        grid_size=4,
-        horizon=80,
+        constraints=constraints, dynamics=dynamics,
+        configuration=config, grid_size=4, horizon=80,
     )
-    persistence = kernel.fraction_viable() > 0.10
-    flourishing = thresholds.is_flourishing(sample_flourishing)
-    morality = persistence and flourishing
-
-    print(f"{name:15s}  {str(persistence):12s}  {str(flourishing):12s}  {str(morality):10s}")
+    print(
+        f"{name:10s}  "
+        f"{config.viability_thresholds.values[0]:.2f}            "
+        f"{kernel.fraction_viable():.2%}"
+    )
 ```
 
-### Self-check 9.1
+### Self-check 9
 
-- [ ] Run both scripts. Verify the table.
-- [ ] Give `authoritarian_stable` a much higher W (0.95). Does it flourish now? Why or why not?
-- [ ] Modify `transitional` so that only `S` is deficient by 0.01. Re-run — does the deficit round to zero?
+- [ ] Run the script; verify the viable fraction.
+- [ ] Change `τ^V` from 0.30 to 0.50; does the viable fraction shrink?
+- [ ] Explain why a **stricter** τ^V produces a **smaller** kernel.
 
 ### Exercise 9.1
 
-Find the **minimum threshold vector** $\tau_H$ such that `transitional` (from the first script) still flourishes. Verify by re-running with your computed thresholds.
+Determine which single function's τ^V is most restrictive. Set five of the six functions to `τ^V = 0.1` and vary the sixth from 0.1 to 0.7. Report the viable fraction at each level. Which function shrinks the kernel fastest?
 
 ### Paper reference
 
-Section 8 (five-dimensional flourishing), Section 9 (persistence vs flourishing).
+Section 7.5.
 
 ---
 
-## Chapter 10: The Persistence-Flourishing Distinction
+## Chapter 10: Flourishing Measurement
 
 ### Learning objective
 
-Master the philosophical argument that resolves the functionalist objection, and see it as a design principle of the framework.
+Build a culturally specific measurement operator \(M_c\) and use it with τ^H.
 
-### The functionalist objection
-
-The objection (paper §9.1):
-
-> A theory that grounds morality in functional requirements of persistence is vulnerable to the counterexample: an oppressive regime that satisfies all six functions may persist for a long time. If persistence is the criterion of morality, the theory must count this regime as moral.
-
-**The MCTEV response**: the objection conflates persistence with morality. MCTEV explicitly defines:
-
-$$
-\text{Morality}(\theta_c) = \text{Persistence}(\theta_c) \wedge \text{Flourishing}(\theta_c)
-$$
-
-**Persistence** is necessary: a non-viable culture cannot be moral because it collapses.
-
-**Flourishing** is evaluative: a viable culture is not thereby moral; it must also enable thriving.
-
-### The four cases
-
-This yields a 2×2 taxonomy:
-
-|  | Persistence ✓ | Persistence ✗ |
-|--|:-------------:|:-------------:|
-| **Flourishing ✓** | **Moral** (e.g., thriving liberal democracies) | Non-viable (e.g., utopian projects that collapse) |
-| **Flourishing ✗** | **Viable but not moral** (e.g., stable authoritarianism) | **Failed** (e.g., collapsed regimes) |
-
-The **authoritarian_stable** society from Chapter 9 is in the bottom-left cell. It persists (material security) but does not flourish (agency, social connection, meaning are suppressed).
-
-### A worked analysis
+### The measurement pipeline
 
 ```python
-# experiments/ch10_taxonomy.py
-"""Chapter 10: The four cases of the persistence-flourishing taxonomy."""
-
+# experiments/ch10_flourishing.py
 import numpy as np
-from mctev.core.cultural_params import CulturalParameters
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.viability.kernel import compute_viable_region
-from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
+from mctev.core.configuration import default_configuration
+from mctev.core.measurement import LinearMeasurement
+from mctev.flourishing.dimensions import FlourishingProfile
+
+# Build a culturally specific measurement operator
+agency_boost = LinearMeasurement(
+    to_core=lambda x: np.asarray(x)[:5],
+    monotone_transforms={2: lambda v: v ** 0.7},  # boost agency
+)
+config = default_configuration(
+    name="agency_emphasizing",
+    flourishing_value=0.50,
+    measurement=agency_boost,
 )
 
-thresholds = FlourishingThresholds.default()
+# Compute flourishing profile for a state
+state = np.array([0.55, 0.55, 0.65, 0.55, 0.55, 0.5])
+profile = FlourishingProfile.from_measurement(
+    state, config.measurement_operator,
+)
+print(f"Observed flourishing: {profile}")
+# FlourishingProfile(W=0.55, P=0.55, A=0.76, S=0.55, M=0.55)  ← agency boosted
 
-cases = {
-    "thriving_democracy": {
-        "params": CulturalParameters.from_dict(
-            {"cooperation": 0.20, "conflict": 0.15, "distribution": 0.20,
-             "care": 0.20, "information": 0.15, "sustainability": 0.10}
-        ),
-        "flourishing": FlourishingProfile.from_dict(
-            {"W": 0.8, "P": 0.7, "A": 0.75, "S": 0.8, "M": 0.7}
-        ),
-    },
-    "stable_authoritarian": {
-        "params": CulturalParameters.from_dict(
-            {"cooperation": 0.30, "conflict": 0.30, "distribution": 0.20,
-             "care": 0.05, "information": 0.05, "sustainability": 0.10}
-        ),
-        "flourishing": FlourishingProfile.from_dict(
-            {"W": 0.75, "P": 0.40, "A": 0.10, "S": 0.20, "M": 0.15}
-        ),
-    },
-    "utopian_collapsing": {
-        "params": CulturalParameters.from_dict(
-            {"cooperation": 0.10, "conflict": 0.05, "distribution": 0.40,
-             "care": 0.30, "information": 0.10, "sustainability": 0.05}
-        ),
-        "flourishing": FlourishingProfile.from_dict(
-            {"W": 0.7, "P": 0.8, "A": 0.9, "S": 0.85, "M": 0.9}
-        ),
-    },
-    "failed_state": {
-        "params": CulturalParameters.from_dict(
-            {"cooperation": 0.05, "conflict": 0.05, "distribution": 0.05,
-             "care": 0.05, "information": 0.05, "sustainability": 0.05}
-        ),
-        "flourishing": FlourishingProfile.from_dict(
-            {"W": 0.2, "P": 0.2, "A": 0.2, "S": 0.2, "M": 0.2}
-        ),
-    },
-}
-
-print(f"{'Case':25s}  {'Persistent':12s}  {'Flourishing':12s}  {'Verdict':20s}")
-print("-" * 80)
-
-for name, data in cases.items():
-    kernel = compute_viable_region(
-        constraints=default_constraints(),
-        dynamics=LinearDynamics(),
-        params=data["params"],
-        grid_size=4,
-        horizon=80,
-    )
-    persistence = kernel.fraction_viable() > 0.10
-    flourishing = thresholds.is_flourishing(data["flourishing"])
-
-    if persistence and flourishing:
-        verdict = "MORAL"
-    elif persistence:
-        verdict = "viable, not moral"
-    elif flourishing:
-        verdict = "utopian, non-viable"
-    else:
-        verdict = "failed"
-
-    print(f"{name:25s}  {str(persistence):12s}  {str(flourishing):12s}  {verdict:20s}")
+# Check against τ^H
+meets = profile.meets(config.flourishing_thresholds)
+print(f"Meets τ^H: {meets}")
 ```
 
-### Expected output
+### The objectivity safeguard
 
-```
-Case                       Persistent    Flourishing    Verdict
---------------------------------------------------------------------------------
-thriving_democracy         True          True           MORAL
-stable_authoritarian       True          False          viable, not moral
-utopian_collapsing         False         True           utopian, non-viable
-failed_state               False         False          failed
-```
+A cultural context cannot lower its thresholds below the architecture's admissible range, nor use an invalid measurement operator. The library enforces:
 
-### Why this is philosophically important
+1. **Threshold values** are validated in `FlourishingThresholds.__post_init__` (shape `(5,)`, no bound on values but you should set them per the architecture).
+2. **Measurement operators** must implement `within_context_monotone`, which checks that E[Ĥ_d(x_higher)] > E[Ĥ_d(x_lower)].
+3. **Cross-context comparability** is explicitly unavailable without anchors or linking maps.
 
-The four-case taxonomy is MCTEV's *answer* to the functionalist objection. It shows:
+### Self-check 10
 
-1. **Stable authoritarianism** is not licensed by the framework, because flourishing fails.
-2. **Utopian projects** are not licensed either, because persistence fails.
-3. **Moral** is a *conjunction*, not a disjunction, of the two.
-
-This is what the paper (§9.3) calls the "principled basis for criticizing" both oppressive stability and unsustainable idealism.
-
-### Self-check 10.1
-
-- [ ] Run the script. Verify all four cases.
-- [ ] Change `stable_authoritarian`'s flourishing profile so agency (A) is 0.55. Does it flourish now?
-- [ ] Construct a fifth case that is *both* persisting *and* flourishing in the framework's sense.
+- [ ] Run the script; verify that agency is boosted.
+- [ ] Change the transform to `lambda v: v ** 0.3` (more boosting). Does the profile change?
+- [ ] Try `within_context_monotone` for a valid and an invalid operator.
 
 ### Exercise 10.1
 
-Add a case "sustainable_collective": a collectivist culture that:
-1. Persists (verify with the kernel).
-2. Flourishes with a distinctly non-individualist profile (e.g., S and M high, A moderate).
+Design two measurement operators:
+1. `identity`: leaves indicators unchanged.
+2. `discriminatory`: adds `+0.2` to all dimensions for states with `x[0] > 0.5` (i.e., boosts flourishing for high-cooperation states).
 
-Show that a collectivist society can be moral under MCTEV's framework even though its flourishing profile emphasizes different dimensions than the thriving democracy.
+Show that the second operator **violates within-context monotonicity** if the boost is conditioned on an indicator that isn't a monotone function of the core dimensions. Use `operator.within_context_monotone` to detect this.
 
 ### Paper reference
 
-Section 9 (Persistence versus Flourishing), Section 9.2 (two conditions of morality), Section 9.3 (four-case taxonomy).
+Sections 8.1–8.4.
+
+---
+
+## Chapter 11: Viable Current vs Sustainable Flourishing
+
+### Learning objective
+
+Distinguish the three flourishing notions:
+- **Instantaneous**: \(x \in \mathcal{F}(\lambda_c)\)
+- **Viable current**: \(x \in \mathcal{F}(\lambda_c) \cap \mathcal{R}(\lambda_c; \Pi)\)
+- **Sustainable**: \(x \in \mathcal{R}_\mathcal{F}(\lambda_c; \Pi) = \mathrm{Viab}_\Pi(\mathcal{F}(\lambda_c) \cap \mathcal{V}(\lambda_c); F_{\lambda_c})\)
+
+### The three notions at a glance
+
+```python
+# experiments/ch11_three_flourishing.py
+import numpy as np
+from mctev.core.configuration import default_configuration
+from mctev.viability.constraints import default_constraints
+from mctev.viability.dynamics import LinearDynamics
+from mctev.viability.kernel import compute_viable_region
+from mctev.flourishing.dimensions import FlourishingProfile
+
+config = default_configuration(name="universalist")
+constraints = default_constraints(thresholds=config.viability_thresholds)
+dynamics = LinearDynamics()
+
+# R — the controlled viability region
+R_kernel = compute_viable_region(
+    constraints=constraints, dynamics=dynamics,
+    configuration=config, grid_size=4, horizon=80,
+)
+
+# Instantaneous flourishing for one state
+state = np.array([0.6, 0.6, 0.6, 0.6, 0.6, 0.5])
+profile = FlourishingProfile.from_measurement(
+    state, config.measurement_operator,
+)
+instantaneous = profile.meets(config.flourishing_thresholds)
+
+# Viable current: instantaneous AND in R
+viable_current = instantaneous and R_kernel.contains(state)
+
+print(f"State: {state}")
+print(f"  Instantaneous flourishing: {instantaneous}")
+print(f"  In R (viable region):      {R_kernel.contains(state)}")
+print(f"  Viable current flourishing: {viable_current}")
+
+# The distinction matters:
+# A state can be flourishing NOW but not viably current.
+# Viable current flourishing does NOT guarantee sustained flourishing.
+```
+
+### Why the distinction matters
+
+A society can be:
+
+| State | Instantaneous F | In R (viable)? | Sustained? |
+|---|---|---|---|
+| Thriving democracy | ✓ | ✓ | ✓ |
+| Transiently flourishing (about to collapse) | ✓ | ✗ | ✗ |
+| Stable but oppressive | ✗ | ✓ | ✗ |
+| Failed | ✗ | ✗ | ✗ |
+
+The distinction is what allows MCTEV to criticize **both** unsustainable prosperity **and** stable authoritarianism (§9).
+
+### Self-check 11
+
+- [ ] Run the script; verify both checks.
+- [ ] Try states with different profiles; find one that is instantaneous-flourishing but not in R.
+- [ ] Explain the four-case taxonomy in your own words.
+
+### Paper reference
+
+Sections 8.5–8.7, 9.
 
 ---
 
 # Part IV — Dynamics
 
-## Chapter 11: The Constraint Violation Theorem
+## Chapter 12: Boundary-Instability — the Index/Outcome Distinction
 
 ### Learning objective
 
-Empirically evaluate the Constraint Violation Theorem and interpret the decay rate $\lambda$.
+Understand the crucial distinction between the **index boundary** (whose proximity is measured) and the **outcome set** (whose survival is evaluated).
 
-### The theorem
+### The crucial distinction
 
-The theorem says: **sustained constraint violation predicts collapse with exponential decay of survival probability**:
+The manuscript (§10.6) requires:
 
 $$
-\mathbb{P}(\tau_{\text{exit}} > T) \leq C \cdot e^{-\lambda T}
+\Delta_\epsilon^{\mathcal{K}_{\text{index}} \to \mathcal{K}_{\text{out}}} = q_{T, \mathcal{K}_{\text{out}}}^\pi(\mathbf{x}_b - \epsilon_2 n) - q_{T, \mathcal{K}_{\text{out}}}^\pi(\mathbf{x}_b - \epsilon_1 n)
 $$
 
-The library **does not prove** this — the paper states it as a theorem *sketch*. What the library does is:
+**Two different sets**:
 
-1. **Simulate** many trajectories under sustained constraint violation.
-2. **Estimate** the survival function $\mathbb{P}(\tau_{\text{exit}} > T)$.
-3. **Fit** an exponential to the survival function and report $(C, \lambda)$.
+- \(\mathcal{K}_{\text{index}}\) — the set whose **boundary** is used to define inward displacement.
+- \(\mathcal{K}_{\text{out}}\) — the set whose **survival** is evaluated.
 
-This is the *empirical evaluation* of the theorem — a testable prediction, not an assumption.
+These need not coincide.
 
-### Running the evaluation
+### Set-specific survival
 
 ```python
-# experiments/ch11_collapse.py
-"""Chapter 11: Empirically evaluating the Constraint Violation Theorem."""
-
+# experiments/ch12_survival.py
 import numpy as np
-import matplotlib.pyplot as plt
-
-from mctev.collapse.theorem import compare_viable_vs_violating
-from mctev.viability.constraints import default_constraints
+from mctev.core.configuration import default_configuration
+from mctev.viability.constraints import default_constraints, ViabilityConstraints
 from mctev.viability.dynamics import LinearDynamics
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.analysis.visualization import plot_survival_curves
-from experiments.plot_style import apply_style
+from mctev.instability.safe_sets import SafeSet
+from mctev.instability.survival import set_specific_survival
 
-apply_style()
 
-# ---- Compare a viable vs a violating culture ----
-results = compare_viable_vs_violating(
-    viable_params=CULTURAL_TYPES["universalist"],
-    violating_params=CULTURAL_TYPES["self_regarding"],
-    constraints=default_constraints(),
-    dynamics=LinearDynamics(),
-    n_trials=100,
-    horizon_steps=2000,
-    noise_scale=0.05,
-    seed=42,
+class ViabilitySet(SafeSet):
+    """The viability set V(λ_c)."""
+    def __init__(self, constraints):
+        self.constraints = constraints
+    def contains(self, x):
+        return self.constraints.is_satisfied(x)
+    def signed_distance(self, x):
+        return -self.constraints.violation_score(x)
+
+
+config = default_configuration(name="universalist")
+constraints = default_constraints(thresholds=config.viability_thresholds)
+dynamics = LinearDynamics()
+
+outcome_set = ViabilitySet(constraints)
+x0 = np.full(6, 0.4)
+
+# q_{T, V}^π(x0)
+survived = set_specific_survival(
+    x0=x0,
+    outcome_set=outcome_set,
+    dynamics=dynamics,
+    configuration=config,
+    horizon_steps=300,
+    noise_scale=0.02,
+)
+print(f"Survived V for horizon: {survived}")
+```
+
+### Two different "safe sets"
+
+The library provides two concrete `SafeSet` subclasses:
+
+```python
+from mctev.instability.safe_sets import IndicatorSafeSet, KernelSafeSet
+
+# V_i(λ_c) — indicator-specific safe set
+indicator_set = IndicatorSafeSet(
+    indicator_fn=constraints.viability_fns[MoralFunction.COOPERATION],
+    threshold=config.viability_thresholds[MoralFunction.COOPERATION],
+    function=MoralFunction.COOPERATION,
 )
 
-# ---- Report summaries ----
-for name, res in results.items():
-    print(res.summary())
-    print()
+# R(λ_c; Π) — controlled viability kernel
+kernel_set = KernelSafeSet(kernel=R_kernel)
 
-# ---- Plot survival curves ----
-fig = plt.figure(figsize=(8, 5))
-plot_survival_curves(results)
-plt.savefig("outputs/ch11_survival.png")
-print("Saved outputs/ch11_survival.png")
+# These are DIFFERENT sets.
+# Being deep inside R does not imply being deep inside V_i, and vice versa.
 ```
 
-### Expected output
+### Self-check 12
 
-```
-ExitTimeResult(n=100, horizon=20.000, noise=0.05)
-  mean exit time: 18.752
-  censor rate: 93.00%
-  exponential fit: C=1.004, λ=0.010
-
-ExitTimeResult(n=100, horizon=20.000, noise=0.05)
-  mean exit time: 5.831
-  censor rate: 4.00%
-  exponential fit: C=1.001, λ=0.184
-
-Saved outputs/ch11_survival.png
-```
-
-### Interpreting the numbers
-
-| | Viable | Violating |
-|---|---|---|
-| Mean exit time | 18.75 | 5.83 |
-| Censor rate | 93% | 4% |
-| λ (decay rate) | 0.010 | 0.184 |
-
-- **Censor rate**: The fraction of trials where the system never exits. The viable culture almost never exits (93%); the violating culture almost always exits (96% exit).
-- **Decay rate λ**: How fast the survival function drops. A *10× higher* λ for the violating culture means it collapses roughly 10× faster.
-
-**This is the empirical prediction the paper makes.** A theory that predicts $\lambda$ from the constraint violation magnitude would be validated if the measured $\lambda$ matches. The paper does not attempt this prediction (it is left as future work); the library provides the machinery to attempt it.
-
-### How λ scales with violation magnitude
-
-```python
-# experiments/ch11_lambda_sweep.py
-"""Chapter 11: How does λ depend on violation magnitude?"""
-
-import numpy as np
-from mctev.core.cultural_params import CulturalParameters
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.collapse.theorem import ConstraintViolationAnalyzer
-from experiments.seeds import rng
-
-constraints = default_constraints()
-dynamics = LinearDynamics()
-rng_gen = rng(42)
-
-x0_samples = rng_gen.uniform(0.4, 0.8, size=(80, 6))
-
-print(f"{'Violation':12s}  {'Censor rate':12s}  {'λ':8s}  {'Mean exit':10s}")
-print("-" * 50)
-
-for violation_level in [0.00, 0.10, 0.20, 0.30, 0.40]:
-    # Build a culture with a controlled cooperation deficit
-    weights = np.array([0.30, 0.15, 0.15, 0.15, 0.15, 0.10])
-    # Rotate weight from cooperation to information (which decays slower)
-    weights[0] = max(0.01, weights[0] - violation_level)
-
-    params = CulturalParameters(weights=weights, name=f"violation_{violation_level}")
-
-    analyzer = ConstraintViolationAnalyzer(
-        constraints=constraints,
-        dynamics=dynamics,
-        params=params,
-        noise_scale=0.05,
-        rng=rng(42),
-    )
-    res = analyzer.simulate(x0_samples, horizon_steps=1000)
-    C, lam = res.fit_exponential()
-    print(f"{violation_level:.2f}        "
-          f"{res.censor_rate:10.2%}  "
-          f"{lam:8.4f}  "
-          f"{res.exit_times.mean():10.2f}")
-```
-
-### Expected output
-
-```
-Violation     Censor rate    λ        Mean exit
---------------------------------------------------
-0.00          87.50%         0.0143    17.83
-0.10          65.00%         0.0482    13.91
-0.20          42.50%         0.0871    10.44
-0.30          22.50%         0.1342    7.19
-0.40          7.50%          0.1924    4.92
-```
-
-**Notice the monotonic relationship**: as constraint violation increases, censor rate drops and $\lambda$ rises. This is the empirical prediction of the Constraint Violation Theorem.
-
-### Why "theorem sketch"?
-
-The paper states (§10.4): "A fully rigorous proof would require specifying the technical conditions under which A4 holds." The library implements the *empirical* version — you observe the exponential decay in simulation, but the exact theoretical rate $\lambda$ is not proven from first principles.
-
-This is philosophically honest: the theorem is a *predictive hypothesis* awaiting both proof and empirical validation in real societies.
-
-### Self-check 11.1
-
-- [ ] Run the first script; verify both summaries.
-- [ ] Run the sweep; verify the monotone relationship.
-- [ ] Increase `horizon_steps` to 5000. Does the censor rate for `violation=0.00` change?
-
-### Exercise 11.1
-
-Find the **critical violation magnitude** where censor rate drops below 50%. This is the threshold at which the culture becomes more likely than not to collapse within your horizon.
+- [ ] Run the script.
+- [ ] Explain in your own words why "being far from ∂R" is not equivalent to "being far from ∂V".
 
 ### Paper reference
 
-Section 10 (the Constraint Violation Theorem), Section 10.4 (interpretation), Section 10.5 (falsifiability).
+Sections 10.3–10.6.
 
 ---
 
-## Chapter 12: The Three Societies Simulation
+## Chapter 13: The Three Designs of Section 10.6
 
 ### Learning objective
 
-Run the paper's flagship simulation (§13), interpret the three conditions, and reason about what the results do and don't show.
+Run all three designs:
+1. **Indicator-specific**: index = V_i, outcome = V
+2. **Kernel-to-viability-exit**: index = R, outcome = V
+3. **Kernel-retention**: index = R, outcome = R
 
-### What the simulation does
-
-Three societies of 30 agents each play a public goods game for 200 rounds. Agents differ in their cultural weights (the four canonical types). Each round, each agent chooses a contribution to maximize their culture-weighted utility. Agents observe others' contributions and update their beliefs.
-
-**Three conditions**:
-
-1. **Condition 1**: all universalists.
-2. **Condition 2**: equal mix of universalists, collectivists, individualists.
-3. **Condition 3**: 10% self-regarding agents introduced at round 50 (invasion).
-
-### Running the simulation
+### The three designs
 
 ```python
-# experiments/ch12_three_societies.py
-"""Chapter 12: The Three Societies simulation."""
-
+# experiments/ch13_three_designs.py
+import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
 
-from mctev.simulation import (
-    ThreeSocietiesConfig,
-    run_three_societies,
-)
-from mctev.analysis.visualization import plot_three_societies
-from experiments.plot_style import apply_style
-
-apply_style()
-
-# ---- Configure ----
-config = ThreeSocietiesConfig(
-    n_agents=30,
-    n_rounds=200,
-    return_rate=1.5,
-    endowment=10.0,
-    coop_threshold=0.20,
+from mctev.core.configuration import default_configuration
+from mctev.core.moral_functions import MoralFunction
+from mctev.viability.constraints import default_constraints
+from mctev.viability.dynamics import LinearDynamics
+from mctev.viability.kernel import compute_viable_region
+from mctev.instability.analyzer import (
+    build_three_designs, THREE_DESIGNS,
 )
 
-# ---- Run all three conditions ----
-dfs = {
-    cond: run_three_societies(cond, config=config, seed=42)
-    for cond in (1, 2, 3)
-}
+config = default_configuration(name="universalist")
+constraints = default_constraints(thresholds=config.viability_thresholds)
+dynamics = LinearDynamics()
 
-# ---- Summary statistics ----
-print(f"{'Cond':6s}  {'Final mean':12s}  {'Max payoff':12s}  {'Collapsed?':12s}")
-print("-" * 50)
+kernel = compute_viable_region(
+    constraints=constraints, dynamics=dynamics,
+    configuration=config, grid_size=5, horizon=100,
+)
 
-for cond, df in dfs.items():
-    final_mean = df["mean_contribution"].iloc[-20:].mean()
-    final_max = df["max_payoff"].iloc[-20:].mean()
-    collapsed = df["collapsed"].iloc[-1]
-    print(f"{cond:6d}  {final_mean:10.2f}    {final_max:10.2f}    {str(collapsed):12s}")
+designs = build_three_designs(
+    dynamics=dynamics, configuration=config,
+    viability_constraints=constraints, viability_kernel=kernel,
+    function=MoralFunction.COOPERATION,
+)
 
-# ---- Plot ----
-fig = plt.figure(figsize=(10, 5))
-plot_three_societies(dfs)
-plt.savefig("outputs/ch12_three_societies.png")
-print("\nSaved outputs/ch12_three_societies.png")
-```
+boundary_point = np.full(6, 0.32)
+inward_distances = [0.02, 0.05, 0.10, 0.20]
 
-### Expected output
-
-```
-Cond    Final mean    Max payoff    Collapsed?
---------------------------------------------------
-1            5.87         13.21    False
-2            4.92         12.44    False
-3            1.73         11.02    True
-
-Saved outputs/ch12_three_societies.png
-```
-
-### Interpreting the three conditions
-
-**Condition 1** (all universalists): sustained cooperation. Mean contribution stabilizes around 5.87.
-
-**Condition 2** (heterogeneous): lower but sustained cooperation. Mean contribution stabilizes around 4.92. This is Level-1 convergence with Level-2 divergence: three cultures converge on constraint satisfaction but produce different contribution levels.
-
-**Condition 3** (invaded): cooperation collapses. Mean contribution falls below the threshold around round 50–80. This is the **empirical content** of the Constraint Violation Theorem applied to a multi-agent setting.
-
-### What the results *do* show
-
-- Heterogeneous viable cultures can coexist productively (Condition 2).
-- Degenerate configurations (Condition 3) drive cooperation down.
-- The collapse in Condition 3 is preceded by a gradual decline, not a sudden cliff.
-
-### What the results *do not* show
-
-- **Not empirical validation**: the simulation is a demonstration of internal coherence, not a test against real-world data (paper §13.4).
-- **Not proof of inevitability**: the Self-Regarding collapse is somewhat built-in (their parameter configuration guarantees low contribution) — this is acknowledged in §13.4 as a limitation.
-- **Not exhaustive**: real societies have richer interaction structures that could resist collapse more or less than this model.
-
-### Exploring the design space
-
-What if the invasion rate is lower? What if the self-regarding agents leave and are replaced by universalists?
-
-```python
-# experiments/ch12_invasion_sweep.py
-"""Chapter 12: Does the invasion rate matter?"""
-
-import matplotlib.pyplot as plt
-import pandas as pd
-from mctev.simulation import ThreeSocietiesConfig, run_three_societies
-
-invasion_rates = [0.05, 0.10, 0.20, 0.30]
 results = {}
-
-for rate in invasion_rates:
-    # We can't easily parameterize rate; use run_three_societies which
-    # hard-codes 10%. Simulate by choosing condition 3 repeatedly at
-    # different seeds to estimate variability:
-    df = run_three_societies(3, seed=42)
-    final_mean = df["mean_contribution"].iloc[-20:].mean()
-    results[rate] = final_mean
-    print(f"invasion={rate:.0%}  final mean ≈ {final_mean:.2f}")
-
-# Note: to genuinely sweep the invasion rate you would need to
-# construct agents manually. See exercise 12.1.
+for name, analyzer in designs.items():
+    print(f"\n=== {name} ===")
+    print(f"  {THREE_DESIGNS[name]['description']}")
+    res = analyzer.design_B(
+        boundary_point=boundary_point,
+        inward_distances=inward_distances,
+        horizon_steps=200, n_trials=20,
+    )
+    print(res.summary())
+    results[name] = res
 ```
 
-**Note**: `run_three_societies` hard-codes the 10% invasion rate. For a true sweep, construct agents manually (Exercise 12.1).
+### Interpreting the results
 
-### Self-check 12.1
+- **Design 1** (indicator-specific): proximity to V_i boundary predicts exit from V. This is the most direct test.
+- **Design 2** (kernel-to-viability-exit): proximity to ∂R predicts exit from V. **The directional hypothesis requires additional assumptions** because R ⊂ V — you can leave R while remaining in V.
+- **Design 3** (kernel-retention): proximity to ∂R predicts exit from R. This probes the **internal geometry** of the kernel. It is **excluded from Prediction 5** in the manuscript, because it answers a different question.
 
-- [ ] Run the first script; verify all three conditions collapse or not as expected.
-- [ ] Verify Condition 1's final mean is *higher* than Condition 2's.
-- [ ] Verify Condition 3's final mean is *below* the cooperation threshold.
+### Self-check 13
 
-### Exercise 12.1
+- [ ] Run the script; verify all three designs produce results.
+- [ ] Compare Δ_ε across designs. Which is largest? Does that match your intuition?
+- [ ] Explain why Design 3 answers a different question from Prediction 5.
 
-Construct the simulation manually with different invasion rates. Follow the pattern in `mctev.simulation.public_goods._build_agents`:
+### Exercise 13.1
 
-```python
-from mctev.simulation.agents import Agent, AgentType
-from mctev.simulation.public_goods import PublicGoodsGame, ThreeSocietiesConfig
-
-# Build your own composition and run
-config = ThreeSocietiesConfig()
-agents = [...]
-game = PublicGoodsGame(agents=agents, config=config)
-# Then play rounds
-```
-
-Sweep the invasion rate from 5% to 30% in steps of 5% and report how final cooperation depends on invasion rate. What is the *critical* invasion rate at which collapse occurs?
+Modify the script to hold the **index boundary** fixed (always R) but vary the **outcome set** between V and R. Show that Δ_ε differs. This demonstrates the outcome-set dependence of the estimand.
 
 ### Paper reference
 
-Section 13 (Three Societies simulation), especially §13.2 (results) and §13.4 (limitations).
+Section 10.6.
+
+---
+
+## Chapter 14: Retentionist Conditions (R1)–(R3)
+
+### Learning objective
+
+Implement the three retentionist conditions from the manuscript.
+
+### The three conditions
+
+```python
+# experiments/ch14_retentionist.py
+import numpy as np
+from mctev.core.configuration import default_configuration
+from mctev.core.situational import Action, Situation
+from mctev.retentionist.architecture import (
+    RetentionistArchitecture, AbolitionistArchitecture,
+)
+from mctev.retentionist.conditions import (
+    check_R1, check_R2, check_R3,
+    CapitalActionSet, evaluate_test_situations, anti_triviality_filter,
+)
+
+
+# ---- Constraint predicate (with error-rate safeguard) ----
+def constraint(situation, action, config):
+    if action.name != "execute":
+        return True
+    if situation.context.get("severity") != "high":
+        return False
+    tau_error = config.safeguard_thresholds.get("error_rate", 0.05)
+    return situation.context.get("observed_error_rate", 0.01) <= tau_error
+
+
+# ---- Architectures ----
+A_R = RetentionistArchitecture(name="A_R", constraint_predicate=constraint)
+A_A = AbolitionistArchitecture(name="A_A", constraint_predicate=constraint)
+
+# ---- R1: architectural non-exclusion ----
+print(f"R1 for A_R: {check_R1(A_R)}")  # True
+print(f"R1 for A_A: {check_R1(A_A)}")  # False
+
+# ---- Test situations + actions ----
+test_situations = [
+    Situation("murder", {"severity": "high", "observed_error_rate": 0.01}),
+    Situation("theft",  {"severity": "low",  "observed_error_rate": 0.01}),
+]
+
+def action_generator(situation):
+    actions = [
+        Action("life_imprisonment", 0.5),
+        Action("acquittal", 0.0),
+    ]
+    if situation.context.get("severity") == "high":
+        actions.append(Action("execute", 1.0))
+    return actions
+
+capital_set = CapitalActionSet()
+
+# ---- R2: weak configuration-specific non-vacuity ----
+config_permissive = default_configuration(
+    name="permissive", safeguard_values={"error_rate": 0.05},
+)
+config_strict = default_configuration(
+    name="strict", safeguard_values={"error_rate": 0.001},
+)
+
+R2 = check_R2(
+    A_R, [config_permissive, config_strict], test_situations, action_generator,
+    capital_set=capital_set, judgment=SituationalJudgment(
+        utilities=MoralUtilityLibrary(), constraints=constraint,
+    ),
+)
+print(f"R2 (weak non-vacuity): {R2}")  # True (permissive admits execute)
+
+# ---- R3: strong configuration-specific non-vacuity ----
+R3 = check_R3(
+    A_R, [config_permissive, config_strict], test_situations, action_generator,
+    capital_set=capital_set, judgment=SituationalJudgment(
+        utilities=MoralUtilityLibrary(), constraints=constraint,
+    ),
+)
+print(f"R3 (strong non-vacuity): {R3}")  # False (strict admits no execution)
+
+# ---- Anti-triviality filter ----
+filtered = anti_triviality_filter(
+    test_situations,
+    is_factually_coherent=lambda s: s.context.get("severity") in {"high", "low"},
+    in_jurisdiction=lambda s: True,
+    is_feasible=lambda s: s.context.get("observed_error_rate", 0) >= 0,
+    is_artificial=lambda s: False,
+)
+print(f"Test situations passing filter: {len(filtered)}")
+```
+
+### The interpretive point
+
+- **R1** says the **architecture** does not exclude execution categorically.
+- **R2** says **some** configuration admits execution in **some** test situation.
+- **R3** says **every** configuration admits execution in **some** test situation.
+
+The manuscript (§12.3) states that **R1 + R2** is the natural requirement for a genuinely retentionist **architecture**. A configuration that fails to admit execution—even within a retentionist-permissive architecture—is **abolitionist in implementation**.
+
+### Self-check 14
+
+- [ ] Run the script; verify R1 for retentionist is True, R1 for abolitionist is False.
+- [ ] Verify R2 is True (because permissive admits execution).
+- [ ] Verify R3 is False (because strict does not).
+- [ ] Explain what "abolitionist in implementation" means for `config_strict`.
+
+### Exercise 14.1
+
+Add a third configuration `moderate` with `error_rate=0.02`. Does the addition change R2? R3? Report the outcomes.
+
+### Paper reference
+
+Section 12.3.
 
 ---
 
 # Part V — Applications
 
-## Chapter 13: Case Study — Slavery
+## Chapter 15: Qualifying Conditions and the Proxy Audit
 
 ### Learning objective
 
-Apply MCTEV to a clear historical case and understand how the framework diagnoses constraint violation.
+Build qualifying conditions \(Q_{-i}\) and run the **proxy audit** for non-circularity.
 
-### Why slavery is the "easy" case
+### The problem the proxy audit solves
 
-Slavery is morally obvious in a way that capital punishment is not. The paper (§11) uses it as a *baseline*: any framework that cannot diagnose slavery as a violation is defective. MCTEV can.
+The manuscript (§6.3.2) requires that when \(S_i^{\text{qual}}\) is used to derive or evaluate candidate function \(f_i\), the qualifying condition \(Q_{-i}\) must **not** contain \(f_i\) or any proxy that presupposes \(f_i\). Mere non-equivalence is insufficient.
 
-**But**: diagnosing a clear case is *not* sufficient. A framework that only handles obvious cases is uninteresting. That's why Chapter 14 (capital punishment) is the *hard* case.
-
-### Running the diagnosis
+### Building a qualifying condition
 
 ```python
-# experiments/ch13_slavery.py
-"""Chapter 13: Slavery as constraint violation."""
-
-from mctev.cases.slavery import evaluate_slavery
-from mctev.core.moral_functions import MoralFunction
-
-diagnosis = evaluate_slavery()
-
-print("Slavery diagnosis under MCTEV")
-print("=" * 50)
-print(f"\nProfile:")
-for k, v in diagnosis.profile.as_dict().items():
-    bar = "█" * int(v * 20)
-    print(f"  {k:15s} {v:.2f}  {bar}")
-
-print(f"\nViolated functions (threshold = 0.30):")
-for k, v in diagnosis.violations.items():
-    print(f"  ✗ {k:15s} {v:.2f}")
-
-print(f"\nSeverity score: {diagnosis.severity:.3f}")
-print(f"Num violations: {len(diagnosis.violations)} / {len(MoralFunction)}")
-```
-
-### Expected output
-
-```
-Slavery diagnosis under MCTEV
-==================================================
-
-Profile:
-  cooperation     0.10  ██
-  conflict        0.10  ██
-  distribution    0.10  ██
-  care            0.20  ████
-  information     0.10  ██
-  sustainability  0.30  ██████
-
-Violated functions (threshold = 0.30):
-  ✗ cooperation     0.10
-  ✗ conflict        0.10
-  ✗ distribution    0.10
-  ✗ care            0.20
-  ✗ information     0.10
-
-Severity score: 0.130
-Num violations: 5 / 6
-```
-
-### Interpreting the diagnosis
-
-Five of the six functions are violated. Only `sustainability` reaches the threshold (0.30 — some slave economies were more sustainable than others; the argument is empirical).
-
-**This is a strong violation**: severity 0.130 against a range of [0, 0.5] means slavery is thoroughly non-viable.
-
-### What this *doesn't* show
-
-The diagnosis is a **descriptive** claim: slavery scores poorly against the six candidate functions. It is **not** a causal claim: it does not show that slavery's collapse was *caused* by these violations. The paper (§11.4) is careful: "constraint violations are contributing factors rather than sole causes."
-
-### Connecting to the collapse theorem
-
-Does the diagnosis *predict* collapse? Not directly — you'd need to run the analyzer with parameters representing slavery's moral configuration. Let's try:
-
-```python
-# experiments/ch13_slavery_collapse.py
-"""Chapter 13: Does slavery predictably collapse?"""
-
+# experiments/ch15_qualifying.py
 import numpy as np
-from mctev.core.cultural_params import CulturalParameters
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.collapse.theorem import ConstraintViolationAnalyzer
-from experiments.seeds import rng
-
-# Construct parameters from the slavery diagnosis
-slavery_params = CulturalParameters.from_dict(
-    {
-        "cooperation":    0.10,
-        "conflict":       0.10,
-        "distribution":   0.10,
-        "care":           0.20,
-        "information":    0.10,
-        "sustainability": 0.30,
-    },
-    name="slavery",
+from mctev.core.moral_functions import MoralFunction
+from mctev.core.qualifying import (
+    QualifyingConditions, MemberInclusiveViability, proxy_audit,
 )
 
-# Compare to universalist
-from mctev.core.cultural_params import CULTURAL_TYPES
+# Example: member-inclusive viability, excluding distribution
+member_inclusive = MemberInclusiveViability(
+    target_function=MoralFunction.RESOURCE_DISTRIBUTION,
+    welfare_index=lambda x: np.array([x[0], x[3]]),  # coop + care
+    minimum_member_welfare=0.3,
+)
+member_inclusive._inputs = ["cooperation_indicator", "care_indicator"]
 
-rng_gen = rng(42)
-x0_samples = rng_gen.uniform(0.4, 0.8, size=(80, 6))
+conditions = QualifyingConditions()
+conditions[MoralFunction.RESOURCE_DISTRIBUTION] = member_inclusive
 
-for name, params in [("slavery", slavery_params),
-                     ("universalist", CULTURAL_TYPES["universalist"])]:
-    analyzer = ConstraintViolationAnalyzer(
-        constraints=default_constraints(),
-        dynamics=LinearDynamics(),
-        params=params,
-        noise_scale=0.05,
-        rng=rng(42),
-    )
-    res = analyzer.simulate(x0_samples, horizon_steps=1000)
-    C, lam = res.fit_exponential()
-    print(f"{name:15s}  censor={res.censor_rate:.1%}  λ={lam:.4f}")
+# Proxy audit
+report = proxy_audit(conditions, MoralFunction.RESOURCE_DISTRIBUTION)
+print(report.summary())
+# Proxy audit [PASS] for target f = distribution
+#   condition: member-inclusive welfare on non-distribution dimensions >= 0.3
+#   constitutive inputs: ['cooperation_indicator', 'care_indicator']
 ```
 
-### Expected output
-
-```
-slavery          censor=8.75%  λ=0.1743
-universalist     censor=87.50%  λ=0.0143
-```
-
-**Interpretation**: Under the assumption that slavery's parameter vector is a good proxy for its moral configuration, the analyzer predicts ~9% survival and ~10× higher decay rate. This is *consistent with* the historical trajectory of slavery (eventual abolition), but consistent evidence is not proof.
-
-### Self-check 13.1
-
-- [ ] Run both scripts.
-- [ ] Verify the five violations match.
-- [ ] Re-run the collapse comparison with different seeds. Does the pattern hold?
-
-### Exercise 13.1
-
-Compare slavery to two other historical institutions: (a) feudalism, (b) a hypothetical "enlightened monarchy." Construct parameter vectors for each and run the collapse analysis. Which is most stable? Which is most moral by the paper's criteria?
-
-### Paper reference
-
-Section 11 (Slavery case study), especially §11.3 (contributing factors, not sole causes) and §11.4 (why the case study matters).
-
----
-
-## Chapter 14: Case Study — Capital Punishment
-
-### Learning objective
-
-Apply MCTEV to a case of *legitimate disagreement* and understand why it is not a constraint violation.
-
-### Why this is the hard case
-
-Slavery is morally obvious. Capital punishment is not. Both retentionist and abolitionist positions have sophisticated philosophical defenses. A framework that only diagnoses clear cases is a **straw man**. The paper (§12) argues MCTEV handles this correctly.
-
-**The claim**: retentionists and abolitionists are both implementing the *same* Level-1 function (conflict management) with different Level-2 weights. They disagree about Level 2, not Level 1.
-
-### Running the diagnosis
+### When the audit fails
 
 ```python
-# experiments/ch14_capital_punishment.py
-"""Chapter 14: Capital punishment as legitimate Level-2 disagreement."""
-
-from mctev.cases.capital_punishment import evaluate_capital_punishment
-
-diagnosis = evaluate_capital_punishment()
-
-print("Capital punishment under MCTEV")
-print("=" * 55)
-print(f"\nShared Level-1 function: {diagnosis.agreed_function}")
-print(f"  → {diagnosis.retentionist.__class__.__name__} of both sides\n")
-
-print(f"{'Dimension':15s}  {'Retentionist':15s}  {'Abolitionist':15s}  Diff")
-print("-" * 65)
-
-for k in diagnosis.retentionist.as_dict():
-    ret = diagnosis.retentionist[k]
-    abo = diagnosis.abolitionist[k]
-    diff = ret - abo
-    marker = "←" if abs(diff) > 0.1 else " "
-    print(f"{k:15s}  {ret:.2f}            {abo:.2f}            "
-          f"{diff:+.2f}  {marker}")
-```
-
-### Expected output
-
-```
-Capital punishment under MCTEV
-=======================================================
-
-Shared Level-1 function: conflict
-  → CapitalPunishmentDiagnosis of both sides
-
-Dimension        Retentionist     Abolitionist     Diff
------------------------------------------------------------------
-cooperation      0.50             0.50             +0.00
-conflict         0.80             0.80             +0.00
-distribution     0.40             0.70             -0.30  ←
-care             0.30             0.80             -0.50  ←
-information      0.50             0.70             -0.20  ←
-sustainability   0.50             0.50             +0.00
-```
-
-### Interpreting the diagnosis
-
-**Key observations**:
-
-1. **Both sides score high on conflict management** (0.80 for both). They agree that structured regulation of conflict matters — they just disagree about what *structure* it should have.
-
-2. **Abolitionists score higher on care, distribution, and information**. This is consistent with their argument that execution risks injustice (information), wastes resources (distribution), and kills people (care).
-
-3. **Retentionists score lower on those dimensions but not *zero***. They do care about justice and welfare; they just weigh them differently against retributive considerations.
-
-**What MCTEV says**: this is *not* a case where one side has failed to implement a Level-1 function. Both sides score above threshold on all six functions. The disagreement is about how to balance them.
-
-### The interpretive work of Level 1
-
-The paper (§12.4) makes a crucial claim: **Level 1 constrains the space of legitimate arguments but does not uniquely determine outcomes**. This is why MCTEV can have a non-trivial theory of legitimate moral pluralism.
-
-Concretely, in the capital punishment debate:
-
-- A **retentionist** must argue that their position better satisfies structured conflict regulation.
-- An **abolitionist** must argue the same.
-- **Neither can argue that conflict management doesn't matter** — that would be Level-1 disagreement, not Level-2.
-
-This is the *test* of whether a debate is a legitimate pluralism: do both sides reason within the Level-1 constraint space?
-
-### What this is *not*
-
-MCTEV does **not** say both sides are equally right. It says:
-
-1. Both sides are *within* Level 1 (not violating constraints).
-2. The disagreement is *legitimate* in the sense that it doesn't reduce to error or ignorance.
-3. Additional argument (Level 3) may still favor one side — but the framework itself is silent on which.
-
-This is why the framework is *compatible with* taking a side in the debate: your Level-3 arguments, your empirical evidence, and your specific cultural context can lead you to favor one implementation over another. MCTEV just says both are legitimate moral positions.
-
-### Self-check 14.1
-
-- [ ] Run the script; verify the table.
-- [ ] In which dimensions do retentionist and abolitionist *agree*? What does that show?
-- [ ] Would a person who said "conflict management doesn't matter" be within the MCTEV framework?
-
-### Exercise 14.1
-
-The paper (§12.1) says "Western Europe has abolished it; the United States, Japan, and Singapore retain it." Model these four societies as Level-2 parameter vectors. Which has the most abolitionist-leaning weights? Which the most retentionist? Then run the collapse analysis on each — which is most stable?
-
-### Paper reference
-
-Section 12 (Capital punishment case study), especially §12.4 (Level 1 constrains but does not determine).
-
----
-
-# Part VI — Advanced
-
-## Chapter 15: Cross-Cultural AI Policy
-
-### Learning objective
-
-Design an AI policy that respects universal constraints while adapting to local cultural contexts.
-
-### The three-layer architecture for AI
-
-From paper §16.2, an AI system's moral reasoning decomposes into three layers:
-
-1. **Constraint layer**: hard rules from Level 1 (e.g., never facilitate harm).
-2. **Cultural parameter layer**: weights chosen per deployment context.
-3. **Situational inference layer**: case-specific judgments.
-
-This is exactly the `MCTEVSystem` structure.
-
-### Building a cross-cultural policy
-
-```python
-# experiments/ch15_ai_policy.py
-"""Chapter 15: Cross-cultural AI policy."""
-
-from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.core.situational import Action, Situation, SituationalJudgment
-
-# ---- Level 1: universal constraints (do not vary across cultures) ----
-def universal_constraints(situation, action):
-    """Hard rules that apply in every deployment context."""
-    # Never allocate negative resources
-    if action.payload.get("allocation", 0) < 0:
-        return False
-    # Never favor one group by more than 10x
-    max_share = action.payload.get("max_share", 0)
-    min_share = action.payload.get("min_share", 0)
-    if min_share > 0 and max_share / min_share > 10:
-        return False
-    return True
-
-
-# ---- Level 1: universal utilities (do not vary across cultures) ----
-lib = MoralUtilityLibrary()
-lib[MoralFunction.COOPERATION] = (
-    lambda a, s: a.payload.get("collective_gain", 0)
+# A qualifying condition that secretly contains f_dist
+suspect = MemberInclusiveViability(
+    target_function=MoralFunction.RESOURCE_DISTRIBUTION,
+    welfare_index=lambda x: np.array([x[2]]),  # distribution!
 )
-lib[MoralFunction.REPRODUCTION_CARE] = (
-    lambda a, s: a.payload.get("weakest_outcome", 0)
-)
-lib[MoralFunction.RESOURCE_DISTRIBUTION] = (
-    lambda a, s: 1.0 - a.payload.get("inequality", 0)
-)
-lib[MoralFunction.KNOWLEDGE_TRANSMISSION] = (
-    lambda a, s: a.payload.get("transparency", 0)
-)
+suspect._inputs = ["gini_coefficient"]  # a proxy for distribution
 
-# ---- Candidates for a resource allocation decision ----
-situation = Situation(
-    "aid distribution",
-    context={"crisis_level": "high", "populations": ["A", "B", "C"]},
-)
-
-actions = [
-    Action("equal_split", payload={
-        "collective_gain": 0.6, "weakest_outcome": 0.5,
-        "inequality": 0.05, "transparency": 0.8,
-        "max_share": 0.35, "min_share": 0.33,
-    }),
-    Action("favor_most_vulnerable", payload={
-        "collective_gain": 0.5, "weakest_outcome": 0.8,
-        "inequality": 0.20, "transparency": 0.7,
-        "max_share": 0.50, "min_share": 0.25,
-    }),
-    Action("favor_most_productive", payload={
-        "collective_gain": 0.9, "weakest_outcome": 0.2,
-        "inequality": 0.40, "transparency": 0.6,
-        "max_share": 0.70, "min_share": 0.15,
-    }),
-]
-
-# ---- Deploy to three cultural contexts ----
-solver = SituationalJudgment(
-    utilities=lib,
-    constraints=universal_constraints,
-)
-
-deployments = {
-    "US": CULTURAL_TYPES["individualist"],
-    "Japan": CULTURAL_TYPES["collectivist"],
-    "EU": CULTURAL_TYPES["universalist"],
-}
-
-print(f"{'Context':10s}  {'Best action':22s}  Ranking")
-print("-" * 75)
-
-policy = {}
-for context_name, params in deployments.items():
-    ranking = solver.rank(situation, actions, params)
-    best = ranking[0][1].name if ranking else "no_admissible_action"
-    policy[context_name] = best
-    scores = "  ".join(f"{a.name}={v:.2f}" for v, a in ranking)
-    print(f"{context_name:10s}  {best:22s}  {scores}")
-
-print(f"\nFinal policy: {policy}")
+conditions[MoralFunction.RESOURCE_DISTRIBUTION] = suspect
+report = proxy_audit(conditions, MoralFunction.RESOURCE_DISTRIBUTION)
+print(report.summary())
+# Proxy audit [FAIL] for target f = distribution
+#   ...
+#   flagged proxies: ['gini_coefficient']
 ```
 
-### Expected output
+The library flags `gini_coefficient` as a **common proxy** for distribution. The audit does not catch every circularity (semantic proxies require human judgment), but it catches the common cases.
 
-```
-Context     Best action             Ranking
----------------------------------------------------------------------------
-US          favor_most_productive   favor_most_productive=0.62  equal_split=0.48  favor_most_vulnerable=0.38
-Japan       favor_most_vulnerable   favor_most_vulnerable=0.63  equal_split=0.52  favor_most_productive=0.22
-EU          equal_split             equal_split=0.58  favor_most_vulnerable=0.54  favor_most_productive=0.33
+### Self-check 15
 
-Final policy: {'US': 'favor_most_productive', 'Japan': 'favor_most_vulnerable', 'EU': 'equal_split'}
-```
-
-### What this demonstrates
-
-- **Universal constraints**: all three actions pass. If we had an action with `min_share=0.05, max_share=0.70` (ratio 14), it would be filtered out.
-- **Cultural divergence**: the three contexts pick different actions.
-- **Level-1 convergence**: all three pick some *action* (no abstention), and all three pick actions with high transparency and reasonable weakest-outcomes.
-
-**This is what MCTEV-consistent AI policy looks like**: constraints uniform, judgments local.
-
-### Constraint violation detection
-
-What if one of the actions *violates* the universal constraints?
-
-```python
-# Add a violating action
-actions.append(Action("extreme_concentration", payload={
-    "collective_gain": 0.95, "weakest_outcome": 0.05,
-    "inequality": 0.85, "transparency": 0.3,
-    "max_share": 0.95, "min_share": 0.02,  # ratio 47.5, violates
-}))
-
-# Re-run
-for context_name, params in deployments.items():
-    best = solver.judge(situation, actions, params)
-    print(f"{context_name}: {best.name if best else 'none'}")
-```
-
-### Self-check 15.1
-
-- [ ] Run the script; verify the three contexts pick different actions.
-- [ ] Add the violating action; verify it never appears.
-- [ ] Change `universal_constraints` to also forbid `transparency < 0.5`. Re-run.
+- [ ] Run the script; verify PASS then FAIL.
+- [ ] Add a qualifying condition that includes "reciprocity_index" and audit for `COOPERATION`. Does it FAIL?
+- [ ] Explain why mere non-equivalence is insufficient to prevent circularity.
 
 ### Exercise 15.1
 
-Extend the policy to **dynamic contexts**: if `crisis_level` is `"extreme"`, apply a stricter distribution constraint (`max_share / min_share < 3`). Re-run with `crisis_level="extreme"` and verify that `favor_most_productive` is now filtered out.
+Design a qualifying condition for \(f_{\text{coop}}\) that satisfies the proxy audit. It must exclude both the function itself and any common proxy (e.g., `reciprocity_index`, `public_goods_contribution`). Use the audit to verify.
 
 ### Paper reference
 
-Section 16 (AI as testbed), especially §16.2 (three-layer architecture).
+Sections 6.3.2, Supplement S12.
 
 ---
 
-## Chapter 16: Building a Collapse Dashboard
+## Chapter 16: The Slavery Case Study
 
 ### Learning objective
 
-Integrate everything into a monitoring dashboard that detects collapse risk in real time.
+Run the slavery diagnosis with the **descriptive/qualified distinction** and **proxy audit**.
 
-### The dashboard design
+### What changed since v0.1.0
 
-The dashboard should show:
+The slavery diagnosis now distinguishes:
 
-1. **Current mean cooperation** (Level 1 indicator).
-2. **Distance to viability kernel boundary** (Level 2 risk).
-3. **Flourishing deficit** (Level 2 quality).
-4. **Estimated collapse risk** (Level 3 prediction).
+1. **Descriptive profile** (S^viab): how slavery scores on the six functions.
+2. **Qualifying condition** Q_{-dist}: the condition used to evaluate the distribution function.
+3. **Proxy audit**: verifies that Q_{-dist} does not itself presuppose distribution.
 
-### The dashboard
+### The script
 
 ```python
-# experiments/ch16_dashboard.py
-"""Chapter 16: A monitoring dashboard for MCTEV collapse detection."""
+# experiments/ch16_slavery.py
+from mctev.cases.slavery import evaluate_slavery
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
-
-from mctev.core.cultural_params import CulturalParameters
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.flourishing.dimensions import FlourishingProfile, FlourishingThresholds
-from mctev.simulation import ThreeSocietiesConfig, run_three_societies
-
-# ---- Run a simulation with a slow invasion ----
-config = ThreeSocietiesConfig(n_agents=30, n_rounds=200)
-df = run_three_societies(condition=3, config=config, seed=42)
-
-# ---- Compute indicators ----
-window = 10
-rolling_mean = df["mean_contribution"].rolling(window).mean()
-rolling_std = df["std_contribution"].rolling(window).std()
-
-# Flourishing proxy: W from mean, S from low std (cohesion)
-flourishing = FlourishingProfile.from_dict(
-    {"W": df["mean_contribution"].mean() / config.endowment,
-     "P": 0.5, "A": 0.5, "S": 0.5, "M": 0.5}
-)
-thresholds = FlourishingThresholds.default()
-
-# ---- Build the dashboard ----
-fig, axes = plt.subplots(2, 2, figsize=(14, 8))
-
-# Panel 1: cooperation over time
-ax = axes[0, 0]
-ax.plot(df["round"], df["mean_contribution"], alpha=0.3, label="raw")
-ax.plot(df["round"], rolling_mean, label=f"{window}-round mean")
-ax.axhline(
-    config.coop_threshold * config.endowment,
-    color="red", linestyle="--", label="threshold"
-)
-ax.set_xlabel("Round")
-ax.set_ylabel("Mean contribution")
-ax.set_title("Panel 1: Level-1 indicator")
-ax.legend()
-
-# Panel 2: distance to viability boundary (crude: distance to threshold)
-ax = axes[0, 1]
-distance_to_threshold = (
-    rolling_mean - config.coop_threshold * config.endowment
-)
-ax.plot(df["round"], distance_to_threshold, color="purple")
-ax.axhline(0, color="red", linestyle="--")
-ax.fill_between(
-    df["round"], distance_to_threshold, 0,
-    where=(distance_to_threshold > 0),
-    alpha=0.3, color="green", label="viable region"
-)
-ax.fill_between(
-    df["round"], distance_to_threshold, 0,
-    where=(distance_to_threshold < 0),
-    alpha=0.3, color="red", label="violation"
-)
-ax.set_xlabel("Round")
-ax.set_ylabel("Distance to threshold")
-ax.set_title("Panel 2: Level-2 risk (distance to viability)")
-ax.legend()
-
-# Panel 3: flourishing deficit over time
-ax = axes[1, 0]
-# Recompute flourishing at each round with updated W
-flourishing_deficit = []
-for i in range(window, len(df)):
-    w = df["mean_contribution"].iloc[i-window:i].mean() / config.endowment
-    profile = FlourishingProfile.from_dict(
-        {"W": max(0, min(1, w)), "P": 0.5, "A": 0.5, "S": 0.5, "M": 0.5}
-    )
-    flourishing_deficit.append(thresholds.deficit(profile))
-
-ax.plot(
-    df["round"].iloc[window:], flourishing_deficit, color="orange"
-)
-ax.fill_between(
-    df["round"].iloc[window:], 0, flourishing_deficit,
-    alpha=0.3, color="orange"
-)
-ax.set_xlabel("Round")
-ax.set_ylabel("Flourishing deficit")
-ax.set_title("Panel 3: Level-2 quality (flourishing)")
-ax.axhline(0, color="black", linestyle="--")
-
-# Panel 4: collapse probability estimate
-ax = axes[1, 1]
-# Crude collapse probability: logistic of negative distance
-from scipy.special import expit
-collapse_prob = expit(-distance_to_threshold * 2)  # steeper for illustration
-ax.plot(df["round"], collapse_prob, color="darkred")
-ax.fill_between(df["round"], 0, collapse_prob, alpha=0.3, color="red")
-ax.set_xlabel("Round")
-ax.set_ylabel("Estimated collapse probability")
-ax.set_title("Panel 4: Level-3 prediction")
-ax.set_ylim(0, 1)
-
-plt.tight_layout()
-plt.savefig("outputs/ch16_dashboard.png")
-print("Saved outputs/ch16_dashboard.png")
-
-# ---- Print a summary report ----
-print("\n=== COLLAPSE RISK REPORT ===")
-print(f"Final mean contribution:   {rolling_mean.iloc[-1]:.2f}")
-print(f"Final distance to threshold: {distance_to_threshold.iloc[-1]:.2f}")
-print(f"Final flourishing deficit: {flourishing_deficit[-1]:.3f}")
-print(f"Estimated collapse risk:   {collapse_prob.iloc[-1]:.1%}")
+diag = evaluate_slavery()
+print(diag.summary())
 ```
 
-### Expected output
+Expected output:
 
 ```
-Saved outputs/ch16_dashboard.png
+Slavery diagnosis (MCTEV v0.2.0)
+=============================================
+Descriptive profile (S^viab):
+  cooperation    : 0.10
+  conflict       : 0.10
+  distribution   : 0.10
+  care           : 0.20
+  information    : 0.10
+  sustainability : 0.30
+---------------------------------------------
+Descriptive violations: ['cooperation', 'conflict', 'distribution', 'care', 'information']
+Descriptive severity:   0.130
+Qualifying condition: member-inclusive welfare on non-distribution dimensions >= 0.3
+Proxy audit:
+  Proxy audit [PASS] for target f = distribution
+  ...
+```
 
-=== COLLAPSE RISK REPORT ===
-Final mean contribution:   1.73
-Final distance to threshold: -0.27
-Final flourishing deficit: 0.300
-Estimated collapse risk:   83.4%
+### The interpretive caution
+
+The slavery diagnosis is **descriptive**, not causal. It does not claim that slavery collapsed **because** it violated these functions. Per §11:
+
+> Moral wrongness and empirical instability are distinct questions.
+
+The diagnosis reports the **profile**, not the **causal explanation**. The **flourishing** classification of slavery depends on the independently justified architecture and calibrated measurements.
+
+### Self-check 16
+
+- [ ] Run the script; verify 5 violations.
+- [ ] Change `SlaveryMemberInclusive._inputs` to include `"gini_coefficient"`; does the proxy audit fail?
+- [ ] Explain the difference between "descriptive profile" and "causal explanation".
+
+### Exercise 16.1
+
+Add a second qualifying condition `Q_{-care}` for slavery using the flourishing indicators W, P, S, M. Verify it passes the proxy audit (it should not include care-specific proxies).
+
+### Paper reference
+
+Section 11.
+
+---
+
+## Chapter 17: The Capital Punishment Case Study
+
+### Learning objective
+
+Run the capital punishment diagnosis with the **retentionist conditions (R1)–(R3)**.
+
+### The script
+
+```python
+# experiments/ch17_capital.py
+from mctev.cases.capital_punishment import evaluate_capital_punishment
+
+diag = evaluate_capital_punishment()
+print(diag.summary())
+```
+
+Expected output:
+
+```
+Capital punishment diagnosis (MCTEV v0.2.0)
+=======================================================
+R1 (retentionist non-exclusion): True
+R1 (abolitionist non-exclusion): False
+R2 (weak non-vacuity):           True
+R3 (strong non-vacuity):         False
+Test situations passing filter:  3
 ```
 
 ### The interpretation
 
-The dashboard shows four views of the same trajectory:
+- **R1** for retentionist: True. The retentionist architecture contains **no categorical prohibition** of execution.
+- **R1** for abolitionist: False. The abolitionist architecture categorically prohibits execution.
+- **R2**: True. **Some** configuration admits execution in **some** test situation.
+- **R3**: False. **Not every** configuration admits execution. A "strict" configuration (with `error_rate = 0.001`) does not. This configuration is **abolitionist in implementation** within the retentionist-permissive architecture.
 
-1. **Level-1 indicator** (cooperation) declines steadily.
-2. **Level-2 risk** (distance to viability) goes negative around round 80.
-3. **Level-2 quality** (flourishing deficit) rises in tandem.
-4. **Level-3 prediction** (collapse probability) rises smoothly.
+### The meta-level point
 
-This is the **operational form** of the persistence-flourishing distinction: a society can be *near the boundary* on viability while *falling short* on flourishing — and both signals should trigger concern.
+The capital punishment case study's contribution is **not** that MCTEV resolves the debate. It is that MCTEV **makes the choice explicit**:
 
-### Extending the dashboard
+- Architecture A_R: retentionist-conditional
+- Architecture A_A: abolitionist-categorical
 
-What would make this dashboard *production-grade*?
+The choice between them is a **meta-level choice about the constraint architecture**, not an ordinary Level-2 parameter choice. MCTEV frames the choice; it does not adjudicate.
 
-1. **Multiple indicators**: add `std_contribution` (as a proxy for cohesion), `payoff_ratio` (inequality), etc.
-2. **Uncertainty bands**: use bootstrap or analytical bounds on the collapse probability.
-3. **Leading indicators**: detect regime shift *before* it happens (e.g., rising variance is a classic early-warning signal).
-4. **Cross-level consistency**: require that Levels 1, 2, and 3 all agree before declaring "collapse risk high."
+### Self-check 17
 
-### Self-check 16.1
+- [ ] Run the script; verify all four conditions print.
+- [ ] Change the `_make_constraint_predicate` in `capital_punishment.py` to be more permissive; does R3 become True?
+- [ ] Explain what "abolitionist in implementation" means.
 
-- [ ] Run the script; verify the report matches expectations.
-- [ ] Change the seed; do the qualitative patterns change?
-- [ ] Add a "distance to flourishing boundary" line to Panel 3.
+### Exercise 17.1
 
-### Exercise 16.1
-
-Implement a **regime-shift early warning** by tracking the variance of contributions. The classic result (Scheffer et al., 2009) is that **rising variance precedes a critical transition**. Add a panel showing rolling variance over time. Does the variance rise before collapse in this simulation?
+Add a third architecture `A_weak_retentionist` that prohibits execution in low-severity cases but allows it in high-severity cases. Compute R1, R2, R3 for this new architecture. Compare to A_R.
 
 ### Paper reference
 
-Section 7.6 (Level structure), Section 9 (persistence vs flourishing), Section 13 (simulation as evidence).
+Section 12.
+
+---
+
+# Part VI — Dispersion Analysis
+
+## Chapter 18: Eight Dispersion Measures
+
+### Learning objective
+
+Quantify cross-context dispersion using the eight type-appropriate measures from Section 14.
+
+### The eight measures
+
+```python
+# experiments/ch18_dispersion.py
+import numpy as np
+from mctev.core.configuration import default_configuration
+from mctev.core.moral_functions import MoralFunction
+from mctev.core.selection import SelectionConvention
+from mctev.core.measurement import LinearMeasurement
+from mctev.analysis.metrics import (
+    dispersion_function_recognition,
+    dispersion_weights,
+    dispersion_viability_thresholds,
+    dispersion_safeguard_thresholds,
+    dispersion_flourishing_thresholds,
+    dispersion_selection_conventions,
+    dispersion_measurement_operators,
+    dispersion_judgments,
+    full_dispersion_vector,
+)
+
+# Build three configurations (contexts)
+configs = [
+    default_configuration(
+        name="universalist",
+        weights=[0.30, 0.20, 0.20, 0.15, 0.10, 0.05],
+        viability_value=0.30,
+        safeguard_values={"error_rate": 0.05},
+        selection=SelectionConvention.STATUS_QUO,
+    ),
+    default_configuration(
+        name="collectivist",
+        weights=[0.25, 0.15, 0.15, 0.30, 0.10, 0.05],
+        viability_value=0.35,
+        safeguard_values={"error_rate": 0.03},
+        selection=SelectionConvention.PRECEDENT,
+    ),
+    default_configuration(
+        name="individualist",
+        weights=[0.20, 0.15, 0.20, 0.10, 0.20, 0.15],
+        viability_value=0.25,
+        safeguard_values={"error_rate": 0.10},
+        selection=SelectionConvention.LEXICOGRAPHIC,
+    ),
+]
+
+# Compute each measure individually
+print(f"D_θ    (weights, Aitchison):       {dispersion_weights([c.weights for c in configs]):.4f}")
+print(f"D_τ^V  (viability thresholds):     {dispersion_viability_thresholds(configs):.4f}")
+print(f"D_τ^S  (safeguard thresholds):     {dispersion_safeguard_thresholds(configs):.4f}")
+print(f"D_τ^H  (flourishing thresholds):   {dispersion_flourishing_thresholds(configs):.4f}")
+
+# D_F requires recognized function sets
+recognized = [
+    [MoralFunction.COOPERATION, MoralFunction.CARE],
+    [MoralFunction.COOPERATION, MoralFunction.CARE],
+    [MoralFunction.COOPERATION],  # individualist recognizes fewer
+]
+print(f"D_F    (function recognition):     {dispersion_function_recognition(recognized):.4f}")
+
+# D_M requires anchor states
+anchors = [np.array([0.5]*6), np.array([0.7]*6)]
+print(f"D_M    (measurement operators):    {dispersion_measurement_operators(configs, anchors):.4f}")
+
+# D_ρ requires a shared benchmark
+benchmark = {
+    "situations": [
+        __import__("mctev.core.situational", fromlist=["Situation"]).Situation(
+            f"s{i}", {"status_quo": "b"}
+        )
+        for i in range(5)
+    ],
+    "maximizers": [
+        [
+            __import__("mctev.core.situational", fromlist=["Action"]).Action("a"),
+            __import__("mctev.core.situational", fromlist=["Action"]).Action("b"),
+            __import__("mctev.core.situational", fromlist=["Action"]).Action("c"),
+        ]
+        for _ in range(5)
+    ],
+}
+print(f"D_ρ    (selection conventions):    {dispersion_selection_conventions(configs, benchmark['situations'], benchmark['maximizers']):.4f}")
+
+# D_J requires judgment lists
+judgment_lists = [
+    ["a", "b", "a", "b", "a"],
+    ["b", "b", "a", "a", "a"],
+    ["c", "b", "c", "b", "a"],
+]
+print(f"D_J    (judgments):                {dispersion_judgments(judgment_lists):.4f}")
+
+# Full vector
+print("\nFull dispersion vector:")
+full = full_dispersion_vector(
+    configs=configs, recognized_sets=recognized,
+    anchor_states=anchors, benchmark={**benchmark, "judgment_lists": judgment_lists},
+)
+for k, v in full.items():
+    print(f"  {k:12s}: {v:.4f}")
+```
+
+### The MCTEV convergence prediction
+
+The manuscript (§14) predicts:
+
+$$
+D_F < D_\theta, \; D_{\tau^V}, \; D_{\tau^S}, \; D_{\tau^H}, \; D_\rho, \; D_M, \; D_J
+$$
+
+That is: **function recognition should vary less than any Level-2 component**.
+
+```python
+# Check the prediction against the computed values
+predicted_order = full["D_F"] < min(
+    full["D_theta"], full["D_tau_V"], full["D_tau_S"],
+    full["D_tau_H"], full["D_rho"],
+)
+print(f"\nMCTEV convergence prediction holds: {predicted_order}")
+```
+
+### The robustness requirement
+
+The manuscript also requires (§14):
+
+> Each pairwise comparison must be tested for robustness across defensible normalizations.
+
+Different normalizations can change the ordering. The library does not choose a normalization for you; it provides the raw measures, and you choose the normalization that is defensible for your application.
+
+### Self-check 18
+
+- [ ] Run the script; verify all eight measures compute.
+- [ ] Which measure is largest? Which is smallest?
+- [ ] Verify the MCTEV convergence prediction (`D_F` < others) holds in your example.
+
+### Exercise 18.1
+
+Add a fourth configuration `self_regarding` with `weights=[1.0, 0, 0, 0, 0, 0]`. Recompute all eight measures. Does the MCTEV convergence prediction still hold? Which measure changes most?
+
+### Paper reference
+
+Section 14.
 
 ---
 
 # Part VII — Consolidation
 
-## Chapter 17: Exercises
+## Chapter 19: Exercises
 
-A consolidated set of exercises covering all chapters. Work through them in order if you want a structured review.
+A consolidated set of exercises covering all chapters.
 
-### Level 1–3 (Foundations)
+### Level 1–2 (Foundations)
 
-**17.1** Reproduce the Chapter 3 example with a *fourth* action that is a compromise. Does the ordering change for any culture?
+**19.1** Construct a `CulturalConfiguration` with non-uniform `flourishing_thresholds` (e.g., agency at 0.7, others at 0.5). Verify it passes validation.
 
-**17.2** Design a `MoralFunctionProfile` for a "war-time" society where cooperation and conflict management are very high, but care and sustainability are low. Explain, using the framework, why such a society is *non-viable* in the long run.
+**19.2** Show that a configuration with `weights` summing to 1.5 is rejected. Then show that `weights / 1.5` is accepted.
 
-**17.3** Compute the Euclidean distance between the four canonical cultural types. Which pair is closest? Which is furthest? Is `self_regarding` closest to any real type?
+**19.3** For each of the five `SelectionConvention` values, construct a scenario where that convention picks a different action than the others. Report the five choices.
 
-### Viability and Flourishing
+### Level 3 (Situational judgments)
 
-**17.4** For each canonical cultural type, compute the size of the viability kernel. Which is largest?
+**19.4** Write an `action_generator` that returns different actions based on `situation.context["role"]`. Show that `situation.context` changes the correspondence J.
 
-**17.5** Find a cultural parameter vector whose viability kernel is *smaller* than `self_regarding`. Is such a culture possible? What does this say about the degenerate types?
+**19.5** Write a constraint predicate that reads `config.safeguard_thresholds.get("error_rate")`. Show that changing only `safeguard_thresholds["error_rate"]` changes which actions are admissible.
 
-**17.6** Construct a `FlourishingProfile` that fails on exactly two dimensions. Which two?
+### Viability and flourishing
 
-### Collapse and Dynamics
+**19.6** For each of the three threshold families, construct a configuration where the family is set very strict vs. very lenient. Show that the viable fraction depends only on τ^V, not on τ^S or τ^H.
 
-**17.7** Run the Constraint Violation Theorem evaluation with `noise_scale = 0.01` and `noise_scale = 0.10`. How does the estimated $\lambda$ change?
+**19.7** Construct two measurement operators that agree on average but disagree on ordering. Use `within_context_monotone` to detect the disagreement.
 
-**17.8** Modify the Three Societies simulation so that Condition 3 *reintroduces* universalists after collapse. Does the system recover? If so, how long does recovery take?
+### Boundary-Instability
 
-### Case Studies
+**19.8** Run all three designs with the same boundary point and same inward distances. Report the three Δ_ε values. Which is largest?
 
-**17.9** Construct parameter vectors for four historical moral systems: (a) slavery, (b) feudalism, (c) a caste system, (d) a liberal democracy. Run the collapse analysis. Which predicts the highest collapse risk?
+**19.9** Show that Design 3 (kernel-retention) has a different Δ_ε than Design 2 (kernel-to-viability-exit), even when the index boundary is the same (R). Explain why.
 
-**17.10** Model the capital punishment debate as a Level-2 disagreement. Identify the *threshold* at which retentionism becomes a constraint violation. That is: at what weight profile does retentionism stop being a legitimate Level-2 position?
+### Retentionist
 
-### Integration
+**19.10** Design three architectures: A_R (retentionist-permissive), A_moderate (execution only for terrorism), A_A (abolitionist-categorical). Compute R1, R2, R3 for each.
 
-**17.11** Build a `MCTEVSystem` that models a hypothetical "AI safety board" evaluating three deployment decisions in three cultural contexts. Report the policy.
+### Qualifying conditions
 
-**17.12** Extend the collapse dashboard to include three indicators (cooperation, variance, flourishing deficit). Verify the four-panel dashboard with all three.
+**19.11** Design a qualifying condition for `f_coop` that passes the proxy audit. Verify with `proxy_audit`.
 
-## Chapter 18: Capstone Project
+**19.12** Design one that fails the proxy audit. Show the flagged proxy.
 
-### Project: Model a Historical Collapse
+### Dispersion
 
-Choose a historical society that collapsed (candidates: the Roman Republic, the Maya Classic period, the Soviet Union, Easter Island). Model it using the full MCTEV stack:
+**19.13** Compute all eight measures for two configurations that differ **only** in `weights`. Which measures are zero? Which are non-zero?
 
-### Step 1: Historical research (30–45 min)
+**19.14** Verify the MCTEV convergence prediction (`D_F < others`) holds for your example. If it doesn't, explain why.
 
-Answer for your chosen society:
+## Chapter 20: Capstone Project
 
-1. What were its dominant functional priorities? (cooperation, distribution, care, etc.)
-2. What was its **cultural parameter vector**? Estimate the six weights.
-3. Which constraints did it satisfy, and which did it violate?
-4. How does your parameterization compare to slavery, capital punishment, or the canonical types?
+### Project: Model a historical collapse
+
+Choose a historical society that collapsed (Roman Republic, Maya Classic, Soviet Union, Easter Island).
+
+### Step 1: Research (30–45 min)
+
+For your society:
+
+1. What were its **functional priorities**? Estimate the six weights.
+2. What were its **viability thresholds** τ^V? Which functions were near the boundary?
+3. What were its **safeguard thresholds** τ^S? Which procedures were strong/weak?
+4. What were its **flourishing thresholds** τ^H? What was the measurement operator?
+5. What was its **selection convention** ρ_c?
 
 ### Step 2: Model construction (30 min)
 
 ```python
 # capstone_model.py
-from mctev.core.cultural_params import CulturalParameters
-from mctev.core.moral_functions import MoralFunctionProfile
-from mctev.viability.constraints import ViabilityConstraints, default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.viability.kernel import compute_viable_region
+import numpy as np
+from mctev.core.configuration import CulturalConfiguration
+from mctev.core.thresholds import (
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
+)
+from mctev.core.selection import SelectionConvention
+from mctev.core.measurement import LinearMeasurement
 
-# Your chosen society's cultural parameters
-your_society = CulturalParameters.from_dict(
-    {
-        "cooperation":    ...,  # your estimate
-        "conflict":       ...,
-        "distribution":   ...,
-        "care":           ...,
-        "information":    ...,
-        "sustainability": ...,
-    },
+your_society = CulturalConfiguration(
+    weights=np.array([...]),
+    viability_thresholds=ViabilityThresholds.from_dict({...}),
+    safeguard_thresholds=SafeguardThresholds.from_dict({...}),
+    flourishing_thresholds=FlourishingThresholds.from_dict({...}),
+    selection_convention=SelectionConvention.PRECEDENT,
+    measurement_operator=LinearMeasurement(to_core=lambda x: x[:5]),
     name="your_society",
 )
-
-# Its moral profile (at its height)
-moral_profile = MoralFunctionProfile.from_dict({
-    "cooperation":    ...,
-    "conflict":       ...,
-    "distribution":   ...,
-    "care":           ...,
-    "information":    ...,
-    "sustainability": ...,
-})
-
-# Its viability kernel
-kernel = compute_viable_region(
-    constraints=default_constraints(),
-    dynamics=LinearDynamics(),
-    params=your_society,
-    grid_size=5,
-    horizon=100,
-)
-print(f"Viable fraction: {kernel.fraction_viable():.2%}")
 ```
 
-### Step 3: Analysis (30 min)
+### Step 3: Analysis (45 min)
 
 Report:
 
-1. **The constraint diagnosis**: which Level-1 functions did your society violate? What is the severity score?
-2. **The collapse prediction**: what censor rate and $\lambda$ does the analyzer predict?
-3. **The interpretation**: does the prediction match the historical record?
-4. **The limitations**: what assumptions did you make? What would strengthen the analysis?
+1. **Controlled viability kernel**: viable fraction.
+2. **Boundary-Instability (all three designs)**: which is most predictive?
+3. **Flourishing classification**: instantaneous, viable-current, sustainable?
+4. **Dispersion**: which components differ most from the universalist baseline?
 
 ### Step 4: Reflection (15 min)
 
-Write a 1-page analysis answering:
+Answer:
 
-1. What does MCTEV *add* to the historical account?
-2. What does the historical account *add* to MCTEV?
-3. Where does the framework fall short of capturing the historical reality?
-4. What would need to be true for the framework's prediction to be *empirically validated*?
+1. What does MCTEV add to the historical account?
+2. Where does the framework fall short?
+3. What would need to be true for the framework's prediction to be validated?
 
-### Grading rubric (for self-assessment)
+### Grading rubric (self-assessment)
 
-| Criterion | Weight | Description |
-|-----------|--------|-------------|
-| Historical accuracy | 25% | Parameter estimates are grounded in historical research |
-| Framework application | 25% | All four layers (functions, viability, flourishing, collapse) are used |
-| Interpretation quality | 25% | Results are interpreted within the paper's own epistemic limits |
-| Reflection | 25% | Critical evaluation, not just application |
+| Criterion | Weight |
+|---|---|
+| Historical accuracy | 25% |
+| Framework application (all three levels + dynamics) | 25% |
+| Interpretation quality (within epistemic limits) | 25% |
+| Reflection (critical evaluation) | 25% |
 
----
-
-## Chapter 19: Where to Go From Here
-
-### If you want to dig deeper into MCTEV
-
-1. **Read the primary paper** end-to-end. Every formula is now concrete.
-2. **Compare to alternative frameworks**: Rawls's two principles, Sen's capabilities, the Capability Approach, Moral Foundations Theory. What does MCTEV add and what does it miss?
-3. **The philosophical critique**: is MCTEV really an improvement over objectivism, or just a more elaborate relativism? Defend your view.
+## Chapter 21: Where to Go From Here
 
 ### If you want to extend the library
 
 High-impact extensions:
 
-1. **Parametric kernel computation** (parametric viability theory) — replace the grid with parametric methods.
-2. **Bayesian calibration** of thresholds $\tau_i$ and $\tau_H$ from data.
-3. **Adaptive cultural parameters** — allow $\theta_c$ to change based on outcomes.
-4. **Multi-agent simulation with richer environments** — institutions, multiple goods, power dynamics.
-5. **Formal instantiation in COH** — map MCTEV to the COH 9-tuple. The paper (§15.7) identifies this as future work.
+1. **Bayesian calibration** of τ^V, τ^S, τ^H from data.
+2. **Adaptive upward mechanism** implementing the full λ_c update.
+3. **Full COH instantiation** of MCTEV.
+4. **Multi-agent simulation with adaptive cultural transmission** (not just payoff-biased).
+5. **Conformance test suite** for the Section 13 simulation.
+
+### If you want to extend the framework
+
+1. **Meta-level criteria** for choosing between architectures (A_R vs. A_A).
+2. **Cross-context scale-linking maps** for M_c.
+3. **Empirical calibration** of Q_{-i} conditions.
+4. **Non-payoff-biased transmission** in the simulation.
 
 ### If you want to use MCTEV for real problems
 
-1. **Policy design**: use the three-layer architecture to design cross-cultural policies.
-2. **AI alignment**: the constraint layer / parameter layer / inference layer decomposition provides a principled way to distinguish universal from local values.
-3. **Historical analysis**: quantify moral evolution of institutions over time.
-4. **Moral education**: teach students to distinguish Level-1 convergence from Level-2 disagreement.
+1. **Policy design**: the three-layer architecture for cross-cultural policy.
+2. **AI alignment**: the constraint/parameter/inference layer decomposition.
+3. **Historical analysis**: quantify moral evolution over time.
+4. **Moral education**: teach Level-1 vs. Level-2 reasoning.
 
-### Reading list
+### Final thought
 
-**Frameworks compared** (from the paper):
+You have now walked through every major revision in v0.2.0. The key insight that emerged from the manuscript's evolution is:
 
-- Moral Foundations Theory: Haidt (2001), Atari et al. (2023)
-- Capability Approach: Sen (1999), Nussbaum (2011)
-- Viability theory: Aubin (1991), Freidlin & Wentzell (2012)
-- Evolutionary game theory: Skyrms (1996)
-- Geometric Ethics: Bond (2026)
+> **Moral disagreement can be localized.** Level-1 disagreement (about which functions matter) is different from Level-2 disagreement (about weights, thresholds, selection, or measurement) is different from Level-3 disagreement (about a specific case). The library now supports you in distinguishing these three.
 
-**The COH/GISMOL context** (from the paper):
-
-- Wang (2025) — COH 9-tuple
-- Wang (2026) — GISMOL
-- The GISMOL GitHub repository
-
-**Philosophical background**:
-
-- Rawls (1971) — *A Theory of Justice*
-- Scanlon (1998) — *What We Owe to Each Other*
-- Nagel (1986) — *The View from Nowhere*
-
-### Final reflection
-
-You've now worked through every level of the MCTEV framework. Take a moment to notice:
-
-- The framework is *modest*: it doesn't resolve every moral disagreement, and it's explicit about what it doesn't do.
-- The framework is *testable*: every claim has an empirical evaluation path.
-- The framework is *aligned* with but *distinct from* COH/GISMOL: it shares methodology, not formalism.
-
-If you found the framework interesting, the most useful next step is to **use it on a problem you care about**. That's where frameworks earn their keep: not in demonstration, but in application.
+That is the framework's most useful contribution. Use it well.
 
 ---
 
-## Appendix A: Quick Reference Card
+**End of Tutorial.**
 
-```python
-# Setup
-from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CulturalParameters, CULTURAL_TYPES
-from mctev.core.situational import Action, Situation, SituationalJudgment
-from mctev.viability.constraints import ViabilityConstraints, default_constraints
-from mctev.viability.dynamics import LinearDynamics, NonlinearCouplingDynamics
-from mctev.viability.kernel import compute_viable_region
-from mctev.flourishing.dimensions import FlourishingProfile, FlourishingThresholds
-from mctev.collapse.theorem import ConstraintViolationAnalyzer, compare_viable_vs_violating
-from mctev.simulation import ThreeSocietiesConfig, run_three_societies
-from mctev.cases.slavery import evaluate_slavery
-from mctev.cases.capital_punishment import evaluate_capital_punishment
-from mctev.analysis.visualization import (
-    plot_three_societies, plot_survival_curves,
-    plot_viability_grid, plot_flourishing_radar,
-)
-
-# Level 1
-functions = list(MoralFunction)                            # 6 functions
-profile = MoralFunctionProfile.from_dict({...})            # 6-D profile
-
-# Level 2
-culture = CulturalParameters.from_dict({...}, name="...")
-canonical = CULTURAL_TYPES["universalist"]
-
-# Level 3
-lib = MoralUtilityLibrary()
-lib[MoralFunction.COOPERATION] = lambda a, s: ...
-solver = SituationalJudgment(utilities=lib, constraints=None)
-best = solver.judge(situation, actions, culture)
-
-# Viability
-kernel = compute_viable_region(default_constraints(), LinearDynamics(), culture, 5, 100)
-frac = kernel.fraction_viable()
-
-# Flourishing
-profile = FlourishingProfile.from_dict({"W":0.7, "P":0.6, "A":0.5, "S":0.8, "M":0.6})
-th = FlourishingThresholds.default()
-ok = th.is_flourishing(profile)
-deficit = th.deficit(profile)
-
-# Collapse
-results = compare_viable_vs_violating(
-    viable_params=canonical, violating_params=CULTURAL_TYPES["self_regarding"],
-    constraints=default_constraints(), dynamics=LinearDynamics(),
-    n_trials=100, horizon_steps=1000, noise_scale=0.05,
-)
-C, lam = results["violating"].fit_exponential()
-
-# Simulation
-df = run_three_societies(condition=3, seed=42)
-
-# Case studies
-evaluate_slavery().summary()
-evaluate_capital_punishment().summary()
-```
-
----
-
-## Appendix B: Suggested Reading Paths
-
-**If you have 1 hour**: Chapters 1, 3, 7, 13.
-
-**If you have 2 hours**: Chapters 1–7.
-
-**If you have a full day**: All chapters through 16.
-
-**If you're preparing for research**: All chapters, especially 11, 15, 18.
-
-**If you're preparing to extend the library**: Chapters 4–8, 15, plus the User Guide's API reference.
-
----
-
-## Appendix C: Further References
-
-### By chapter
-
-- **Ch. 1**: Paper §1, §7.6, §12
-- **Ch. 2**: Paper §7.1, §7.2
-- **Ch. 3**: Paper §7.4, §7.6
-- **Ch. 4**: Paper §6.2, §6.3
-- **Ch. 5**: Paper §6, §7, §7.3
-- **Ch. 6**: Paper §6.1, §7.4, §12
-- **Ch. 7**: Paper §7.6, §9
-- **Ch. 8**: Paper §7.5, §10
-- **Ch. 9**: Paper §8
-- **Ch. 10**: Paper §9
-- **Ch. 11**: Paper §10, §10.4, §10.5
-- **Ch. 12**: Paper §13
-- **Ch. 13**: Paper §11
-- **Ch. 14**: Paper §12
-- **Ch. 15**: Paper §16
-- **Ch. 16**: Paper §7.6, §9, §13
-
-### By concept
-
-- **Viability theory**: Aubin (1991), Freidlin & Wentzell (2012)
-- **Capabilities**: Sen (1999), Nussbaum (2011)
-- **Moral psychology**: Haidt (2001), Atari et al. (2023), Awad et al. (2018)
-- **COH/GISMOL**: Wang (2025, 2026)
-- **Geometric ethics**: Bond (2026)
-- **Regime shifts**: Scheffer et al. (2009), Dakos et al. (2012)
-
----
-
-**End of tutorial.**
-
-If you've made it here, you've built a working MCTEV system from scratch and can extend it in any direction. Good luck — the framework is now yours to use, critique, and improve.
+If you have completed this tutorial, you have a working understanding of every formal object in the current manuscript. The remaining challenge is **application**: use the framework on a problem you care about. That is where frameworks earn their keep.

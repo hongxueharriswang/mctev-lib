@@ -1,5 +1,9 @@
 """
-Viability constraints V_i(x) ≥ τ_i.
+Viability constraints using the dynamical viability thresholds τ^V.
+
+This module no longer holds safeguard thresholds (they live in
+`mctev.core.thresholds.SafeguardThresholds`) or flourishing thresholds
+(they live in `mctev.core.thresholds.FlourishingThresholds`).
 """
 
 from __future__ import annotations
@@ -9,7 +13,10 @@ from typing import Callable, Dict
 
 import numpy as np
 
-from mctev.core.moral_functions import MORAL_FUNCTION_ORDER, MoralFunction
+from mctev.core.moral_functions import (
+    MORAL_FUNCTION_ORDER, MoralFunction,
+)
+from mctev.core.thresholds import ViabilityThresholds
 
 
 ViabilityFn = Callable[[np.ndarray], float]
@@ -17,32 +24,41 @@ ViabilityFn = Callable[[np.ndarray], float]
 
 @dataclass
 class ViabilityConstraints:
-    """A set of viability constraints {V_i(x) ≥ τ_i}."""
+    """
+    The state-viability constraint set V(λ_c) defined by τ^V.
+
+    Attributes
+    ----------
+    viability_fns : Dict[MoralFunction, ViabilityFn]
+        Per-function indicator V_i(x).
+    thresholds : ViabilityThresholds
+        The dynamical viability thresholds τ^V.
+    """
 
     viability_fns: Dict[MoralFunction, ViabilityFn] = field(
         default_factory=dict
     )
-    thresholds: Dict[MoralFunction, float] = field(default_factory=dict)
+    thresholds: ViabilityThresholds = field(
+        default_factory=lambda: ViabilityThresholds.uniform(0.3)
+    )
 
     def __setitem__(
-        self,
-        f: MoralFunction,
-        pair: tuple,
+        self, f: MoralFunction, fn: ViabilityFn
     ) -> None:
-        fn, tau = pair
         self.viability_fns[f] = fn
-        self.thresholds[f] = float(tau)
 
-    def __getitem__(self, f: MoralFunction) -> tuple:
-        return self.viability_fns[f], self.thresholds[f]
+    def with_thresholds(
+        self, thresholds: ViabilityThresholds
+    ) -> "ViabilityConstraints":
+        return ViabilityConstraints(
+            viability_fns=dict(self.viability_fns), thresholds=thresholds
+        )
 
     def values(self, x: np.ndarray) -> Dict[MoralFunction, float]:
         return {f: fn(x) for f, fn in self.viability_fns.items()}
 
     def violations(
-        self,
-        x: np.ndarray,
-        tol: float = 1e-9,
+        self, x: np.ndarray, tol: float = 1e-9
     ) -> Dict[MoralFunction, float]:
         out: Dict[MoralFunction, float] = {}
         for f, fn in self.viability_fns.items():
@@ -58,9 +74,12 @@ class ViabilityConstraints:
         return float(sum(self.violations(x).values()))
 
 
-def default_constraints() -> ViabilityConstraints:
+def default_constraints(
+    thresholds: ViabilityThresholds = None,
+) -> ViabilityConstraints:
     """Default illustrative constraints on a 6-D indicator vector."""
-    constraints = ViabilityConstraints()
+    thresholds = thresholds or ViabilityThresholds.uniform(0.3)
+    constraints = ViabilityConstraints(thresholds=thresholds)
     for i, f in enumerate(MORAL_FUNCTION_ORDER):
-        constraints[f] = (lambda x, i=i: float(x[i]), 0.3)
+        constraints[f] = (lambda x, i=i: float(x[i]))
     return constraints

@@ -99,3 +99,27 @@ def plot_flourishing_radar(
     ax.set_title("Flourishing profile")
     ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.1))
     return ax
+
+# (existing functions unchanged)
+
+def plot_index_outcome_designs(
+    results: dict,
+    ax=None,
+):
+    """
+    Plot Δ_ε^{K_index → K_out} as a function of inward distance for each
+    of the three designs (indicator_specific, kernel_to_viability_exit,
+    kernel_retention).
+    """
+    import matplotlib.pyplot as plt
+    ax = ax or plt.gca()
+    for name, res in results.items():
+        ax.plot(
+            res.inward_distances, res.survival_probabilities,
+            marker="o", label=name,
+        )
+    ax.set_xlabel("Inward distance ε from index boundary")
+    ax.set_ylabel("Survival probability q_{T,K_out}")
+    ax.set_title("Index/outcome-set designs (Section 10.6)")
+    ax.legend()
+    return ax

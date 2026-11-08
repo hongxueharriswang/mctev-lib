@@ -1,13 +1,5 @@
 from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
-    DIMENSIONS,
-    DIMENSION_NAMES,
+    FlourishingProfile, FlourishingDimension, DIMENSIONS,
 )
 
-__all__ = [
-    "FlourishingProfile",
-    "FlourishingThresholds",
-    "DIMENSIONS",
-    "DIMENSION_NAMES",
-]
+__all__ = ["FlourishingProfile", "FlourishingDimension", "DIMENSIONS"]

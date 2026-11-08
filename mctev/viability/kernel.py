@@ -1,7 +1,5 @@
 """
-Viability kernel computation.
-
-The feasible moral region R is the viability kernel of (V, F).
+Viability kernel computed from the full configuration λ_c.
 """
 
 from __future__ import annotations
@@ -11,7 +9,7 @@ from typing import Optional
 
 import numpy as np
 
-from mctev.core.cultural_params import CulturalParameters
+from mctev.core.configuration import CulturalConfiguration
 from mctev.core.moral_functions import N_FUNCTIONS
 from mctev.viability.constraints import ViabilityConstraints
 from mctev.viability.dynamics import Dynamics
@@ -19,11 +17,9 @@ from mctev.viability.dynamics import Dynamics
 
 @dataclass
 class ViabilityKernel:
-    """Approximate viability kernel R ⊆ ℝ^n."""
-
     constraints: ViabilityConstraints
     dynamics: Dynamics
-    params: CulturalParameters
+    configuration: CulturalConfiguration
     horizon: int = 500
     dt: float = 0.01
     grid_size: int = 8
@@ -43,7 +39,7 @@ class ViabilityKernel:
         for _ in range(self.horizon):
             if not self.constraints.is_satisfied(x):
                 return False
-            x = self.dynamics.step(x, self.params, self.dt)
+            x = self.dynamics.step(x, self.configuration, self.dt)
             x = np.clip(x, 0.0, 1.0)
         return True
 
@@ -64,39 +60,18 @@ class ViabilityKernel:
             self.build()
         return float(self._mask.mean())
 
-    def sample_viable(
-        self,
-        n_samples: int = 100,
-        rng: Optional[np.random.Generator] = None,
-    ) -> np.ndarray:
-        rng = rng or np.random.default_rng(0)
-        accepted = []
-        attempts = 0
-        while len(accepted) < n_samples and attempts < n_samples * 100:
-            x = rng.uniform(0, 1, size=N_FUNCTIONS)
-            if (
-                self.constraints.is_satisfied(x)
-                and self.trajectory_stays_viable(x)
-            ):
-                accepted.append(x)
-            attempts += 1
-        if not accepted:
-            return np.empty((0, N_FUNCTIONS))
-        return np.array(accepted)
-
 
 def compute_viable_region(
     constraints: ViabilityConstraints,
     dynamics: Dynamics,
-    params: CulturalParameters,
+    configuration: CulturalConfiguration,
     grid_size: int = 8,
     horizon: int = 500,
 ) -> ViabilityKernel:
-    """Convenience constructor."""
     kernel = ViabilityKernel(
         constraints=constraints,
         dynamics=dynamics,
-        params=params,
+        configuration=configuration,
         horizon=horizon,
         grid_size=grid_size,
     )

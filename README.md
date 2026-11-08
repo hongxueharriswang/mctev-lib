@@ -1,66 +1,144 @@
 # mctev-lib
 
-> **Reference implementation of the Multi-Level Computational Theory of Ethics (MCTEV)**
+> **Reference implementation of the Multi-Level Computational Theory of Ethics (MCTEV), v0.2.0**
 
-A Python library for formalizing, simulating, and empirically evaluating the three-level architecture of ethics proposed in *"Toward a Computational Science of Ethics: A Multi-Level Theory of Ethical Variation and Universal Moral Principles."*
+A Python library for formalizing, simulating, and empirically evaluating the three-level ethical architecture described in *"Toward a Computational Science of Ethics: A Multi-Level Computational Theory of Ethical Variation and Candidate Level 1 Moral Functions."*
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](CHANGELOG.md)
 
 ---
 
 ## Table of Contents
 
+- [What's new in 0.2.0](#whats-new-in-020)
 - [Overview](#overview)
+- [Conceptual alignment with the manuscript](#conceptual-alignment-with-the-manuscript)
 - [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Conceptual Architecture](#conceptual-architecture)
-- [Module Reference](#module-reference)
+- [Quick start](#quick-start)
+- [Core concepts](#core-concepts)
+- [Module reference](#module-reference)
 - [Examples](#examples)
-- [Reproducing Paper Results](#reproducing-paper-results)
-- [Design Principles](#design-principles)
+- [Reproducing the paper's results](#reproducing-the-papers-results)
+- [Migration from v0.1.0](#migration-from-v010)
+- [Design commitments](#design-commitments)
 - [Testing](#testing)
 - [Citation](#citation)
 - [License](#license)
 
 ---
 
+## What's new in 0.2.0
+
+v0.2.0 brings the library into alignment with the current manuscript. The formal structures below are now **first-class objects**:
+
+| Manuscript refinement | Library module | Version |
+|---|---|---|
+| Three threshold families \(\boldsymbol{\tau}^V, \boldsymbol{\tau}^S, \boldsymbol{\tau}^H\) | `mctev.core.thresholds` | new |
+| Full Level-2 configuration \(\lambda_c = (\theta_c, \boldsymbol{\tau}_c^V, \boldsymbol{\tau}_c^S, \boldsymbol{\tau}_c^H, \rho_c, M_c)\) | `mctev.core.configuration` | new |
+| Selection convention \(\rho_c\) | `mctev.core.selection` | new |
+| Measurement operator \(M_c\) with cross-context comparability | `mctev.core.measurement` | new |
+| Qualifying condition \(Q_{-i}\) + proxy audit | `mctev.core.qualifying` | new |
+| Boundary-Instability with index/outcome sets | `mctev.instability` | new (replaces `collapse`) |
+| Retentionist conditions (R1)–(R3) | `mctev.retentionist` | new |
+| Situation-dependent action sets \(\mathcal{A}(s)\) | `mctev.core.situational` | revised |
+| Dispersion measures \(D_F, \ldots, D_J\) | `mctev.analysis.metrics` | revised |
+| Set-specific survival \(q_{T,\mathcal{K}_{\text{out}}}^\pi\) | `mctev.instability.survival` | new |
+
+**Backward compatibility is preserved** through deprecation shims (`CulturalParameters`, `collapse`, legacy import paths). Every breaking change is documented in [`CHANGELOG.md`](CHANGELOG.md) and [`MIGRATION.md`](MIGRATION.md).
+
+---
+
 ## Overview
 
-The **Multi-Level Computational Theory of Ethics (MCTEV)** proposes that moral phenomena are organized across three interconnected levels:
+MCTEV formalizes ethics as a three-level computational system:
 
-| Level | Concept | Formal object | Library module |
-|-------|---------|---------------|----------------|
-| **Level 1** | Candidate universal moral functions | Constraint set $\mathcal{V}$, viability kernel $\mathcal{R}$ | `mctev.core.moral_functions`, `mctev.viability` |
-| **Level 2** | Cultural parameter configurations | Weight vector $\theta_c \in \Theta_{\text{viable}}$ | `mctev.core.cultural_params` |
-| **Level 3** | Situational judgments | Constrained optimization $j(s; \theta_c)$ | `mctev.core.situational` |
+```
+┌────────────────────────────────────────────────────────────────────┐
+│  LEVEL 1 — Candidate Level 1 moral functions and architecture A    │
+│  ────────────────────────────────────────────────────────────────  │
+│  ℱ₁ = {f_coop, f_conflict, f_dist, f_care, f_info, f_sustain}      │
+│  A = (ℱ₁, T_V^{L1}, T_S^{L1}, T_H^{L1}, C^{L1},                    │
+│       S^{dom}, S^{req}, P_A, M_A, Q)                               │
+│                                                                    │
+│                     constrains                                     │
+│                        ▼                                           │
+│  LEVEL 2 — Cultural-institutional configuration λ_c               │
+│  ────────────────────────────────────────────────────────────────  │
+│  λ_c = (θ_c, τ^V, τ^S, τ^H, ρ_c, M_c)                              │
+│       │    │    │    │    │    │                                   │
+│       │    │    │    │    │    └─ measurement operator              │
+│       │    │    │    │    └────── selection convention              │
+│       │    │    │    └─────────── flourishing thresholds            │
+│       │    │    └──────────────── safeguard thresholds              │
+│       │    └───────────────────── dynamical viability thresholds    │
+│       └────────────────────────── compensatory weights              │
+│                                                                    │
+│                     constrains                                     │
+│                        ▼                                           │
+│  LEVEL 3 — Situational judgment                                    │
+│  ────────────────────────────────────────────────────────────────  │
+│  J(s; A, λ_c) = argmax_{a ∈ A(s) ∩ C(s; A, τ^S)}                   │
+│                 Σ_f θ_c,f · u_f(a, s)                              │
+│                                                                    │
+│  j(s; A, λ_c) = σ_{ρ_c}( J(s; A, λ_c), s )                         │
+└────────────────────────────────────────────────────────────────────┘
+```
 
-The library operationalizes the paper's central claims:
+The library supports:
 
-1. **Functional universals**: Six candidate moral functions derived from the functional problems any enduring society must solve.
-2. **Feasible moral region**: The viability kernel of social dynamics — the set of states from which some policy can keep a society viable forever.
-3. **Measurable flourishing**: A five-dimensional construct $H = (W, P, A, S, M)$ with componentwise thresholds.
-4. **Constraint Violation Theorem (empirical)**: Sustained violations of viability constraints predict exponential survival decay.
-5. **Two case studies**: Slavery (constraint violation and collapse pressures) and capital punishment (legitimate Level-2 disagreement over Level-1 functions).
+- **Representation** of any moral system as a full \(\lambda_c\) configuration under a fixed architecture \(\mathfrak{A}\).
+- **Reasoning** about specific situations under situation-dependent action sets \(\mathcal{A}(s)\).
+- **Simulation** of moral dynamics (the Three Societies public-goods model).
+- **Evaluation** of viability through the controlled viability kernel \(\mathcal{R}(\lambda_c; \Pi)\).
+- **Boundary-Instability analysis** with distinct index-boundary and outcome-set designs.
+- **Retentionist / abolitionist comparison** via conditions (R1)–(R3).
+- **Dispersion quantification** across the eight type-appropriate measures \(D_F, \ldots, D_J\).
 
-The framework is **methodologically aligned with, but not formally derived from** the [COH/GISMOL](https://github.com/hongxueharriswang/gismol-lib) research program on hierarchical computational explanations of complex systems.
+---
+
+## Conceptual alignment with the manuscript
+
+Every public class corresponds to a formal object in the paper. The table below maps the reader directly to the relevant section.
+
+| Manuscript § | Formal object | Library class / function |
+|---|---|---|
+| §6.3.1 | \(S_i^{\text{viab}}\) (descriptive viability) | *conceptual; supplied by the user* |
+| §6.3.2 | \(S_i^{\text{qual}}\), \(Q_{-i}\), proxy audit | `QualifyingCondition`, `QualifyingConditions`, `proxy_audit` |
+| §7.1 | Threshold families \(\mathcal{T}_V^{L1}, \mathcal{T}_S^{L1}, \mathcal{T}_H^{L1}\) | `ViabilityThresholds`, `SafeguardThresholds`, `FlourishingThresholds` |
+| §7.2 | Full configuration \(\lambda_c\) | `CulturalConfiguration` |
+| §7.4 | Selection function \(\sigma_{\rho_c}\) | `SelectionConvention`, `select_action` |
+| §7.5 | Controlled viability kernel \(\mathcal{R}(\lambda_c; \Pi)\) | `ViabilityKernel`, `compute_viable_region` |
+| §8.2 | Measurement operator \(M_c\) | `MeasurementOperator`, `LinearMeasurement` |
+| §8.2 | Cross-context comparability | `validate_cross_context_comparability` |
+| §8.4 | Flourishing region \(\mathcal{F}(\lambda_c)\) | `FlourishingProfile` |
+| §9.2 | Witness argument, stabilization time | *conceptual; see `FlourishingProfile`* |
+| §10.4 | Set-specific survival \(q_{T,\mathcal{K}_{\text{out}}}^\pi\) | `set_specific_survival` |
+| §10.6 | Three designs (indicator, kernel-to-exit, kernel-retention) | `build_three_designs`, `BoundaryInstabilityAnalyzer` |
+| §10.6 | Index boundary \(\partial\mathcal{K}_{\text{index}}\) | `IndicatorSafeSet`, `KernelSafeSet` |
+| §12.3 | Retentionist conditions (R1)–(R3) | `check_R1`, `check_R2`, `check_R3`, `anti_triviality_filter` |
+| §14 | Dispersion measures \(D_F,\ldots,D_J\) | `mctev.analysis.metrics` |
 
 ---
 
 ## Installation
 
-### From a local copy
+### From GitHub (v0.2.0)
 
 ```bash
-git clone <repository-url> mctev-lib
+git clone https://github.com/hongxueharriswang/mctev-lib.git
 cd mctev-lib
+python -m venv .mctev-venv
+source .mctev-venv/bin/activate
 pip install -e .
 ```
 
-### With development dependencies
+### Development install
 
 ```bash
 pip install -e ".[dev]"
+pytest tests/ -v
 ```
 
 ### Requirements
@@ -73,13 +151,14 @@ pip install -e ".[dev]"
 
 ---
 
-## Quick Start
+## Quick start
 
-### Judging a situation under a cultural configuration
+### Example 1: Level-3 judgment with a full configuration
 
 ```python
+from mctev.core.configuration import default_configuration
 from mctev.core.moral_functions import MoralFunction, MoralUtilityLibrary
-from mctev.core.cultural_params import CULTURAL_TYPES
+from mctev.core.selection import SelectionConvention
 from mctev.core.situational import Action, Situation, SituationalJudgment
 
 # Define per-function utilities
@@ -87,310 +166,290 @@ lib = MoralUtilityLibrary()
 lib[MoralFunction.COOPERATION] = lambda a, s: float(a.payload)
 lib[MoralFunction.REPRODUCTION_CARE] = lambda a, s: 1.0 - float(a.payload)
 
-# Pick a cultural parameter configuration
-params = CULTURAL_TYPES["universalist"]
-
-# Build the Level-3 solver and evaluate
-solver = SituationalJudgment(utilities=lib)
-actions = [Action("low", 0.2), Action("high", 0.8)]
-best = solver.judge(Situation("test"), actions, params)
-
-print(best.name)  # 'high' for a universalist
-```
-
-### Diagnosing a moral system
-
-```python
-from mctev.cases.slavery import evaluate_slavery
-from mctev.cases.capital_punishment import evaluate_capital_punishment
-
-print(evaluate_slavery().summary())
-print()
-print(evaluate_capital_punishment().summary())
-```
-
-### Running the Three Societies simulation
-
-```python
-from mctev.simulation import ThreeSocietiesConfig, run_three_societies
-
-config = ThreeSocietiesConfig(n_agents=30, n_rounds=200)
-df = run_three_societies(condition=3, config=config, seed=42)
-
-print(df.tail())
-print("Collapsed:", df["collapsed"].iloc[-1])
-```
-
-### Evaluating the Constraint Violation Theorem empirically
-
-```python
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-from mctev.collapse.theorem import compare_viable_vs_violating
-
-results = compare_viable_vs_violating(
-    viable_params=CULTURAL_TYPES["universalist"],
-    violating_params=CULTURAL_TYPES["self_regarding"],
-    constraints=default_constraints(),
-    dynamics=LinearDynamics(),
-    n_trials=100,
-    horizon_steps=2000,
+# Build a full configuration λ_c
+config = default_configuration(
+    name="universalist",
+    weights=[0.30, 0.20, 0.20, 0.15, 0.10, 0.05],
+    viability_value=0.30,
+    safeguard_values={"error_rate": 0.05},
+    flourishing_value=0.50,
+    selection=SelectionConvention.STATUS_QUO,
 )
 
-print(results["viable"].summary())
-print(results["violating"].summary())
+# Judge under the full configuration
+solver = SituationalJudgment(utilities=lib)
+best = solver.judge(
+    Situation("allocation", {"status_quo": "moderate"}),
+    [Action("selfish", 0.2), Action("moderate", 0.5), Action("generous", 0.8)],
+    config,
+)
+print(best.name)  # respects ρ_c = STATUS_QUO
+```
+
+### Example 2: Boundary-Instability with the three designs
+
+```python
+import numpy as np
+from mctev.core.configuration import default_configuration
+from mctev.core.moral_functions import MoralFunction
+from mctev.viability.constraints import default_constraints
+from mctev.viability.dynamics import LinearDynamics
+from mctev.viability.kernel import compute_viable_region
+from mctev.instability.analyzer import build_three_designs
+
+config = default_configuration(name="universalist")
+constraints = default_constraints()
+dynamics = LinearDynamics()
+
+kernel = compute_viable_region(
+    constraints=constraints, dynamics=dynamics,
+    configuration=config, grid_size=5, horizon=150,
+)
+
+designs = build_three_designs(
+    dynamics=dynamics, configuration=config,
+    viability_constraints=constraints, viability_kernel=kernel,
+    function=MoralFunction.COOPERATION,
+)
+
+for name, analyzer in designs.items():
+    print(f"\n=== {name} ===")
+    result = analyzer.design_B(
+        boundary_point=np.full(6, 0.32),
+        inward_distances=[0.02, 0.05, 0.10, 0.20],
+        horizon_steps=300, n_trials=20,
+    )
+    print(result.summary())
+```
+
+### Example 3: Retentionist conditions (R1)–(R3)
+
+```python
+from mctev.cases.capital_punishment import evaluate_capital_punishment
+
+diag = evaluate_capital_punishment()
+print(diag.summary())
+# R1 (retentionist non-exclusion): True
+# R1 (abolitionist non-exclusion): False
+# R2 (weak non-vacuity):           True
+# R3 (strong non-vacuity):         False
 ```
 
 ---
 
-## Conceptual Architecture
+## Core concepts
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  LEVEL 1:  Candidate Universal Moral Functions                  │
-│  ─────────────────────────────────────────────────────────────  │
-│  f_coop    f_conflict    f_dist    f_care    f_info    f_sustain│
-│      │         │            │          │         │         │    │
-│      └─────────┴────────────┴──────────┴─────────┴─────────┘    │
-│                              │                                  │
-│                     define feasible region R (viability kernel) │
-│                              │  ← constraints propagate down    │
-│                              ▼                                  │
-│  LEVEL 2:  Cultural Parameter Configurations  θ_c ∈ Θ_viable    │
-│  ─────────────────────────────────────────────────────────────  │
-│  universalist  collectivist  individualist  self_regarding      │
-│                              │                                  │
-│                     constrain situational judgment              │
-│                              │  ← adaptation propagates up      │
-│                              ▼                                  │
-│  LEVEL 3:  Situational Judgments  j(s; θ_c)                     │
-│  ─────────────────────────────────────────────────────────────  │
-│  argmax_a Σ_f θ_{c,f} · u_f(a, s)   subject to  a ∈ C(s)        │
-└─────────────────────────────────────────────────────────────────┘
+### The full configuration \(\lambda_c\)
+
+The **only** Level-2 object in v0.2.0 is `CulturalConfiguration`. It carries all six components:
+
+```python
+from mctev.core.configuration import CulturalConfiguration, default_configuration
+from mctev.core.thresholds import (
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
+)
+from mctev.core.selection import SelectionConvention
+from mctev.core.measurement import LinearMeasurement
+import numpy as np
+
+config = CulturalConfiguration(
+    weights=np.array([0.30, 0.20, 0.20, 0.15, 0.10, 0.05]),
+    viability_thresholds=ViabilityThresholds.uniform(0.30),
+    safeguard_thresholds=SafeguardThresholds.from_dict({"error_rate": 0.05}),
+    flourishing_thresholds=FlourishingThresholds.uniform(0.50),
+    selection_convention=SelectionConvention.STATUS_QUO,
+    measurement_operator=LinearMeasurement(to_core=lambda x: x[:5]),
+    name="universalist",
+)
 ```
 
-The **Ethical Constraint Hierarchy Principle** — *constraints propagate downward, adaptation propagates upward* — is the mechanism the framework shares with COH/GISMOL, though MCTEV is not a formal instantiation of the COH 9-tuple.
+The weights must lie in the probability simplex \(\Delta^5\); `__post_init__` enforces this.
+
+### Three threshold families (do not conflate them)
+
+```python
+# τ^V — dynamical viability: state-level constraint V(λ_c)
+viability = ViabilityThresholds.from_dict({"cooperation": 0.4, "care": 0.3})
+
+# τ^S — safeguard: action-level constraint C(s; A, τ^S)
+safeguard = SafeguardThresholds.from_dict({"error_rate": 0.05, "disparity": 0.10})
+
+# τ^H — flourishing: membership in F(λ_c)
+flourishing = FlourishingThresholds.from_dict({"W": 0.5, "P": 0.5, "A": 0.6})
+```
+
+These are **not interchangeable**. Each acts on a different object:
+
+| Family | Acts on | Example |
+|---|---|---|
+| \(\boldsymbol{\tau}^V\) | States | Minimum cooperation rate for societal viability |
+| \(\boldsymbol{\tau}^S\) | Actions | Wrongful-conviction rate threshold in a capital case |
+| \(\boldsymbol{\tau}^H\) | States | Minimum agency for flourishing |
+
+### Selection conventions \(\rho_c\)
+
+Five built-in conventions resolve ties among maximizers:
+
+```python
+from mctev.core.selection import SelectionConvention, select_action
+
+# Supported conventions:
+#   PRECEDENT           — choose closest to previous action
+#   MINIMUM_INTERVENTION — choose smallest-payload maximizer
+#   STATUS_QUO          — choose the status-quo action if it maximizes
+#   LEXICOGRAPHIC       — choose by a declared secondary key
+#   RANDOM              — uniform among maximizers (seeded)
+```
+
+### Qualifying conditions \(Q_{-i}\)
+
+The qualifying condition \(Q_{-i}\) excludes the target function \(f_i\) and must satisfy the **definitional-independence** requirement:
+
+```python
+from mctev.core.moral_functions import MoralFunction
+from mctev.core.qualifying import (
+    QualifyingConditions, MemberInclusiveViability, proxy_audit,
+)
+import numpy as np
+
+conditions = QualifyingConditions()
+conditions[MoralFunction.RESOURCE_DISTRIBUTION] = MemberInclusiveViability(
+    target_function=MoralFunction.RESOURCE_DISTRIBUTION,
+    welfare_index=lambda x: np.array([x[0], x[3]]),
+    minimum_member_welfare=0.3,
+)
+
+# Run the proxy audit
+report = proxy_audit(conditions, MoralFunction.RESOURCE_DISTRIBUTION)
+print(report.summary())  # PASS or FAIL
+```
+
+### Boundary-Instability: index boundary vs outcome set
+
+The key distinction of Section 10.6: the set whose **boundary** indexes proximity need not be the set whose **survival** is evaluated.
+
+```python
+from mctev.instability.safe_sets import IndicatorSafeSet, KernelSafeSet
+from mctev.instability.analyzer import BoundaryInstabilityAnalyzer
+
+# Design 1: index = V_i, outcome = V
+analyzer_1 = BoundaryInstabilityAnalyzer(
+    dynamics=dyn, configuration=config,
+    index_set=IndicatorSafeSet(...),  # V_i(λ_c)
+    outcome_set=viability_set,        # V(λ_c)
+)
+
+# Design 2: index = R, outcome = V (kernel-to-viability-exit)
+analyzer_2 = BoundaryInstabilityAnalyzer(
+    dynamics=dyn, configuration=config,
+    index_set=KernelSafeSet(kernel=kernel),  # R(λ_c; Π)
+    outcome_set=viability_set,                # V(λ_c)
+)
+
+# Design 3: index = R, outcome = R (kernel-retention; reported separately)
+analyzer_3 = BoundaryInstabilityAnalyzer(
+    dynamics=dyn, configuration=config,
+    index_set=KernelSafeSet(kernel=kernel),
+    outcome_set=KernelSafeSet(kernel=kernel),
+)
+```
+
+### Retentionist conditions (R1)–(R3)
+
+```python
+from mctev.retentionist.architecture import (
+    RetentionistArchitecture, AbolitionistArchitecture,
+)
+from mctev.retentionist.conditions import (
+    check_R1, check_R2, check_R3, anti_triviality_filter,
+)
+
+A_R = RetentionistArchitecture(name="A_R", constraint_predicate=...)
+A_A = AbolitionistArchitecture(name="A_A", constraint_predicate=...)
+
+# R1: architectural non-exclusion
+assert check_R1(A_R) is True
+assert check_R1(A_A) is False
+
+# R2/R3 require test situations and an action generator
+test_sits = anti_triviality_filter(raw_test_situations)
+R2 = check_R2(A_R, configs, test_sits, action_gen)
+R3 = check_R3(A_R, configs, test_sits, action_gen)
+```
 
 ---
 
-## Module Reference
+## Module reference
 
 ### `mctev.core`
 
-The three-level heart of the library.
-
-#### `mctev.core.moral_functions`
-
-| Symbol | Description |
-|--------|-------------|
-| `MoralFunction` | Enum of the six candidate universal moral functions |
-| `MORAL_FUNCTION_ORDER` | Canonical list ordering for vectors and matrices |
-| `N_FUNCTIONS` | Constant `= 6` |
-| `MoralFunctionProfile` | Frozen dataclass; vector of contributions in $[0,1]^6$ |
-| `MoralUtilityLibrary` | Library of per-function utility callables $u_f(a, s)$ |
-
-```python
-from mctev.core.moral_functions import MoralFunction, MoralFunctionProfile
-
-profile = MoralFunctionProfile.from_dict({"cooperation": 0.9, "care": 0.7})
-print(profile.dominance())  # fraction of functions above 0.5
-```
-
-#### `mctev.core.cultural_params`
-
-| Symbol | Description |
-|--------|-------------|
-| `CulturalParameters` | Weight vector $\theta_c$ over the six functions |
-| `CULTURAL_TYPES` | Dictionary of canonical types |
-| `CulturalParametersRegion` | Convex region in parameter space |
-| `get_cultural_type(name)` | Retrieve a canonical type by name |
-
-Available canonical types:
-
-- `universalist` — balanced across all six functions
-- `collectivist` — emphasizes care and cooperation
-- `individualist` — emphasizes distribution and information
-- `self_regarding` — degenerate: prioritizes only cooperation (illustrative)
-
-#### `mctev.core.situational`
-
-| Symbol | Description |
-|--------|-------------|
-| `Action` | Named action with optional payload |
-| `Situation` | Named situation with context dictionary |
-| `SituationalJudgment` | Solver implementing $j(s;\theta_c)$ |
-
-```python
-solver = SituationalJudgment(utilities=lib)
-ranking = solver.rank(situation, actions, params)
-for score, action in ranking:
-    print(f"{score:+.3f}  {action.name}")
-```
-
-#### `mctev.core.hierarchy`
-
-| Symbol | Description |
-|--------|-------------|
-| `MCTEVSystem` | Combines all three levels in one object |
-
-```python
-from mctev.core.hierarchy import MCTEVSystem
-
-system = MCTEVSystem.from_type("universalist", utilities=lib)
-print(system.is_viable())
-print(system.judge(Situation("s"), actions))
-```
-
----
+| Module | Public API |
+|---|---|
+| `moral_functions` | `MoralFunction`, `MoralFunctionProfile`, `MoralUtilityLibrary`, `MORAL_FUNCTION_ORDER`, `N_FUNCTIONS` |
+| `thresholds` | `ViabilityThresholds`, `SafeguardThresholds`, `FlourishingThresholds`, `ThresholdFamilies` |
+| `configuration` | `CulturalConfiguration`, `default_configuration` |
+| `selection` | `SelectionConvention`, `select_action` |
+| `measurement` | `MeasurementOperator`, `LinearMeasurement`, `validate_cross_context_comparability` |
+| `qualifying` | `QualifyingCondition`, `MemberInclusiveViability`, `MinimumFlourishing`, `QualifyingConditions`, `proxy_audit` |
+| `situational` | `Situation`, `Action`, `SituationalJudgment`, `ConstraintPredicate`, `ActionGenerator` |
+| `hierarchy` | `MCTEVSystem` |
+| `cultural_params` | *(deprecated shim)* `CulturalParameters`, `CULTURAL_TYPES` |
 
 ### `mctev.viability`
 
-Feasible moral region $\mathcal{R} = \text{Viab}(\mathcal{V}, F)$.
+| Module | Public API |
+|---|---|
+| `constraints` | `ViabilityConstraints`, `default_constraints` |
+| `dynamics` | `Dynamics`, `LinearDynamics`, `NonlinearCouplingDynamics` |
+| `kernel` | `ViabilityKernel`, `compute_viable_region` |
 
-#### `mctev.viability.constraints`
+### `mctev.instability` *(replaces `mctev.collapse`)*
 
-| Symbol | Description |
-|--------|-------------|
-| `ViabilityConstraints` | Container for $\{V_i(\mathbf{x}) \ge \tau_i\}$ |
-| `default_constraints()` | Illustrative constraints with $\tau_i = 0.3$ |
+| Module | Public API |
+|---|---|
+| `safe_sets` | `SafeSet`, `IndicatorSafeSet`, `KernelSafeSet` |
+| `survival` | `set_specific_survival` |
+| `analyzer` | `BoundaryInstabilityAnalyzer`, `InstabilityResult`, `build_three_designs`, `THREE_DESIGNS` |
 
-```python
-from mctev.viability.constraints import default_constraints
-import numpy as np
+### `mctev.retentionist`
 
-constraints = default_constraints()
-constraints.is_satisfied(np.array([0.5]*6))    # True
-constraints.violations(np.array([0.1]*6))      # dict of deficits
-```
-
-#### `mctev.viability.dynamics`
-
-| Symbol | Description |
-|--------|-------------|
-| `Dynamics` | Abstract base class |
-| `LinearDynamics` | $\dot x = Ax + B\theta_c - c \cdot x(1-x)$ |
-| `NonlinearCouplingDynamics` | Coupled indicator dynamics |
-
-#### `mctev.viability.kernel`
-
-| Symbol | Description |
-|--------|-------------|
-| `ViabilityKernel` | Grid-based approximation of $\mathcal{R}$ |
-| `compute_viable_region(...)` | Convenience constructor |
-
-```python
-from mctev.viability.kernel import compute_viable_region
-from mctev.core.cultural_params import CULTURAL_TYPES
-from mctev.viability.constraints import default_constraints
-from mctev.viability.dynamics import LinearDynamics
-
-kernel = compute_viable_region(
-    constraints=default_constraints(),
-    dynamics=LinearDynamics(),
-    params=CULTURAL_TYPES["universalist"],
-    grid_size=6,
-    horizon=200,
-)
-print(f"Viable fraction: {kernel.fraction_viable():.2%}")
-```
-
----
+| Module | Public API |
+|---|---|
+| `architecture` | `Architecture`, `RetentionistArchitecture`, `AbolitionistArchitecture` |
+| `conditions` | `check_R1`, `check_R2`, `check_R3`, `CapitalActionSet`, `evaluate_test_situations`, `anti_triviality_filter` |
 
 ### `mctev.flourishing`
 
-Five-dimensional flourishing construct with componentwise thresholds.
+| Module | Public API |
+|---|---|
+| `dimensions` | `FlourishingProfile`, `FlourishingDimension`, `DIMENSIONS` |
 
-| Symbol | Description |
-|--------|-------------|
-| `FlourishingProfile` | Vector $H = (W,P,A,S,M) \in [0,1]^5$ |
-| `FlourishingThresholds` | Threshold vector $\tau_H$ |
-| `DIMENSIONS` | `["W","P","A","S","M"]` |
-| `DIMENSION_NAMES` | Human-readable dimension names |
-
-```python
-from mctev.flourishing.dimensions import (
-    FlourishingProfile, FlourishingThresholds
-)
-
-p = FlourishingProfile.from_dict({"W": 0.7, "P": 0.6, "A": 0.5, "S": 0.8, "M": 0.6})
-th = FlourishingThresholds.default()
-print(th.is_flourishing(p))   # True
-print(th.deficit(p))          # 0.0
-```
-
----
-
-### `mctev.collapse`
-
-Empirical evaluation of the Constraint Violation Theorem.
-
-| Symbol | Description |
-|--------|-------------|
-| `ConstraintViolationAnalyzer` | Run many noisy trajectories |
-| `ExitTimeResult` | Survival function, exponential fit |
-| `compare_viable_vs_violating(...)` | Side-by-side comparison helper |
-
-```python
-result = analyzer.simulate(x0_samples, horizon_steps=2000)
-print(result.summary())
-# ExitTimeResult(...)
-#   mean exit time: 4.317
-#   censor rate: 12.00%
-#   exponential fit: C=1.021, λ=0.184
-```
-
----
-
-### `mctev.simulation`
-
-The Three Societies public goods simulation from Section 13.
-
-| Symbol | Description |
-|--------|-------------|
-| `AgentType` | `UNIVERSALIST`, `COLLECTIVIST`, `INDIVIDUALIST`, `SELF_REGARDING` |
-| `Agent` | Individual public goods player |
-| `PublicGoodsGame` | Game orchestrator |
-| `ThreeSocietiesConfig` | Configuration dataclass |
-| `run_three_societies(...)` | Returns a `pandas.DataFrame` |
-
-Conditions:
-- **1** — homogeneous viable (all universalists)
-- **2** — heterogeneous viable (equal mix of U, C, I)
-- **3** — invasion by self-regarding agents
-
----
-
-### `mctev.cases`
-
-Two worked case studies from the paper.
-
-| Symbol | Description |
-|--------|-------------|
-| `evaluate_slavery()` | Returns a `SlaveryDiagnosis` |
-| `evaluate_capital_punishment()` | Returns a `CapitalPunishmentDiagnosis` |
-
----
+*(Note: `FlourishingThresholds` now lives in `mctev.core.thresholds`; the legacy import from `mctev.flourishing.dimensions` continues to work but is deprecated.)*
 
 ### `mctev.analysis`
 
-Metrics and visualization.
+| Module | Public API |
+|---|---|
+| `metrics` | `dispersion_function_recognition` (\(D_F\)), `dispersion_weights` (\(D_\theta\)), `dispersion_viability_thresholds` (\(D_{\tau^V}\)), `dispersion_safeguard_thresholds` (\(D_{\tau^S}\)), `dispersion_flourishing_thresholds` (\(D_{\tau^H}\)), `dispersion_selection_conventions` (\(D_\rho\)), `dispersion_measurement_operators` (\(D_M\)), `dispersion_judgments` (\(D_J\)), `full_dispersion_vector`, `aitchison_distance` |
+| `visualization` | `plot_three_societies`, `plot_survival_curves`, `plot_viability_grid`, `plot_flourishing_radar`, `plot_index_outcome_designs` |
 
-| Symbol | Description |
-|--------|-------------|
-| `convergence_index(profiles)` | Mean pairwise cosine similarity |
-| `divergence_index(profiles)` | `1 − convergence_index` |
-| `cultural_distance_matrix(params)` | Pairwise L2 distance matrix |
-| `plot_three_societies(dfs)` | Multi-condition line plot |
-| `plot_survival_curves(results)` | Survival curves from collapse analysis |
-| `plot_viability_grid(kernel)` | 2-D marginalized viability mask |
-| `plot_flourishing_radar(profile)` | Five-axis radar chart |
+### `mctev.simulation`
 
----
+| Module | Public API |
+|---|---|
+| `agents` | `Agent`, `AgentType` |
+| `public_goods` | `PublicGoodsGame`, `ThreeSocietiesConfig`, `run_three_societies` |
 
-### `mctev.utils`
+### `mctev.cases`
 
-Small math helpers: `normalize`, `safe_divide`, `cosine_similarity`.
+| Module | Public API |
+|---|---|
+| `slavery` | `evaluate_slavery`, `SlaveryDiagnosis` |
+| `capital_punishment` | `evaluate_capital_punishment`, `CapitalPunishmentDiagnosis` |
+
+### `mctev.collapse` *(deprecated shim)*
+
+Redirects to `mctev.instability` with a `DeprecationWarning`. The legacy names `ConstraintViolationAnalyzer` and `ExitTimeResult` are aliased to `BoundaryInstabilityAnalyzer` and `InstabilityResult` respectively.
 
 ---
 
@@ -399,65 +458,91 @@ Small math helpers: `normalize`, `safe_divide`, `cosine_similarity`.
 All examples are executable scripts in `examples/`.
 
 | Script | Reproduces |
-|--------|------------|
-| `demo_three_societies.py` | Section 13 — convergence/divergence simulation |
-| `demo_viability_kernel.py` | Section 7.5 — feasible region as viability kernel |
-| `demo_flourishing.py` | Section 8 — five-dimensional flourishing |
-| `demo_collapse.py` | Section 10 — Constraint Violation Theorem |
-| `demo_case_studies.py` | Sections 11–12 — slavery + capital punishment |
+|---|---|
+| `demo_three_societies.py` | Section 13 — Three Societies simulation |
+| `demo_viability_kernel.py` | Section 7.5 — controlled viability kernel |
+| `demo_flourishing.py` | Section 8 — measurement operator and flourishing |
+| `demo_boundary_instability.py` | Section 10.4–10.6 — Boundary-Instability |
+| `demo_index_outcome_designs.py` | Section 10.6 — three designs |
+| `demo_capital_punishment.py` | Section 12.3 — retentionist conditions |
+| `demo_case_studies.py` | Sections 11–12 — combined case studies |
 
 Run any example:
 
 ```bash
-python examples/demo_case_studies.py
+python examples/demo_index_outcome_designs.py
 ```
 
 ---
 
-## Reproducing Paper Results
+## Reproducing the paper's results
 
-| Paper concept | Library call | Expected output |
-|---------------|--------------|-----------------|
-| Section 6 — candidate functions | `MoralFunction` enum | Six functions with descriptions |
-| Section 7 — Level-1/Level-2 distinction | `MORAL_FUNCTION_ORDER` vs. `CULTURAL_TYPES` | 6 functions, 4 canonical cultures |
-| Section 8 — flourishing thresholds | `FlourishingThresholds.default()` | $\tau_H = (0.5, 0.5, 0.5, 0.5, 0.5)$ |
-| Section 9 — persistence ∧ flourishing | `MCTEVSystem.is_viable()` + `FlourishingThresholds.is_flourishing()` | Both must return `True` |
-| Section 10 — Constraint Violation Theorem | `compare_viable_vs_violating(...)` | Viable config: flat survival ≈ 1.0; violating config: exponential decay |
-| Section 11 — slavery | `evaluate_slavery().summary()` | 5 violated functions, severity ≈ 0.15 |
-| Section 12 — capital punishment | `evaluate_capital_punishment().summary()` | Both profiles score high on `conflict` |
-| Section 13 — Three Societies | `run_three_societies(3)` | Mean contribution falls below threshold near round ~50–80 |
+| Paper section | Script | Key output |
+|---|---|---|
+| §7.5 — Controlled viability kernel | `demo_viability_kernel.py` | Kernel fraction-viable |
+| §8 — Flourishing measurement | `demo_flourishing.py` | Flourishing profile and radar plot |
+| §10.4 — Set-specific survival | `demo_boundary_instability.py` | \(q_{T,\mathcal{K}_{\text{out}}}^\pi\) curves |
+| §10.6 — Three designs | `demo_index_outcome_designs.py` | \(\Delta_\epsilon^{\mathcal{K}_{\text{index}} \to \mathcal{K}_{\text{out}}}\) for each design |
+| §12.3 — (R1)–(R3) | `demo_capital_punishment.py` | Retentionist condition report |
+| §13 — Three Societies | `demo_three_societies.py` | Cooperation over time |
 
-> **Note on empirical status.** The library implements the *empirical evaluation* of the Constraint Violation Theorem via simulation. Fully rigorous proofs under stated assumptions (compactness, smoothness, positive feedback, noise) would require additional mathematical work; the theorem remains a *sketch* in the paper and an *empirical estimate* in the library.
+> **Note on the simulation.** The Three Societies simulation is a **hybrid proxy utility model** (Supplement S9), not a full MCTEV implementation. Results are illustrative pending archival reproduction from the finalized implementation.
 
 ---
 
-## Design Principles
+## Migration from v0.1.0
 
-### 1. Candidate, not uniquely determined universals
+v0.2.0 is a **substantial revision**. Full migration guide in [`MIGRATION.md`](MIGRATION.md). Key changes:
 
-The six moral functions are exposed as an `Enum` with an explicit `MORAL_FUNCTION_ORDER` list. Every class that accepts a moral function profile (`MoralFunctionProfile`, `CulturalParameters`, `MoralFunctionProfile.from_dict`) accepts **arbitrary weights**. This mirrors the paper's `f_i ∈ ⋂ S_i` (not `=`): the functions are candidates, not unique necessities.
+| v0.1.0 | v0.2.0 |
+|---|---|
+| `CulturalParameters` (θ_c only) | `CulturalConfiguration` (full λ_c) |
+| Single `ViabilityConstraints` for state + action | `ViabilityConstraints` (τ^V) + `SafeguardThresholds` (τ^S) |
+| `FlourishingThresholds` in `mctev.flourishing.dimensions` | `FlourishingThresholds` in `mctev.core.thresholds` |
+| `ConstraintViolationAnalyzer` | `BoundaryInstabilityAnalyzer` |
+| `compare_viable_vs_violating` | `BoundaryInstabilityAnalyzer.design_B` + `build_three_designs` |
+| Implicit tie-breaking | `SelectionConvention` (ρ_c) |
 
-### 2. Methodological alignment with COH/GISMOL, not formal instantiation
+**All v0.1.0 public APIs remain importable** through deprecation shims. Existing code continues to work; the shims emit `DeprecationWarning` and will be removed in v1.0.0.
 
-`MCTEVSystem` is **not** a COH 9-tuple. It exposes fields `cultural_params`, `utilities`, `constraints`, `viable_region` — MCTEV's own structure. The Constraint Violation Theorem is MCTEV's own result; it is **analogous to** COH's stability results, not derived from them.
+### Minimal migration
 
-### 3. Falsifiable claims
+```python
+# v0.1.0
+from mctev.core.cultural_params import CULTURAL_TYPES
+params = CULTURAL_TYPES["universalist"]
+best = solver.judge(situation, actions, params)
 
-Every quantitative claim is surfaced as a checkable return value:
+# v0.2.0
+from mctev.core.configuration import default_configuration
+config = default_configuration(
+    name="universalist",
+    weights=[0.30, 0.20, 0.20, 0.15, 0.10, 0.05],
+)
+best = solver.judge(situation, actions, config)
+```
 
-- `ConstraintViolationAnalyzer.fit_exponential()` returns `(C, λ)`, which can be compared against predicted decay.
-- `ViabilityKernel.fraction_viable()` returns a scalar measurable against ground truth.
-- `SlaveryDiagnosis.severity` returns a scalar summary of constraint violation.
+---
 
-### 4. Level separation
+## Design commitments
 
-The three levels are strictly separated by module boundary:
+The library embodies three epistemic commitments from the manuscript:
 
-- `mctev.core.moral_functions` does **not** import from `mctev.core.cultural_params`
-- `mctev.core.cultural_params` does **not** import from `mctev.core.situational`
-- `mctev.core.situational` takes cultural parameters as an input, not as a constructor default
+### 1. Candidate, not dogma
 
-This enforces the paper's claim that Level 1 is not reducible to Level 2, nor Level 2 to Level 3.
+The six Level 1 functions are exposed as an **explicitly extensible enumeration**. The epistemic tier of each function (strict universal, robust regularity, weak regularity) is **not yet established** and is not pre-assigned. Extending the set of functions is a source-level operation that requires re-running the test suite.
+
+### 2. Alignment, not derivation
+
+The library is **methodologically aligned with** — but **not formally derived from** — the COH/GISMOL research program. `MCTEVSystem` is MCTEV's own composition; it is not a specialization of the COH 9-tuple.
+
+### 3. Simulation-based evaluation, not proof
+
+The Boundary-Instability Hypothesis is a **research hypothesis and testing protocol**, not a proved theorem. `BoundaryInstabilityAnalyzer` implements the empirical evaluation; it does not prove the hypothesis.
+
+### 4. Three threshold families are not interchangeable
+
+The manuscript's separation of \(\boldsymbol{\tau}^V\), \(\boldsymbol{\tau}^S\), and \(\boldsymbol{\tau}^H\) is enforced at the type level. The library prevents accidental conflation by requiring distinct classes for each family.
 
 ---
 
@@ -470,76 +555,49 @@ pytest tests/ -v
 
 The test suite covers:
 
-- `MoralFunctionProfile` bounds and round-tripping
-- `CulturalParameters` normalization and canonical types
-- `SituationalJudgment` with and without deontological constraints
-- `FlourishingProfile` threshold logic
-- Both case study diagnoses
-
----
-
-## Extending the Library
-
-### Adding a new candidate moral function
-
-Because the framework treats functions as **candidates**, adding a seventh function is a purely additive change:
-
-```python
-# 1. Extend the enum in mctev/core/moral_functions.py
-class MoralFunction(Enum):
-    ...
-    TEMPORAL_JUSTICE = "temporal"
-
-# 2. Add to MORAL_FUNCTION_ORDER
-MORAL_FUNCTION_ORDER = [..., MoralFunction.TEMPORAL_JUSTICE]
-
-# 3. Update N_FUNCTIONS automatically (it's len(MORAL_FUNCTION_ORDER))
-```
-
-Subsequent code (profiles, parameters, viability vectors) adapts to the new dimensionality automatically.
-
-### Adding a new cultural type
-
-```python
-from mctev.core.cultural_params import CulturalParameters, CULTURAL_TYPES
-import numpy as np
-
-CULTURAL_TYPES["confucian"] = CulturalParameters(
-    weights=np.array([0.15, 0.20, 0.10, 0.35, 0.10, 0.10]),
-    name="confucian",
-)
-```
-
-### Adding a new dynamics model
-
-```python
-from mctev.viability.dynamics import Dynamics
-import numpy as np
-
-class MyDynamics(Dynamics):
-    def __call__(self, x, params):
-        return -0.1 * x + params.weights  # example
-```
-
-Any `Dynamics` subclass can be passed to `ViabilityKernel`, `ConstraintViolationAnalyzer`, and `compute_viable_region`.
+- **Threshold families** (`test_thresholds.py`): shape, dictionary roundtrip, override behavior
+- **Full configuration** (`test_configuration.py`): simplex normalization, field presence
+- **Selection conventions** (`test_selection.py`): status-quo, random, empty-maximizer error
+- **Measurement operators** (`test_measurement.py`): linear measurement, cross-context validation
+- **Qualifying conditions** (`test_qualifying.py`): proxy audit flags and passes
+- **Boundary-Instability** (`test_instability.py`): three-design registry, safe sets, design shape
+- **Retentionist conditions** (`test_retentionist.py`): R1 for retentionist and abolitionist
+- **Metrics** (`test_metrics.py`): identity checks for each dispersion measure
 
 ---
 
 ## Citation
 
-If you use `mctev-lib` in academic work, please cite:
+If you use `mctev-lib` in academic work, please cite both the paper and the library:
+
+### Paper
 
 ```bibtex
 @article{wang2026mctev,
   title   = {Toward a Computational Science of Ethics: A Multi-Level
-             Theory of Ethical Variation and Universal Moral Principles},
+             Computational Theory of Ethical Variation and Candidate
+             Level 1 Moral Functions},
   author  = {Wang, Harris},
   year    = {2026},
-  note    = {Reference implementation: \texttt{mctev-lib}}
+  note    = {Manuscript in preparation}
 }
 ```
 
-For the sibling research program on hierarchical computational explanations of complex systems, see:
+### Library
+
+```bibtex
+@software{wang2026mctevlib,
+  title   = {mctev-lib: Reference implementation of the Multi-Level
+             Computational Theory of Ethics},
+  author  = {Wang, Harris},
+  version = {0.2.0},
+  year    = {2026},
+  url     = {https://github.com/hongxueharriswang/mctev-lib},
+  license = {MIT}
+}
+```
+
+### Sibling research program
 
 ```bibtex
 @article{wang2025coh,
@@ -549,7 +607,8 @@ For the sibling research program on hierarchical computational explanations of c
   journal = {Computers},
   volume  = {14},
   pages   = {478},
-  year    = {2025}
+  year    = {2025},
+  doi     = {10.3390/computers14110478}
 }
 ```
 
@@ -557,14 +616,16 @@ For the sibling research program on hierarchical computational explanations of c
 
 ## License
 
-MIT License. See `LICENSE` for details.
+MIT License. See [`LICENSE`](LICENSE) for details.
 
 ---
 
 ## Acknowledgments
 
-The MCTEV framework is methodologically aligned with the [COH/GISMOL](https://github.com/hongxueharriswang/gismol-lib) research program on hierarchical computational explanations of complex systems. The Ethical Constraint Hierarchy Principle — *constraints propagate downward, adaptation propagates upward* — captures the shared mechanism between the two frameworks.
+The MCTEV framework is methodologically aligned with the [COH/GISMOL](https://github.com/hongxueharriswang/gismol-lib) research program on hierarchical computational explanations of complex systems. The **Ethical Constraint Hierarchy Principle** — *constraints propagate downward, adaptation propagates upward* — captures the shared mechanism between the two frameworks.
 
 ---
 
-**MCTEV-Lib v0.1.0** · Built for reproducibility, falsifiability, and extension.
+**mctev-lib v0.2.0** · Built for reproducibility, falsifiability, and extension.
+
+**Status**: The library implements the computational infrastructure for the MCTEV framework. It does not itself constitute an empirical validation of the framework, nor does it report results for the model architecture specified in the paper's Section 13. A DOI-minted archival release is planned before claims of archival reproducibility are made.

@@ -1,10 +1,14 @@
 """
-Level 3: Situational judgments.
+Level 3: situational judgments with situation-dependent action sets.
 
-Given a cultural parameter vector θ_c and a situation s, an agent
-computes a judgment
+Revised for the manuscript:
 
-    j(s; θ_c) = argmax_a Σ_f θ_{c,f} u_f(a, s)   subject to  a ∈ C(s)
+    - Action sets are situation-dependent: A(s), not a static list.
+    - The selection convention ρ_c resolves ties among maximizers.
+    - The judgment correspondence is J(s; A, λ_c); the selection function
+      is σ_{ρ_c}.
+    - The configuration λ_c = (θ_c, τ^V, τ^S, τ^H, ρ_c, M_c) is threaded
+      through so that the safeguard thresholds τ^S act on C(s; A, τ^S).
 """
 
 from __future__ import annotations
@@ -12,8 +16,20 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable, Hashable, Iterable, List, Optional
 
-from mctev.core.cultural_params import CulturalParameters
+import numpy as np
+
+from mctev.core.configuration import CulturalConfiguration
 from mctev.core.moral_functions import MoralUtilityLibrary
+from mctev.core.selection import SelectionConvention, select_action
+
+
+# A constraint predicate takes (situation, action, configuration) → bool
+ConstraintPredicate = Callable[
+    ["Situation", "Action", "CulturalConfiguration"], bool
+]
+
+# A generator takes a situation and returns the available actions A(s)
+ActionGenerator = Callable[["Situation"], List["Action"]]
 
 
 @dataclass
@@ -38,59 +54,90 @@ class Situation:
 @dataclass
 class SituationalJudgment:
     """
-    A situational judgment solver.
+    Level-3 solver.
 
     Parameters
     ----------
     utilities : MoralUtilityLibrary
-        Per-function utility functions u_f(a, s).
-    constraints : Optional[Callable[[Situation, Action], bool]]
-        Deontological constraint predicate C(s); ``True`` means admissible.
+        Per-function utilities u_f(a, s).
+    constraints : Optional[ConstraintPredicate]
+        Deontological constraint predicate C(s; A, τ^S). If provided, it
+        is expected to inspect configuration.safeguard_thresholds.
     """
 
     utilities: MoralUtilityLibrary
-    constraints: Optional[Callable[[Situation, Action], bool]] = None
+    constraints: Optional[ConstraintPredicate] = None
 
     def admissible_actions(
         self,
         actions: Iterable[Action],
         situation: Situation,
+        configuration: CulturalConfiguration,
     ) -> List[Action]:
         if self.constraints is None:
             return list(actions)
-        return [a for a in actions if self.constraints(situation, a)]
+        return [
+            a for a in actions
+            if self.constraints(situation, a, configuration)
+        ]
 
     def score(
         self,
         action: Action,
         situation: Situation,
-        params: CulturalParameters,
+        configuration: CulturalConfiguration,
     ) -> float:
-        """Compute Σ_f θ_{c,f} u_f(a, s)."""
-        return self.utilities.evaluate(action, situation, params.weights)
+        return self.utilities.evaluate(
+            action, situation, configuration.weights
+        )
+
+    def correspondence(
+        self,
+        situation: Situation,
+        actions: Iterable[Action],
+        configuration: CulturalConfiguration,
+    ) -> List[Action]:
+        """Return J(s; A, λ_c) — the set of maximizers."""
+        admissible = self.admissible_actions(actions, situation, configuration)
+        if not admissible:
+            return []
+        scores = [
+            (self.score(a, situation, configuration), a) for a in admissible
+        ]
+        best = max(s for s, _ in scores)
+        return [a for s, a in scores if np.isclose(s, best)]
 
     def judge(
         self,
         situation: Situation,
         actions: Iterable[Action],
-        params: CulturalParameters,
+        configuration: CulturalConfiguration,
+        previous_action: Optional[Action] = None,
+        rng: Optional[np.random.Generator] = None,
+        lexicographic_key: Optional[callable] = None,
     ) -> Optional[Action]:
-        """Return the highest-scoring admissible action, or None."""
-        candidates = self.admissible_actions(actions, situation)
-        if not candidates:
+        """Apply the selection function σ_{ρ_c} to J(s; A, λ_c)."""
+        maximizers = self.correspondence(situation, actions, configuration)
+        if not maximizers:
             return None
-        scored = [(self.score(a, situation, params), a) for a in candidates]
-        scored.sort(key=lambda x: x[0], reverse=True)
-        return scored[0][1]
+        return select_action(
+            convention=configuration.selection_convention,
+            maximizers=maximizers,
+            situation=situation,
+            previous_action=previous_action,
+            rng=rng,
+            lexicographic_key=lexicographic_key,
+        )
 
     def rank(
         self,
         situation: Situation,
         actions: Iterable[Action],
-        params: CulturalParameters,
+        configuration: CulturalConfiguration,
     ) -> List[tuple]:
-        """Return actions ranked by score, descending."""
-        candidates = self.admissible_actions(actions, situation)
-        scored = [(self.score(a, situation, params), a) for a in candidates]
+        admissible = self.admissible_actions(actions, situation, configuration)
+        scored = [
+            (self.score(a, situation, configuration), a) for a in admissible
+        ]
         scored.sort(key=lambda x: x[0], reverse=True)
         return scored

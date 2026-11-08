@@ -1,49 +1,84 @@
 """
-mctev-lib — Multi-Level Computational Theory of Ethics
-======================================================
+mctev-lib — Multi-Level Computational Theory of Ethics (v0.2.0)
 
-Reference implementation of the MCTEV framework:
+Reference implementation aligned with the current manuscript:
 
-    Level 1: Candidate universal moral functions
-    Level 2: Cultural parameter configurations
-    Level 3: Situational judgments
+    λ_c = (θ_c, τ^V, τ^S, τ^H, ρ_c, M_c)
 
 Key components:
-    - viability: Feasible moral region as viability kernel
-    - flourishing: Five-dimensional flourishing construct
-    - collapse: Constraint Violation Theorem (empirical)
-    - simulation: Three Societies public goods model
-    - cases: Slavery and capital punishment case studies
+    - core.thresholds: three threshold families
+    - core.configuration: full Level-2 cultural configuration λ_c
+    - core.selection: selection conventions ρ_c
+    - core.measurement: measurement operators M_c
+    - core.qualifying: Q_{-i} and the proxy audit
+    - core.situational: situation-dependent A(s)
+    - instability: Boundary-Instability Hypothesis with index/outcome sets
+    - retentionist: retentionist conditions (R1)-(R3)
 """
 
-from mctev.core.moral_functions import MoralFunction, MoralFunctionProfile
-from mctev.core.cultural_params import CulturalParameters, CULTURAL_TYPES
-from mctev.core.situational import SituationalJudgment, Situation, Action
+from mctev.core.moral_functions import (
+    MoralFunction, MoralFunctionProfile, MoralUtilityLibrary,
+    MORAL_FUNCTION_ORDER, N_FUNCTIONS,
+)
+from mctev.core.thresholds import (
+    ViabilityThresholds, SafeguardThresholds, FlourishingThresholds,
+    ThresholdFamilies,
+)
+from mctev.core.configuration import CulturalConfiguration
+from mctev.core.selection import SelectionConvention
+from mctev.core.measurement import MeasurementOperator, LinearMeasurement
+from mctev.core.qualifying import QualifyingConditions, QualifyingCondition
+from mctev.core.situational import (
+    Situation, Action, SituationalJudgment, ConstraintPredicate,
+)
 from mctev.core.hierarchy import MCTEVSystem
 from mctev.viability.constraints import ViabilityConstraints
 from mctev.viability.dynamics import LinearDynamics, Dynamics
-from mctev.viability.kernel import ViabilityKernel
-from mctev.flourishing.dimensions import (
-    FlourishingProfile,
-    FlourishingThresholds,
+from mctev.viability.kernel import ViabilityKernel, compute_viable_region
+from mctev.instability.safe_sets import (
+    SafeSet, IndicatorSafeSet, KernelSafeSet,
 )
-from mctev.collapse.theorem import ConstraintViolationAnalyzer
+from mctev.instability.analyzer import (
+    BoundaryInstabilityAnalyzer, InstabilityResult,
+)
+from mctev.instability.survival import set_specific_survival
+from mctev.flourishing.dimensions import (
+    FlourishingProfile, FlourishingDimension,
+)
+from mctev.retentionist.architecture import (
+    RetentionistArchitecture, AbolitionistArchitecture, Architecture,
+)
+from mctev.retentionist.conditions import check_R1, check_R2, check_R3
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
+
 __all__ = [
-    "MoralFunction",
-    "MoralFunctionProfile",
-    "CulturalParameters",
-    "CULTURAL_TYPES",
-    "SituationalJudgment",
-    "Situation",
-    "Action",
+    # Core
+    "MoralFunction", "MoralFunctionProfile", "MoralUtilityLibrary",
+    "MORAL_FUNCTION_ORDER", "N_FUNCTIONS",
+    # Thresholds
+    "ViabilityThresholds", "SafeguardThresholds", "FlourishingThresholds",
+    "ThresholdFamilies",
+    # Configuration
+    "CulturalConfiguration",
+    # Selection / measurement
+    "SelectionConvention", "MeasurementOperator", "LinearMeasurement",
+    # Qualifying
+    "QualifyingConditions", "QualifyingCondition",
+    # Situational
+    "Situation", "Action", "SituationalJudgment", "ConstraintPredicate",
+    # Hierarchy
     "MCTEVSystem",
-    "ViabilityConstraints",
-    "LinearDynamics",
-    "Dynamics",
-    "ViabilityKernel",
-    "FlourishingProfile",
-    "FlourishingThresholds",
-    "ConstraintViolationAnalyzer",
+    # Viability
+    "ViabilityConstraints", "LinearDynamics", "Dynamics",
+    "ViabilityKernel", "compute_viable_region",
+    # Instability
+    "SafeSet", "IndicatorSafeSet", "KernelSafeSet",
+    "BoundaryInstabilityAnalyzer", "InstabilityResult",
+    "set_specific_survival",
+    # Flourishing
+    "FlourishingProfile", "FlourishingDimension",
+    # Retentionist
+    "Architecture", "RetentionistArchitecture", "AbolitionistArchitecture",
+    "check_R1", "check_R2", "check_R3",
 ]
