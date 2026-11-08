@@ -54,37 +54,12 @@ v0.2.0 brings the library into alignment with the current manuscript. The formal
 
 MCTEV formalizes ethics as a three-level computational system:
 
-```
-┌────────────────────────────────────────────────────────────────────┐
-│  LEVEL 1 — Candidate Level 1 moral functions and architecture A    │
-│  ────────────────────────────────────────────────────────────────  │
-│  ℱ₁ = {f_coop, f_conflict, f_dist, f_care, f_info, f_sustain}      │
-│  A = (ℱ₁, T_V^{L1}, T_S^{L1}, T_H^{L1}, C^{L1},                    │
-│       S^{dom}, S^{req}, P_A, M_A, Q)                               │
-│                                                                    │
-│                     constrains                                     │
-│                        ▼                                           │
-│  LEVEL 2 — Cultural-institutional configuration λ_c               │
-│  ────────────────────────────────────────────────────────────────  │
-│  λ_c = (θ_c, τ^V, τ^S, τ^H, ρ_c, M_c)                              │
-│       │    │    │    │    │    │                                   │
-│       │    │    │    │    │    └─ measurement operator              │
-│       │    │    │    │    └────── selection convention              │
-│       │    │    │    └─────────── flourishing thresholds            │
-│       │    │    └──────────────── safeguard thresholds              │
-│       │    └───────────────────── dynamical viability thresholds    │
-│       └────────────────────────── compensatory weights              │
-│                                                                    │
-│                     constrains                                     │
-│                        ▼                                           │
-│  LEVEL 3 — Situational judgment                                    │
-│  ────────────────────────────────────────────────────────────────  │
-│  J(s; A, λ_c) = argmax_{a ∈ A(s) ∩ C(s; A, τ^S)}                   │
-│                 Σ_f θ_c,f · u_f(a, s)                              │
-│                                                                    │
-│  j(s; A, λ_c) = σ_{ρ_c}( J(s; A, λ_c), s )                         │
-└────────────────────────────────────────────────────────────────────┘
-```
+
+<img src="system-overview.svg"
+     alt="Three-level MCTEV computational architecture"
+     width="1000">
+
+
 
 The library supports:
 
