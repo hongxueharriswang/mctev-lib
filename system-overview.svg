@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 900 780"
+     width="900" height="780"
+     role="img"
+     aria-labelledby="title desc">
+  <title id="title">MCTEV three-level computational architecture</title>
+  <desc id="desc">
+    A diagram of the Multi-Level Computational Theory of Ethics.
+    Level 1 defines the candidate moral functions and architecture.
+    Level 2 defines the cultural-institutional configuration.
+    Level 3 defines the situational judgment. Constraints propagate downward;
+    adaptation propagates upward.
+  </desc>
+
+  <defs>
+    <!-- Arrowhead for the constraint-propagation arrows -->
+    <marker id="arrow-down"
+            viewBox="0 0 10 10"
+            refX="9" refY="5"
+            markerWidth="8" markerHeight="8"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#37474F"/>
+    </marker>
+
+    <!-- Softer arrowhead for the upward-adaptation arrow -->
+    <marker id="arrow-up"
+            viewBox="0 0 10 10"
+            refX="9" refY="5"
+            markerWidth="8" markerHeight="8"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8D6E63"/>
+    </marker>
+
+    <!-- Subtle drop shadow for level boxes -->
+    <filter id="box-shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3"
+                    flood-color="#000" flood-opacity="0.08"/>
+    </filter>
+
+    <!-- Level 1 gradient -->
+    <linearGradient id="level1-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E3F2FD"/>
+      <stop offset="100%" stop-color="#BBDEFB"/>
+    </linearGradient>
+
+    <!-- Level 2 gradient -->
+    <linearGradient id="level2-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E8F5E9"/>
+      <stop offset="100%" stop-color="#C8E6C9"/>
+    </linearGradient>
+
+    <!-- Level 3 gradient -->
+    <linearGradient id="level3-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFF3E0"/>
+      <stop offset="100%" stop-color="#FFE0B2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- =========================================================== -->
+  <!-- LEVEL 1                                                     -->
+  <!-- =========================================================== -->
+  <g id="level-1">
+    <!-- Box -->
+    <rect x="40" y="30" width="820" height="170" rx="12" ry="12"
+          fill="url(#level1-fill)" stroke="#1565C0" stroke-width="2"
+          filter="url(#box-shadow)"/>
+
+    <!-- Level badge -->
+    <rect x="40" y="30" width="140" height="34" rx="10" ry="10"
+          fill="#1565C0"/>
+    <text x="110" y="53" text-anchor="middle"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="700" fill="#FFFFFF">LEVEL 1</text>
+
+    <!-- Level title -->
+    <text x="200" y="54"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="600" fill="#0D47A1">
+      Candidate Level 1 moral functions and architecture 𝔄
+    </text>
+
+    <!-- Functions line -->
+    <text x="60" y="100"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="15" fill="#0D47A1">
+      ℱ₁ = { f<tspan font-size="11" dy="2">coop</tspan><tspan dy="-2">, </tspan>f<tspan font-size="11" dy="2">conflict</tspan><tspan dy="-2">, </tspan>f<tspan font-size="11" dy="2">dist</tspan><tspan dy="-2">, </tspan>f<tspan font-size="11" dy="2">care</tspan><tspan dy="-2">, </tspan>f<tspan font-size="11" dy="2">info</tspan><tspan dy="-2">, </tspan>f<tspan font-size="11" dy="2">sustain</tspan><tspan dy="-2"> }</tspan>
+    </text>
+
+    <!-- Architecture tuple, split across two lines for readability -->
+    <text x="60" y="132"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="15" fill="#0D47A1">
+      𝔄 = ( ℱ₁, 𝒯<tspan font-size="11" dy="3">V</tspan><tspan dy="-3">, </tspan>𝒯<tspan font-size="11" dy="3">S</tspan><tspan dy="-3">, </tspan>𝒯<tspan font-size="11" dy="3">H</tspan><tspan dy="-3">, 𝒞</tspan><tspan font-size="11" dy="3">L1</tspan><tspan dy="-3">, </tspan>𝒮<tspan font-size="11" dy="3">dom</tspan><tspan dy="-3">, </tspan>𝒮<tspan font-size="11" dy="3">req</tspan><tspan dy="-3">, </tspan>𝒫<tspan font-size="11" dy="3">𝔄</tspan><tspan dy="-3">, </tspan>ℳ<tspan font-size="11" dy="3">𝔄</tspan><tspan dy="-3">, Q )</tspan>
+    </text>
+
+    <!-- Short annotation -->
+    <text x="60" y="170"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="12" font-style="italic" fill="#546E7A">
+      Three admissible threshold domains, non-compensatory constraints,
+      situation domains, and qualifying conditions
+    </text>
+  </g>
+
+  <!-- =========================================================== -->
+  <!-- CONSTRAINT-PROPAGATION ARROW (L1 → L2)                      -->
+  <!-- =========================================================== -->
+  <g id="constraint-1-to-2">
+    <line x1="450" y1="202" x2="450" y2="242"
+          stroke="#37474F" stroke-width="2.5"
+          marker-end="url(#arrow-down)"/>
+    <text x="465" y="228"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="12" font-style="italic" fill="#37474F">
+      constrains (downward)
+    </text>
+  </g>
+
+  <!-- =========================================================== -->
+  <!-- LEVEL 2                                                     -->
+  <!-- =========================================================== -->
+  <g id="level-2">
+    <!-- Box -->
+    <rect x="40" y="246" width="820" height="290" rx="12" ry="12"
+          fill="url(#level2-fill)" stroke="#2E7D32" stroke-width="2"
+          filter="url(#box-shadow)"/>
+
+    <!-- Level badge -->
+    <rect x="40" y="246" width="140" height="34" rx="10" ry="10"
+          fill="#2E7D32"/>
+    <text x="110" y="269" text-anchor="middle"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="700" fill="#FFFFFF">LEVEL 2</text>
+
+    <!-- Level title -->
+    <text x="200" y="270"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="600" fill="#1B5E20">
+      Cultural-institutional configuration λ<tspan font-size="11" dy="3">c</tspan>
+    </text>
+
+    <!-- The six-component equation -->
+    <text x="450" y="312" text-anchor="middle"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="18" font-weight="600" fill="#1B5E20">
+      λ<tspan font-size="12" dy="3">c</tspan><tspan dy="-3"> = ( θ</tspan><tspan font-size="12" dy="3">c</tspan><tspan dy="-3">, τ</tspan><tspan font-size="12" dy="-8">V</tspan><tspan dy="8">, τ</tspan><tspan font-size="12" dy="-8">S</tspan><tspan dy="8">, τ</tspan><tspan font-size="12" dy="-8">H</tspan><tspan dy="8">, ρ</tspan><tspan font-size="12" dy="3">c</tspan><tspan dy="-3">, M</tspan><tspan font-size="12" dy="3">c</tspan><tspan dy="-3"> )</tspan>
+    </text>
+
+    <!-- Six component descriptions arranged in a 2-column grid -->
+    <!-- Row 1 -->
+    <g id="component-row-1">
+      <rect x="70" y="340" width="380" height="56" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="88" y="364"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        θ<tspan font-size="11" dy="3">c</tspan><tspan dy="-3"> ∈ Δ⁵</tspan>
+      </text>
+      <text x="88" y="384"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        compensatory weights (simplex)
+      </text>
+
+      <rect x="470" y="340" width="380" height="56" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="488" y="364"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        τ<tspan font-size="11" dy="-8">V</tspan><tspan dy="8"> ∈ 𝒯</tspan><tspan font-size="11" dy="-8">V</tspan><tspan dy="8">&#8202;L1</tspan>
+      </text>
+      <text x="488" y="384"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        dynamical viability thresholds
+      </text>
+    </g>
+
+    <!-- Row 2 -->
+    <g id="component-row-2">
+      <rect x="70" y="408" width="380" height="56" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="88" y="432"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        τ<tspan font-size="11" dy="-8">S</tspan><tspan dy="8"> ∈ 𝒯</tspan><tspan font-size="11" dy="-8">S</tspan><tspan dy="8">&#8202;L1</tspan>
+      </text>
+      <text x="88" y="452"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        safeguard thresholds
+      </text>
+
+      <rect x="470" y="408" width="380" height="56" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="488" y="432"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        τ<tspan font-size="11" dy="-8">H</tspan><tspan dy="8"> ∈ 𝒯</tspan><tspan font-size="11" dy="-8">H</tspan><tspan dy="8">&#8202;L1</tspan>
+      </text>
+      <text x="488" y="452"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        flourishing thresholds
+      </text>
+    </g>
+
+    <!-- Row 3 -->
+    <g id="component-row-3">
+      <rect x="70" y="476" width="380" height="46" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="88" y="498"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        ρ<tspan font-size="11" dy="3">c</tspan><tspan dy="-3"> ∈ 𝒫</tspan><tspan font-size="11" dy="3">𝔄</tspan>
+      </text>
+      <text x="200" y="500"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        selection convention
+      </text>
+
+      <rect x="470" y="476" width="380" height="46" rx="8" ry="8"
+            fill="#FFFFFF" stroke="#81C784" stroke-width="1.2" opacity="0.95"/>
+      <text x="488" y="498"
+            font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+            font-size="15" font-weight="600" fill="#1B5E20">
+        M<tspan font-size="11" dy="3">c</tspan><tspan dy="-3"> ∈ ℳ</tspan><tspan font-size="11" dy="3">𝔄</tspan>
+      </text>
+      <text x="600" y="500"
+            font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+            font-size="12" fill="#33691E">
+        measurement operator
+      </text>
+    </g>
+  </g>
+
+  <!-- =========================================================== -->
+  <!-- CONSTRAINT-PROPAGATION ARROW (L2 → L3)                      -->
+  <!-- =========================================================== -->
+  <g id="constraint-2-to-3">
+    <line x1="450" y1="538" x2="450" y2="578"
+          stroke="#37474F" stroke-width="2.5"
+          marker-end="url(#arrow-down)"/>
+    <text x="465" y="564"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="12" font-style="italic" fill="#37474F">
+      constrains (downward)
+    </text>
+  </g>
+
+  <!-- =========================================================== -->
+  <!-- LEVEL 3                                                     -->
+  <!-- =========================================================== -->
+  <g id="level-3">
+    <!-- Box -->
+    <rect x="40" y="582" width="820" height="170" rx="12" ry="12"
+          fill="url(#level3-fill)" stroke="#E65100" stroke-width="2"
+          filter="url(#box-shadow)"/>
+
+    <!-- Level badge -->
+    <rect x="40" y="582" width="140" height="34" rx="10" ry="10"
+          fill="#E65100"/>
+    <text x="110" y="605" text-anchor="middle"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="700" fill="#FFFFFF">LEVEL 3</text>
+
+    <!-- Level title -->
+    <text x="200" y="606"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="16" font-weight="600" fill="#BF360C">
+      Situational judgment
+    </text>
+
+    <!-- Judgment correspondence -->
+    <text x="60" y="652"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="15" fill="#BF360C">
+      J(s; 𝔄, λ<tspan font-size="11" dy="3">c</tspan><tspan dy="-3">) = argmax</tspan><tspan font-size="11" dy="3">a ∈ A(s) ∩ C(s; 𝔄, τ</tspan><tspan font-size="9" dy="-4">S</tspan><tspan font-size="11" dy="4">)</tspan>
+    </text>
+
+    <text x="105" y="678"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="15" fill="#BF360C">
+      Σ<tspan font-size="11" dy="3">f</tspan><tspan dy="-3"> θ</tspan><tspan font-size="11" dy="3">c,f</tspan><tspan dy="-3"> · u</tspan><tspan font-size="11" dy="3">f</tspan><tspan dy="-3">(a, s)</tspan>
+    </text>
+
+    <!-- Selection rule -->
+    <text x="60" y="716"
+          font-family="'Cambria Math', 'Latin Modern Math', Georgia, serif"
+          font-size="15" fill="#BF360C">
+      j(s; 𝔄, λ<tspan font-size="11" dy="3">c</tspan><tspan dy="-3">) = σ</tspan><tspan font-size="11" dy="3">ρc</tspan><tspan dy="-3">( J(s; 𝔄, λ</tspan><tspan font-size="11" dy="3">c</tspan><tspan dy="-3">), s )</tspan>
+    </text>
+
+    <!-- Annotation -->
+    <text x="60" y="740"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="12" font-style="italic" fill="#6D4C41">
+      Set-valued correspondence resolved by the selection convention
+    </text>
+  </g>
+
+  <!-- =========================================================== -->
+  <!-- UPWARD-ADAPTATION ARROW (L3 → L1, on the right margin)      -->
+  <!-- =========================================================== -->
+  <g id="adaptation-3-to-1">
+    <!-- Vertical line on the far right -->
+    <line x1="870" y1="667" x2="870" y2="115"
+          stroke="#8D6E63" stroke-width="2"
+          stroke-dasharray="6,4"
+          marker-end="url(#arrow-up)"/>
+
+    <!-- Rotated label -->
+    <text x="888" y="400" text-anchor="middle"
+          transform="rotate(90 888 400)"
+          font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+          font-size="12" font-style="italic" fill="#8D6E63">
+      adaptation (upward)
+    </text>
+  </g>
+</svg>
